@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crash Course Kids 連携ページ | EHB Global Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;}
+.header{background:#185FA5;color:#fff;padding:20px 24px;}
+.header h1{font-size:20px;font-weight:700;margin-bottom:4px;}
+.header p{font-size:13px;opacity:.85;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#E6F1FB;color:#0C447C;font-weight:600;margin-top:8px;margin-right:6px;}
+.container{max-width:740px;margin:0 auto;padding:20px 16px;}
+.card{background:#fff;border:1px solid #e8e6e0;border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sec{font-size:15px;font-weight:700;margin-bottom:10px;}
+.sub{font-size:13px;color:#666;line-height:1.65;margin-bottom:12px;}
+
+/* Theme tabs */
+.theme-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px;}
+.ttab{padding:8px 14px;border-radius:20px;border:1.5px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;color:#666;transition:all .15s;}
+.ttab.on{background:#185FA5;color:#fff;border-color:#185FA5;}
+.ttab:hover:not(.on){background:#fff;border-color:#185FA5;color:#185FA5;}
+
+/* Episode cards */
+.ep-grid{display:grid;gap:12px;}
+.ep-card{border:1.5px solid #e8e6e0;border-radius:10px;overflow:hidden;background:#fff;transition:all .15s;}
+.ep-card:hover{border-color:#185FA5;box-shadow:0 2px 10px rgba(24,95,165,.1);}
+.ep-thumb{background:#E6F1FB;padding:14px 16px;display:flex;align-items:center;gap:12px;}
+.ep-num{font-size:11px;font-weight:700;color:#185FA5;background:#fff;padding:3px 8px;border-radius:20px;flex-shrink:0;}
+.ep-title-en{font-size:14px;font-weight:700;color:#0C447C;flex:1;}
+.ep-body{padding:12px 16px;}
+.ep-title-ja{font-size:13px;font-weight:600;color:#1a1a1a;margin-bottom:6px;}
+.ep-desc{font-size:12px;color:#666;line-height:1.65;margin-bottom:10px;}
+.ep-tags{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:10px;}
+.ep-tag{font-size:11px;padding:2px 8px;border-radius:20px;background:#E6F1FB;color:#0C447C;font-weight:500;}
+.ep-tag.sci{background:#E1F5EE;color:#085041;}
+.ep-tag.soc{background:#FAEEDA;color:#633806;}
+.ep-actions{display:flex;gap:8px;flex-wrap:wrap;}
+.btn-yt{padding:7px 14px;border-radius:8px;background:#185FA5;color:#fff;font-size:12px;font-weight:600;text-decoration:none;border:none;cursor:pointer;display:inline-flex;align-items:center;gap:5px;}
+.btn-yt:hover{background:#0C447C;}
+.btn-inq{padding:7px 14px;border-radius:8px;background:#E1F5EE;color:#085041;font-size:12px;font-weight:600;border:1.5px solid #1D9E75;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:5px;}
+.btn-inq:hover{background:#1D9E75;color:#fff;}
+
+/* Viewing guide */
+.guide-area{display:none;}
+.guide-area.on{display:block;}
+.guide-tabs{display:flex;gap:6px;margin-bottom:14px;}
+.gtab{padding:7px 16px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;color:#666;}
+.gtab.on{background:#185FA5;color:#fff;border-color:#185FA5;}
+.guide-step{display:none;}
+.guide-step.on{display:block;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lang-box{border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:6px;}
+.lang-en{background:#E1F5EE;color:#085041;}
+.lang-ja{background:#FAEEDA;color:#633806;}
+.lang-lbl{font-size:10px;font-weight:700;margin-bottom:4px;opacity:.8;}
+textarea{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;resize:vertical;min-height:60px;font-family:inherit;margin-top:4px;}
+.vocab-row{display:flex;align-items:baseline;gap:8px;padding:7px 0;border-bottom:1px solid #f0ede8;font-size:13px;}
+.vocab-row:last-child{border-bottom:none;}
+.vocab-en{font-weight:700;color:#0C447C;min-width:100px;}
+.vocab-ja{color:#666;}
+.btn-next{padding:8px 18px;border-radius:8px;background:#185FA5;color:#fff;font-size:13px;border:none;cursor:pointer;margin-top:10px;}
+.btn-back{padding:8px 18px;border-radius:8px;background:#f8f7f4;color:#666;font-size:13px;border:1px solid #ddd;cursor:pointer;margin-top:10px;margin-right:8px;}
+.wow-box{background:#FAEEDA;border-radius:8px;padding:10px 14px;font-size:13px;color:#633806;line-height:1.65;}
+.role-pill{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:4px;}
+.role-bi{background:#E1F5EE;color:#085041;}
+.role-jp{background:#FAEEDA;color:#633806;}
+.theme-section{display:none;}
+.theme-section.on{display:block;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>&#127911; Crash Course Kids</h1>
+  <p>EHB Global Learning — 動画連携学習ページ</p>
+  <span class="badge">英語動画</span>
+  <span class="badge">日英バイリンガル</span>
+  <span class="badge">探究連携</span>
+</div>
+<div class="container">
+
+<div class="card" style="background:#E6F1FB;border-color:#185FA5;">
+  <p class="sec" style="color:#0C447C;">&#127891; このページの使い方</p>
+  <p class="sub" style="margin-bottom:0;">テーマを選んで動画を見よう。視聴ガイドを使えば、英語が苦手でも大丈夫！見終わったら「探究ランチャーへ」ボタンで深い学びにつなげよう。</p>
+</div>
+
+<div class="theme-tabs" id="theme-tabs">
+  <button class="ttab on" onclick="switchTheme('water',this)">&#128167; 水と生命</button>
+  <button class="ttab" onclick="switchTheme('climate',this)">&#127807; 気候と食料</button>
+  <button class="ttab" onclick="switchTheme('ai',this)">&#129302; AIと科学</button>
+  <button class="ttab" onclick="switchTheme('equality',this)">&#9878;&#65039; 社会と人権</button>
+  <button class="ttab" onclick="switchTheme('health',this)">&#10084;&#65039; 健康と体</button>
+  <button class="ttab" onclick="switchTheme('earth',this)">&#127758; 地球と宇宙</button>
+</div>
+
+<!-- WATER -->
+<div class="theme-section on" id="theme-water">
+  <div class="ep-grid" id="eps-water"></div>
+</div>
+<!-- CLIMATE -->
+<div class="theme-section" id="theme-climate">
+  <div class="ep-grid" id="eps-climate"></div>
+</div>
+<!-- AI/SCIENCE -->
+<div class="theme-section" id="theme-ai">
+  <div class="ep-grid" id="eps-ai"></div>
+</div>
+<!-- EQUALITY -->
+<div class="theme-section" id="theme-equality">
+  <div class="ep-grid" id="eps-equality"></div>
+</div>
+<!-- HEALTH -->
+<div class="theme-section" id="theme-health">
+  <div class="ep-grid" id="eps-health"></div>
+</div>
+<!-- EARTH -->
+<div class="theme-section" id="theme-earth">
+  <div class="ep-grid" id="eps-earth"></div>
+</div>
+
+<!-- VIEWING GUIDE (shown when episode selected) -->
+<div class="guide-area" id="guide-area">
+  <div class="card" style="border-color:#185FA5;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;">
+      <span id="guide-ep-title" style="font-size:15px;font-weight:700;flex:1;color:#0C447C;"></span>
+      <button onclick="closeGuide()" style="font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">&#10005; 閉じる</button>
+    </div>
+    <div class="guide-tabs">
+      <button class="gtab on" onclick="switchGuide('before',this)">&#128203; 見る前</button>
+      <button class="gtab" onclick="switchGuide('during',this)">&#127909; 見ながら</button>
+      <button class="gtab" onclick="switchGuide('after',this)">&#9998;&#65039; 振り返り</button>
+    </div>
+
+    <!-- BEFORE -->
+    <div class="guide-step on" id="gs-before">
+      <p style="font-size:13px;font-weight:700;color:#185FA5;margin-bottom:10px;">&#128203; 動画を見る前に</p>
+      <div class="two-col" style="margin-bottom:12px;">
+        <div class="lang-box lang-en">
+          <div class="lang-lbl">&#127468;&#127463; Bilingual student</div>
+          What do you already know about this topic? Share with your friend in Japanese!
+        </div>
+        <div class="lang-box lang-ja">
+          <div class="lang-lbl">&#127471;&#127477; 日本語の友達</div>
+          このテーマで知っていることは? どんな言葉を知ってる?
+        </div>
+      </div>
+      <p style="font-size:13px;font-weight:700;margin-bottom:8px;">&#128218; キーワードチェック</p>
+      <div id="vocab-list" style="margin-bottom:12px;"></div>
+      <p style="font-size:12px;color:#888;margin-bottom:4px;">見る前の「はてな」を書こう / Wonder question before watching</p>
+      <div class="two-col">
+        <textarea placeholder="I wonder… / 気になること（英語で）"></textarea>
+        <textarea placeholder="気になること（日本語で）"></textarea>
+      </div>
+      <button class="btn-next" onclick="switchGuide('during',document.querySelectorAll('.gtab')[1])">動画を見よう &#9654;&#65039;</button>
+    </div>
+
+    <!-- DURING -->
+    <div class="guide-step" id="gs-during">
+      <p style="font-size:13px;font-weight:700;color:#185FA5;margin-bottom:10px;">&#127909; 動画を見ながら</p>
+      <div class="wow-box" style="margin-bottom:12px;">
+        <strong>&#9654; 通訳タイム！</strong> バイリンガルの子は、各セクションが終わったら一時停止して日本語で説明してあげよう。<br>
+        日本語の友達: わかったら &#128077; まだなら &#9995; で合図しよう！
+      </div>
+      <div class="two-col" style="margin-bottom:12px;">
+        <div>
+          <span class="role-pill role-bi">バイリンガル</span>
+          <p style="font-size:12px;color:#666;margin-bottom:4px;">Key words &amp; facts</p>
+          <textarea placeholder="Important words / Interesting facts I noticed…"></textarea>
+        </div>
+        <div>
+          <span class="role-pill role-jp">日本語の友達</span>
+          <p style="font-size:12px;color:#666;margin-bottom:4px;">聞こえた言葉・絵でわかったこと</p>
+          <textarea placeholder="聞こえた単語 / 絵でわかったこと…"></textarea>
+        </div>
+      </div>
+      <p style="font-size:12px;color:#888;margin-bottom:4px;">「へえ！」と思ったこと / Wow moment</p>
+      <textarea placeholder="I didn't know that… / へえ、〇〇ってすごい！"></textarea>
+      <button class="btn-next" onclick="switchGuide('after',document.querySelectorAll('.gtab')[2])">振り返りへ &#8594;</button>
+      <button class="btn-back" onclick="switchGuide('before',document.querySelectorAll('.gtab')[0])">&#8592; 戻る</button>
+    </div>
+
+    <!-- AFTER -->
+    <div class="guide-step" id="gs-after">
+      <p style="font-size:13px;font-weight:700;color:#185FA5;margin-bottom:10px;">&#9998;&#65039; 振り返り</p>
+      <div class="two-col" style="margin-bottom:12px;">
+        <div>
+          <span class="role-pill role-bi">バイリンガル</span>
+          <textarea placeholder="Today I learned that… (2-3 sentences in English)"></textarea>
+        </div>
+        <div>
+          <span class="role-pill role-jp">日本語の友達</span>
+          <textarea placeholder="今日わかったのは… (2〜3文で日本語で)"></textarea>
+        </div>
+      </div>
+      <div class="lang-box lang-en" style="margin-bottom:8px;">
+        <div class="lang-lbl">Challenge for bilingual student</div>
+        Can you explain today's video topic to a family member in Japanese tonight?
+      </div>
+      <div class="lang-box lang-ja">
+        <div class="lang-lbl">全員へのチャレンジ</div>
+        今日学んだことを、家に帰って家族に話してみよう！自分の言葉で伝えると記憶に残るよ。
+      </div>
+      <div style="margin-top:14px;">
+        <a id="inq-link" href="tool1_inquiry_launcher.html" class="btn-inq">&#127757; このテーマを深く探究する &rarr;</a>
+      </div>
+      <button class="btn-back" style="margin-top:8px;" onclick="switchGuide('during',document.querySelectorAll('.gtab')[1])">&#8592; 戻る</button>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+var episodes = {
+  water: [
+    {
+      titleEn: "The Water Cycle",
+      titleJa: "水のサイクル",
+      desc: "雨・川・海・雲がどうつながっているか。水がどうやって地球をめぐるかを学ぼう。",
+      tags: ["理科 Science","蒸発","condensation"],
+      tagTypes: ["sci","sci","sci"],
+      url: "https://www.youtube.com/watch?v=TWm4NnC2BsA",
+      vocab: [
+        {en:"water cycle", ja:"水循環（みずじゅんかん）— how water moves around Earth"},
+        {en:"evaporation", ja:"蒸発（じょうはつ）— water turning into vapor"},
+        {en:"condensation", ja:"凝結（ぎょうけつ）— vapor turning back into water"},
+        {en:"precipitation", ja:"降水（こうすい）— rain, snow, or hail falling"},
+        {en:"groundwater", ja:"地下水（ちかすい）— water stored underground"}
+      ],
+      theme: "water"
+    },
+    {
+      titleEn: "Fresh Water",
+      titleJa: "淡水と水不足",
+      desc: "地球の水のほとんどは飲めない。飲める水はどこにある? なぜ水不足が起きる?",
+      tags: ["地理 Geography","SDG 6","water scarcity"],
+      tagTypes: ["soc","soc","sci"],
+      url: "https://www.youtube.com/watch?v=oMOXBMFDCOQ",
+      vocab: [
+        {en:"freshwater", ja:"淡水（たんすい）— water that is not salty"},
+        {en:"glacier", ja:"氷河（ひょうが）— large body of ice that moves"},
+        {en:"scarcity", ja:"不足・希少（ふそく）— not having enough of something"},
+        {en:"reservoir", ja:"貯水池（ちょすいち）— a lake for storing water"},
+        {en:"drought", ja:"干ばつ（かんばつ）— long period without rain"}
+      ],
+      theme: "water"
+    },
+    {
+      titleEn: "Ocean Currents",
+      titleJa: "海流と気候",
+      desc: "海の流れが世界の気候をコントロールしている。熊本の気候にも関係があるかも!",
+      tags: ["理科 Science","地理 Geography","climate"],
+      tagTypes: ["sci","soc","sci"],
+      url: "https://www.youtube.com/watch?v=UuGrBhK2c7U",
+      vocab: [
+        {en:"ocean current", ja:"海流（かいりゅう）— flow of water in the ocean"},
+        {en:"temperature", ja:"温度（おんど）— how hot or cold something is"},
+        {en:"density", ja:"密度（みつど）— how heavy something is for its size"},
+        {en:"circulation", ja:"循環（じゅんかん）— movement in a circle or cycle"},
+        {en:"climate", ja:"気候（きこう）— typical weather of a region"}
+      ],
+      theme: "water"
+    }
+  ],
+  climate: [
+    {
+      titleEn: "Earth's Atmosphere",
+      titleJa: "地球の大気",
+      desc: "地球を包む空気の層が生命を守っている。温室効果とは何か?",
+      tags: ["理科 Science","気候変動","SDG 13"],
+      tagTypes: ["sci","soc","soc"],
+      url: "https://www.youtube.com/watch?v=fo6O5OhiNy4",
+      vocab: [
+        {en:"atmosphere", ja:"大気（たいき）— layers of air around Earth"},
+        {en:"greenhouse effect", ja:"温室効果（おんしつこうか）— trapping of heat by gases"},
+        {en:"carbon dioxide", ja:"二酸化炭素（にさんかたんそ）— gas released by burning fuel"},
+        {en:"ozone", ja:"オゾン — gas that protects us from UV rays"},
+        {en:"radiation", ja:"放射（ほうしゃ）— energy sent out as waves"}
+      ],
+      theme: "climate"
+    },
+    {
+      titleEn: "Food Webs",
+      titleJa: "食物連鎖と生態系",
+      desc: "生き物はみんなつながっている。一種類が消えると何が起きる?",
+      tags: ["理科 Science","生態系","SDG 15"],
+      tagTypes: ["sci","sci","soc"],
+      url: "https://www.youtube.com/watch?v=Jj5l2gWDOAM",
+      vocab: [
+        {en:"food web", ja:"食物網（しょくもつもう）— connected food chains"},
+        {en:"producer", ja:"生産者（せいさんしゃ）— plants that make their own food"},
+        {en:"consumer", ja:"消費者（しょうひしゃ）— animals that eat other things"},
+        {en:"decomposer", ja:"分解者（ぶんかいしゃ）— breaks down dead organisms"},
+        {en:"ecosystem", ja:"生態系（せいたいけい）— community of living things"}
+      ],
+      theme: "climate"
+    },
+    {
+      titleEn: "Soil",
+      titleJa: "土と農業",
+      desc: "土は食料のすべての始まり。健康な土がなければ食料は作れない。",
+      tags: ["理科 Science","農業","SDG 2"],
+      tagTypes: ["sci","soc","soc"],
+      url: "https://www.youtube.com/watch?v=m6qsNQdIkqs",
+      vocab: [
+        {en:"soil", ja:"土壌（どじょう）— the top layer of Earth"},
+        {en:"nutrients", ja:"栄養素（えいようそ）— substances plants need to grow"},
+        {en:"erosion", ja:"浸食（しんしょく）— wearing away of soil by wind or water"},
+        {en:"microorganism", ja:"微生物（びせいぶつ）— tiny living things in soil"},
+        {en:"agriculture", ja:"農業（のうぎょう）— farming crops and animals"}
+      ],
+      theme: "climate"
+    }
+  ],
+  ai: [
+    {
+      titleEn: "Simple Machines",
+      titleJa: "シンプルな機械の力",
+      desc: "てこ・滑車・斜面。機械の基本原理は現代のロボットやAIにもつながっている。",
+      tags: ["理科 Science","物理","engineering"],
+      tagTypes: ["sci","sci","sci"],
+      url: "https://www.youtube.com/watch?v=fvEsKKCBEJg",
+      vocab: [
+        {en:"simple machine", ja:"単純機械（たんじゅんきかい）— basic mechanical device"},
+        {en:"lever", ja:"てこ — a bar that pivots on a point"},
+        {en:"pulley", ja:"滑車（かっしゃ）— wheel used to lift things"},
+        {en:"force", ja:"力（ちから）— a push or pull"},
+        {en:"mechanical advantage", ja:"機械的利得 — using less force to do more work"}
+      ],
+      theme: "ai"
+    },
+    {
+      titleEn: "Electricity",
+      titleJa: "電気のしくみ",
+      desc: "電気がなければスマホもAIも動かない。電子はどうやって動く?",
+      tags: ["理科 Science","物理","technology"],
+      tagTypes: ["sci","sci","sci"],
+      url: "https://www.youtube.com/watch?v=jQCkxhkIJc0",
+      vocab: [
+        {en:"electricity", ja:"電気（でんき）— flow of electric charge"},
+        {en:"electron", ja:"電子（でんし）— tiny particle with negative charge"},
+        {en:"circuit", ja:"回路（かいろ）— path electricity flows through"},
+        {en:"conductor", ja:"導体（どうたい）— material that lets electricity flow"},
+        {en:"insulator", ja:"絶縁体（ぜつえんたい）— material that blocks electricity"}
+      ],
+      theme: "ai"
+    },
+    {
+      titleEn: "Engineering Process",
+      titleJa: "エンジニアの思考法",
+      desc: "AIも含めすべての技術はこのプロセスで作られる。問題発見→設計→テスト→改善。",
+      tags: ["理科 Science","STEM","problem solving"],
+      tagTypes: ["sci","sci","soc"],
+      url: "https://www.youtube.com/watch?v=fxJWin195kU",
+      vocab: [
+        {en:"engineering", ja:"工学（こうがく）— designing and building solutions"},
+        {en:"prototype", ja:"試作品（しさくひん）— first version for testing"},
+        {en:"iteration", ja:"繰り返し改善（くりかえし）— improving through repeated testing"},
+        {en:"constraint", ja:"制約（せいやく）— limits on what you can do"},
+        {en:"criteria", ja:"基準（きじゅん）— standards for judging success"}
+      ],
+      theme: "ai"
+    }
+  ],
+  equality: [
+    {
+      titleEn: "Biodiversity",
+      titleJa: "生物多様性と共存",
+      desc: "多様性は強さ。生き物の世界も人間の社会も、多様性があるほど強くなる。",
+      tags: ["理科 Science","SDG 15","多様性"],
+      tagTypes: ["sci","soc","soc"],
+      url: "https://www.youtube.com/watch?v=GK_vRtHJZu4",
+      vocab: [
+        {en:"biodiversity", ja:"生物多様性（せいぶつたようせい）— variety of life on Earth"},
+        {en:"species", ja:"種（しゅ）— a group of similar living things"},
+        {en:"habitat", ja:"生息地（せいそくち）— where an animal or plant lives"},
+        {en:"extinction", ja:"絶滅（ぜつめつ）— when a species disappears forever"},
+        {en:"conservation", ja:"保全（ほぜん）— protecting nature from harm"}
+      ],
+      theme: "equality"
+    },
+    {
+      titleEn: "Natural Resources",
+      titleJa: "天然資源と公平な分配",
+      desc: "石油・水・食料は地球に均等に分布していない。それが不平等を生む。",
+      tags: ["地理 Geography","SDG 10","社会 Social Studies"],
+      tagTypes: ["soc","soc","soc"],
+      url: "https://www.youtube.com/watch?v=saxU6fd4cRA",
+      vocab: [
+        {en:"natural resource", ja:"天然資源（てんねんしげん）— materials from nature we use"},
+        {en:"renewable", ja:"再生可能（さいせいかのう）— can be replaced naturally"},
+        {en:"non-renewable", ja:"再生不可能 — cannot be replaced once used"},
+        {en:"distribution", ja:"分配（ぶんぱい）— how things are spread out"},
+        {en:"demand", ja:"需要（じゅよう）— how much people want something"}
+      ],
+      theme: "equality"
+    }
+  ],
+  health: [
+    {
+      titleEn: "Human Body Systems",
+      titleJa: "体のしくみ",
+      desc: "消化・循環・神経・骨格。体のシステムが協力して生命を維持している。",
+      tags: ["理科 Science","保健体育","SDG 3"],
+      tagTypes: ["sci","sci","soc"],
+      url: "https://www.youtube.com/watch?v=Ae4MadKPJhg",
+      vocab: [
+        {en:"organ", ja:"器官（きかん）— body part with a specific job"},
+        {en:"circulatory system", ja:"循環器系（じゅんかんきけい）— heart and blood vessels"},
+        {en:"digestive system", ja:"消化器系（しょうかきけい）— breaks down food"},
+        {en:"nervous system", ja:"神経系（しんけいけい）— brain and nerve network"},
+        {en:"immune system", ja:"免疫系（めんえきけい）— defends against disease"}
+      ],
+      theme: "health"
+    },
+    {
+      titleEn: "Germs and Immunity",
+      titleJa: "細菌とウイルスと免疫",
+      desc: "病気はどうやって体に入る? 体はどう戦う? ワクチンはなぜ効く?",
+      tags: ["理科 Science","健康","SDG 3"],
+      tagTypes: ["sci","soc","soc"],
+      url: "https://www.youtube.com/watch?v=RCPHFr7GHSs",
+      vocab: [
+        {en:"bacteria", ja:"細菌（さいきん）— tiny living organisms, some cause disease"},
+        {en:"virus", ja:"ウイルス — even tinier, needs a host to copy itself"},
+        {en:"immune system", ja:"免疫系（めんえきけい）— your body's defense army"},
+        {en:"antibody", ja:"抗体（こうたい）— proteins that fight specific germs"},
+        {en:"vaccine", ja:"ワクチン — trains immune system without real disease"}
+      ],
+      theme: "health"
+    }
+  ],
+  earth: [
+    {
+      titleEn: "Gravity",
+      titleJa: "重力のしくみ",
+      desc: "なぜ物は落ちる? 重力がなければ地球も宇宙も存在しない。",
+      tags: ["理科 Science","物理","宇宙"],
+      tagTypes: ["sci","sci","sci"],
+      url: "https://www.youtube.com/watch?v=FlXSEFDSHyk",
+      vocab: [
+        {en:"gravity", ja:"重力（じゅうりょく）— force pulling objects together"},
+        {en:"mass", ja:"質量（しつりょう）— amount of matter in an object"},
+        {en:"orbit", ja:"軌道（きどう）— curved path around a planet or star"},
+        {en:"acceleration", ja:"加速度（かそくど）— rate of change of speed"},
+        {en:"atmosphere", ja:"大気（たいき）— layers of air around a planet"}
+      ],
+      theme: "earth"
+    },
+    {
+      titleEn: "Plate Tectonics",
+      titleJa: "プレートと地震",
+      desc: "熊本地震もここで学ぶ原理で説明できる。地球の表面はなぜ動く?",
+      tags: ["理科 Science","地理 Geography","熊本関連"],
+      tagTypes: ["sci","soc","soc"],
+      url: "https://www.youtube.com/watch?v=kwfNGatxUJI",
+      vocab: [
+        {en:"tectonic plate", ja:"プレート — large piece of Earth's outer layer"},
+        {en:"earthquake", ja:"地震（じしん）— shaking caused by plate movement"},
+        {en:"volcano", ja:"火山（かざん）— opening where magma reaches surface"},
+        {en:"fault", ja:"断層（だんそう）— crack in Earth's crust"},
+        {en:"magma", ja:"マグマ — melted rock beneath Earth's surface"}
+      ],
+      theme: "earth"
+    },
+    {
+      titleEn: "The Solar System",
+      titleJa: "太陽系と宇宙",
+      desc: "8つの惑星・太陽・小惑星。地球がいかに特別な場所かがわかる。",
+      tags: ["理科 Science","宇宙","STEM"],
+      tagTypes: ["sci","sci","sci"],
+      url: "https://www.youtube.com/watch?v=rVsZDjN8Mvg",
+      vocab: [
+        {en:"solar system", ja:"太陽系（たいようけい）— Sun and everything orbiting it"},
+        {en:"planet", ja:"惑星（わくせい）— large body orbiting a star"},
+        {en:"asteroid", ja:"小惑星（しょうわくせい）— rocky object orbiting the Sun"},
+        {en:"light year", ja:"光年（こうねん）— distance light travels in one year"},
+        {en:"galaxy", ja:"銀河（ぎんが）— huge system of stars and planets"}
+      ],
+      theme: "earth"
+    }
+  ]
+};
+
+var currentEp = null;
+
+function renderEpisodes(themeKey) {
+  var eps = episodes[themeKey];
+  var container = document.getElementById("eps-" + themeKey);
+  if (!container || container.children.length > 0) return;
+  eps.forEach(function(ep, idx) {
+    var tagHTML = ep.tags.map(function(t, i) {
+      return "<span class=\"ep-tag " + (ep.tagTypes[i] || "") + "\">" + t + "</span>";
+    }).join("");
+    var card = document.createElement("div");
+    card.className = "ep-card";
+    card.innerHTML =
+      "<div class=\"ep-thumb\">" +
+        "<span class=\"ep-num\">Episode " + (idx+1) + "</span>" +
+        "<span class=\"ep-title-en\">" + ep.titleEn + "</span>" +
+      "</div>" +
+      "<div class=\"ep-body\">" +
+        "<p class=\"ep-title-ja\">" + ep.titleJa + "</p>" +
+        "<p class=\"ep-desc\">" + ep.desc + "</p>" +
+        "<div class=\"ep-tags\">" + tagHTML + "</div>" +
+        "<div class=\"ep-actions\">" +
+          "<a href=\"" + ep.url + "\" target=\"_blank\" class=\"btn-yt\">&#9654; YouTubeで見る</a>" +
+          "<button class=\"btn-inq\" onclick=\"openGuide(" + idx + ",\'" + themeKey + "')\">&#128203; 学習ガイドを開く</button>" +
+        "</div>" +
+      "</div>";
+    container.appendChild(card);
+  });
+}
+
+function switchTheme(key, btn) {
+  document.querySelectorAll(".theme-section").forEach(function(s) { s.classList.remove("on"); });
+  document.querySelectorAll(".ttab").forEach(function(t) { t.classList.remove("on"); });
+  document.getElementById("theme-" + key).classList.add("on");
+  btn.classList.add("on");
+  renderEpisodes(key);
+  closeGuide();
+}
+
+function openGuide(idx, themeKey) {
+  var ep = episodes[themeKey][idx];
+  currentEp = ep;
+  document.getElementById("guide-ep-title").textContent = ep.titleEn + " — " + ep.titleJa;
+  var vl = document.getElementById("vocab-list");
+  vl.innerHTML = "";
+  ep.vocab.forEach(function(v) {
+    var row = document.createElement("div");
+    row.className = "vocab-row";
+    row.innerHTML = "<span class=\"vocab-en\">" + v.en + "</span><span style=\"color:#185FA5;\">&#8594;</span><span class=\"vocab-ja\">" + v.ja + "</span>";
+    vl.appendChild(row);
+  });
+  switchGuide("before", document.querySelectorAll(".gtab")[0]);
+  var guide = document.getElementById("guide-area");
+  guide.classList.add("on");
+  guide.scrollIntoView({behavior:"smooth"});
+}
+
+function closeGuide() {
+  document.getElementById("guide-area").classList.remove("on");
+  currentEp = null;
+}
+
+function switchGuide(step, btn) {
+  document.querySelectorAll(".guide-step").forEach(function(s) { s.classList.remove("on"); });
+  document.querySelectorAll(".gtab").forEach(function(t) { t.classList.remove("on"); });
+  document.getElementById("gs-" + step).classList.add("on");
+  if (btn) btn.classList.add("on");
+}
+
+// Init first theme
+renderEpisodes("water");
+</script>
+</body></html>
