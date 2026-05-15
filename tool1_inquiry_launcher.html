@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>世界探究学習ランチャー | EHB Global Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;min-height:100vh;}
+.header{background:#1D9E75;color:#fff;padding:20px 24px;}
+.header h1{font-size:20px;font-weight:600;margin-bottom:4px;}
+.header p{font-size:13px;opacity:.85;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#E1F5EE;color:#085041;font-weight:600;margin-top:8px;}
+.container{max-width:720px;margin:0 auto;padding:20px 16px;}
+.card{background:#fff;border:1px solid #e8e6e0;border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sec{font-size:15px;font-weight:600;margin-bottom:10px;}
+.sub{font-size:13px;color:#666;line-height:1.6;margin-bottom:10px;}
+.theme-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:12px;}
+.theme-card{border:1.5px solid #e8e6e0;border-radius:10px;padding:14px 10px;cursor:pointer;background:#f8f7f4;text-align:center;transition:all .15s;}
+.theme-card:hover{background:#fff;border-color:#1D9E75;}
+.theme-card.sel{border:2px solid #1D9E75;background:#E1F5EE;}
+.theme-icon{font-size:24px;margin-bottom:6px;}
+.theme-en{font-size:13px;font-weight:600;color:#1a1a1a;}
+.theme-ja{font-size:11px;color:#666;margin-top:2px;}
+.step-area{display:none;}
+.step-area.on{display:block;}
+.step-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.stab{padding:7px 14px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;color:#666;}
+.stab.active{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+.stab.done{background:#E1F5EE;color:#085041;border-color:#0F6E56;}
+.step-content{display:none;}
+.step-content.active{display:block;}
+.q-list{list-style:none;}
+.q-list li{padding:8px 0;border-bottom:1px solid #f0ede8;font-size:14px;display:flex;gap:8px;}
+.q-list li:last-child{border-bottom:none;}
+.qnum{font-size:11px;font-weight:600;color:#1D9E75;min-width:16px;margin-top:2px;}
+textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;resize:vertical;min-height:68px;font-family:inherit;margin-top:6px;}
+.btn{padding:9px 20px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;cursor:pointer;margin-top:10px;margin-right:8px;}
+.btn.pri{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+.lang-box{border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;}
+.lang-en{background:#E1F5EE;color:#085041;}
+.lang-ja{background:#FAEEDA;color:#633806;}
+.lang-lbl{font-size:10px;font-weight:600;margin-bottom:4px;opacity:.75;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.chip{display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;margin:3px;}
+.chip.on{background:#EEEDFE;color:#3C3489;border-color:#534AB7;}
+.chip-teal.on{background:#E1F5EE;color:#085041;border-color:#1D9E75;}
+.stance-btn{padding:10px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;text-align:left;transition:all .15s;width:100%;margin-bottom:6px;}
+.stance-btn.chosen{background:#FAEEDA;border:2px solid #BA7517;color:#633806;}
+.hint{font-size:12px;color:#888;margin-top:4px;}
+.pbox{background:#f8f7f4;border-radius:8px;padding:12px 14px;font-size:13px;color:#666;line-height:1.7;margin-top:8px;min-height:50px;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>世界探究学習ランチャー</h1>
+  <p>Global Inquiry Launcher | English House Blossom</p>
+  <span class="badge">探究力 · 批判的思考 · 世界視野</span>
+</div>
+<div class="container">
+
+<div class="card" id="theme-picker">
+  <p class="sec">今日探究するテーマを選ぼう / Choose your inquiry theme</p>
+  <div class="theme-grid">
+    <div class="theme-card" onclick="pickTheme(0)"><div class="theme-icon">💧</div><div class="theme-en">Water & Life</div><div class="theme-ja">水と生命</div></div>
+    <div class="theme-card" onclick="pickTheme(1)"><div class="theme-icon">🌱</div><div class="theme-en">Climate & Food</div><div class="theme-ja">気候と食料</div></div>
+    <div class="theme-card" onclick="pickTheme(2)"><div class="theme-icon">🤖</div><div class="theme-en">AI & Society</div><div class="theme-ja">AIと社会</div></div>
+    <div class="theme-card" onclick="pickTheme(3)"><div class="theme-icon">⚖️</div><div class="theme-en">Equality & Rights</div><div class="theme-ja">平等と権利</div></div>
+    <div class="theme-card" onclick="pickTheme(4)"><div class="theme-icon">❤️</div><div class="theme-en">Health & Wellbeing</div><div class="theme-ja">健康と幸福</div></div>
+    <div class="theme-card" onclick="pickTheme(5)"><div class="theme-icon">🏙️</div><div class="theme-en">Cities & Future</div><div class="theme-ja">都市と未来</div></div>
+  </div>
+</div>
+
+<div class="step-area" id="step-area">
+  <div class="card" style="padding:14px 18px;margin-bottom:10px;">
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px;">
+      <span id="chosen-label" style="font-size:15px;font-weight:600;"></span>
+      <button onclick="resetTheme()" style="margin-left:auto;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">テーマを変える</button>
+    </div>
+    <div class="step-tabs" id="step-tabs"></div>
+  </div>
+  <div id="step-contents"></div>
+</div>
+
+</div>
+<script>
+const themes=[
+  {en:"Water & Life",ja:"水と生命",qs:["Why do 2 billion people still lack safe drinking water?","How might technology help make seawater drinkable?","What if your town ran out of water for one week?"],stances:["Technology will solve it / 技術で解決できる","We need behavior change / 行動を変えるべき","It's a political problem / 政治の問題だ","I'm not sure yet / まだわからない"],subjects:{"理科 Science":"Water cycle, filtration, evaporation, climate connections.","数学 Math":"Population vs water supply ratios, statistics.","地理 Geography":"Which regions face water scarcity and why?","倫理 Ethics":"Is water a human right? Who owns rivers?","英語 English":"Read WHO reports. Summarize in your own words."},sdgs:{"SDG 6 Clean water":"26% of the world lacks safe drinking water (WHO 2023).","SDG 13 Climate action":"Droughts caused by climate change threaten water supplies.","SDG 3 Good health":"Contaminated water causes 1.4 million deaths per year."}},
+  {en:"Climate & Food",ja:"気候と食料",qs:["Why are food prices rising around the world?","How might Japan's food supply change if the climate gets 2°C hotter?","What if we had to grow our own food in our town?"],stances:["Individuals must change diets / 個人の食生活を変えるべき","Farming technology must change / 農業技術を革新すべき","Global trade policy is key / 国際政策が重要","All of the above / 全部"],subjects:{"理科 Science":"Photosynthesis, soil, ecosystems, temperature effects on crops.","数学 Math":"Caloric needs vs crop yield data. Graphing projections.","地理 Geography":"Japan's food self-sufficiency rate. Food exporting nations.","社会 Social Studies":"History of famines. Policy and agriculture.","英語 English":"Read IPCC summaries. Debate: Should everyone eat less meat?"},sdgs:{"SDG 2 Zero hunger":"815 million people are chronically hungry.","SDG 13 Climate action":"Extreme weather destroyed $280B in crops in 2022.","SDG 15 Life on land":"40% of agricultural land has been degraded."}},
+  {en:"AI & Society",ja:"AIと社会",qs:["Who decides what AI is allowed to do?","How might AI change what skills humans need in 20 years?","What if AI could grade every student's work?"],stances:["AI will mostly help society / AIは社会を良くする","AI poses serious risks / AIは深刻なリスクがある","It depends on who controls it / 誰がコントロールするかによる","We need completely new rules / 全く新しいルールが必要"],subjects:{"数学 Math":"Probability, statistics — what AI is actually doing.","理科 Science":"Neuroscience: human brains vs machine learning.","倫理 Ethics":"Bias in AI. Who is responsible for harmful decisions?","英語 English":"Read tech news. Write a persuasive essay on AI regulation.","美術 Art":"AI-generated art — is it creative? What is creativity?"},sdgs:{"SDG 4 Quality education":"AI tutors could help 300M students without teachers.","SDG 8 Decent work":"30% of jobs may be automated by 2030 (McKinsey).","SDG 10 Reduced inequalities":"Digital divide may widen global inequality."}},
+  {en:"Equality & Rights",ja:"平等と権利",qs:["Why do people in different countries have such different rights?","How might Japan become more welcoming to other cultures?","What if you were born where you couldn't go to school?"],stances:["Universal rights must come first / 普遍的人権が最優先","Cultural context matters / 文化的背景も重要","Economic development unlocks rights / 経済発展が権利を生む","Young people must lead change / 若者がリードすべき"],subjects:{"社会 Social Studies":"History of human rights. UN Declaration (1948).","英語 English":"Read speeches by Malala, Greta. Write your own manifesto.","倫理 Ethics":"What is fairness? Theories of justice.","数学 Math":"Gender pay gap data. Representation statistics.","国語 Literature":"Stories from other cultures — empathy through fiction."},sdgs:{"SDG 5 Gender equality":"Women earn 20% less than men globally.","SDG 10 Reduced inequalities":"Richest 10% own 76% of global wealth.","SDG 16 Peace & justice":"100M+ people displaced by conflict or persecution."}},
+  {en:"Health & Wellbeing",ja:"健康と幸福",qs:["Why do people in some countries live 30 years longer?","How might mental health become the biggest challenge for teens?","What if all medical care were free everywhere?"],stances:["Healthcare is a human right / 医療は人権だ","Lifestyle choices are key / 生活習慣が最重要","Prevention is better than treatment / 予防が治療より重要","Community & connection matter most / コミュニティが最重要"],subjects:{"理科 Science":"Body systems, nutrition, disease prevention.","数学 Math":"Life expectancy data by country. Disease transmission rates.","社会 Social Studies":"Healthcare systems comparison — Japan, UK, US.","英語 English":"Read WHO reports. Debate: Social media harms teen mental health.","保健体育 PE":"Physical activity guidelines — exercise as medicine."},sdgs:{"SDG 3 Good health":"Japan avg. life expectancy: 84. Some countries: under 60.","SDG 1 No poverty":"Poor families spend up to 40% of income on healthcare.","SDG 10 Reduced inequalities":"Healthcare deserts affect rural Kumamoto too."}},
+  {en:"Cities & Future",ja:"都市と未来",qs:["How might Kumamoto change in 20 years with TSMC moving in?","What should a city designed by teenagers look like?","Why do more than half of all humans now live in cities?"],stances:["Technology will make cities smarter / テクノロジーが都市を変える","Nature must be at the center / 自然との共存が最重要","Communities need to lead / コミュニティ主導が必要","Old and new must blend / 伝統と革新のバランス"],subjects:{"地理 Geography":"Urbanization trends. Smart city examples — Singapore, Tokyo.","数学 Math":"Population density. Infrastructure cost calculations.","理科 Science":"Urban heat islands. Renewable energy in cities.","美術/デザイン Art":"Urban design — city shapes affect how people feel.","英語 English":"Read city planning manifestos. Write a proposal for your ideal town."},sdgs:{"SDG 11 Sustainable cities":"68% of the world will live in cities by 2050.","SDG 13 Climate action":"Cities produce 70% of global CO2 emissions.","SDG 9 Industry & innovation":"Kumamoto's semiconductor boom reshapes the region."}}
+];
+const stepLabels=["問いを立てる","教科横断","スタンス","SDGs","アクション"];
+let curTheme=null,curStep=0,selStance=null,selSdg=null;
+
+function pickTheme(i){
+  curTheme=i;const t=themes[i];
+  document.getElementById('theme-picker').style.display='none';
+  document.getElementById('step-area').classList.add('on');
+  document.getElementById('chosen-label').textContent=t.en+' — '+t.ja;
+  buildTabs();buildStepContent(t);goStep(0);
+}
+function resetTheme(){
+  document.getElementById('theme-picker').style.display='block';
+  document.getElementById('step-area').classList.remove('on');
+  curTheme=null;
+}
+function buildTabs(){
+  const tabs=document.getElementById('step-tabs');tabs.innerHTML='';
+  stepLabels.forEach((l,i)=>{
+    const b=document.createElement('button');b.className='stab'+(i===0?' active':'');
+    b.textContent=(i+1)+'. '+l;b.onclick=()=>goStep(i);tabs.appendChild(b);
+  });
+}
+function goStep(n){
+  curStep=n;
+  document.querySelectorAll('.stab').forEach((b,i)=>{b.className='stab'+(i===n?' active':i<n?' done':'');});
+  document.querySelectorAll('.step-content').forEach((s,i)=>s.classList.toggle('active',i===n));
+}
+function buildStepContent(t){
+  const c=document.getElementById('step-contents');c.innerHTML='';
+  // Step 0
+  const s0=document.createElement('div');s0.className='step-content active card';
+  s0.innerHTML=`<p class="sec">問いを立てる — Raise a question</p>
+  <p class="sub">「なぜ?」「どうすれば?」で始まる問いを自分の言葉で作ろう。正解はない。</p>
+  <ul class="q-list">${t.qs.map((q,i)=>`<li><span class="qnum">${i+1}</span><span>${q}</span></li>`).join('')}</ul>
+  <p style="font-size:12px;color:#888;margin-top:10px;">自分の問い / My own question</p>
+  <textarea id="my-q" placeholder="Why does... / How might we... / What if..."></textarea>
+  <button class="btn pri" onclick="goStep(1)">次へ →</button>`;
+  c.appendChild(s0);
+  // Step 1
+  const s1=document.createElement('div');s1.className='step-content card';
+  let subHTML='';Object.keys(t.subjects).forEach(k=>{subHTML+=`<span class="chip chip-teal" onclick="selSub(this,'${k}',\`${t.subjects[k]}\`)">${k}</span>`;});
+  s1.innerHTML=`<p class="sec">教科を横断する — Cross-subject lens</p>
+  <p class="sub">このテーマはどの教科の視点で見ると深まる? タップしよう。</p>
+  <div>${subHTML}</div>
+  <div id="sub-explain" class="pbox">教科を選ぶと、その視点からの問いが出てきます。</div>
+  <button class="btn pri" onclick="goStep(2)">次へ →</button><button class="btn" onclick="goStep(0)">← 戻る</button>`;
+  c.appendChild(s1);
+  // Step 2
+  const s2=document.createElement('div');s2.className='step-content card';
+  let stHTML=t.stances.map(s=>`<button class="stance-btn" onclick="selStance(this,'${s}')">${s}</button>`).join('');
+  s2.innerHTML=`<p class="sec">スタンスをとる — Take a stance</p>
+  <p class="sub">今の自分の考えは? 後で変えていい。まず直感で選ぼう。</p>
+  ${stHTML}
+  <div id="stance-exp" class="pbox">スタンスを選んでください。</div>
+  <p style="font-size:12px;color:#888;margin-top:10px;">なぜそう思う? / Why do you think so?</p>
+  <textarea id="stance-reason" placeholder="English or Japanese OK"></textarea>
+  <button class="btn pri" onclick="goStep(3)">次へ →</button><button class="btn" onclick="goStep(1)">← 戻る</button>`;
+  c.appendChild(s2);
+  // Step 3
+  const s3=document.createElement('div');s3.className='step-content card';
+  let sdgHTML='';Object.keys(t.sdgs).forEach(k=>{sdgHTML+=`<span class="chip chip-teal" onclick="selSDG(this,'${k}',\`${t.sdgs[k]}\`)">${k}</span>`;});
+  s3.innerHTML=`<p class="sec">世界とつながる — SDGs</p>
+  <p class="sub">このテーマは世界のどの目標と関係している?</p>
+  <div>${sdgHTML}</div>
+  <div id="sdg-exp" class="pbox">SDGsを選ぶと、世界の具体例が出ます。</div>
+  <div class="two-col" style="margin-top:12px;">
+    <div><p style="font-size:12px;color:#085041;font-weight:600;margin-bottom:4px;">🇬🇧 In English</p><textarea placeholder="How does this connect to the world?"></textarea></div>
+    <div><p style="font-size:12px;color:#633806;font-weight:600;margin-bottom:4px;">🇯🇵 日本語で</p><textarea placeholder="世界とどうつながっている?"></textarea></div>
+  </div>
+  <button class="btn pri" onclick="goStep(4)">次へ →</button><button class="btn" onclick="goStep(2)">← 戻る</button>`;
+  c.appendChild(s3);
+  // Step 4
+  const s4=document.createElement('div');s4.className='step-content card';
+  s4.innerHTML=`<p class="sec">アクションを考える — My action plan</p>
+  <p class="sub">探究した結果、自分にできることは? 中学生としての小さな一歩でいい。</p>
+  <div class="two-col">
+    <div><div class="lang-box lang-en"><div class="lang-lbl">What can I do?</div>Think of 1–2 concrete actions — at home, at school, or online.</div><textarea placeholder="I will… / I want to learn more about…"></textarea></div>
+    <div><div class="lang-box lang-ja"><div class="lang-lbl">私にできること</div>家・学校・ネットでできる小さな一歩を書こう。</div><textarea placeholder="〇〇をやってみる / 〇〇について調べる"></textarea></div>
+  </div>
+  <div style="background:#EEEDFE;border-radius:8px;padding:12px 16px;margin-top:14px;">
+    <p style="font-size:13px;font-weight:600;color:#3C3489;margin-bottom:6px;">探究サマリー</p>
+    <div id="summary" style="font-size:13px;color:#534AB7;line-height:1.75;"></div>
+  </div>
+  <button class="btn" onclick="goStep(3)">← 戻る</button>`;
+  c.appendChild(s4);
+  // build summary on step4 open
+  const origGo=window.goStep;
+  document.querySelectorAll('.stab')[4]&&(document.querySelectorAll('.stab')[4].onclick=()=>{goStep(4);buildSummary();});
+}
+function selSub(el,k,v){document.querySelectorAll('.chip-teal').forEach(c=>c.classList.remove('on'));el.classList.add('on');document.getElementById('sub-explain').textContent=v;}
+function selStance(el,s){document.querySelectorAll('.stance-btn').forEach(b=>b.classList.remove('chosen'));el.classList.add('chosen');selStance_val=s;document.getElementById('stance-exp').textContent='Good — there is no single correct answer. Your reasoning matters more than which stance you pick. どのスタンスも正解。大事なのは「なぜ」そう思うかの理由。';}
+function selSDG(el,k,v){document.querySelectorAll('.chip-teal').forEach(c=>c.classList.remove('on'));el.classList.add('on');selSdg=k;document.getElementById('sdg-exp').textContent=v;}
+function buildSummary(){
+  const t=themes[curTheme];const myQ=document.getElementById('my-q')?.value.trim()||'';
+  const sr=document.getElementById('stance-reason')?.value.trim()||'';
+  let h=`<b>Theme:</b> ${t.en} (${t.ja})<br>`;
+  if(myQ)h+=`<b>My question:</b> "${myQ}"<br>`;
+  if(window.selStance_val)h+=`<b>My stance:</b> ${window.selStance_val}<br>`;
+  if(sr)h+=`<b>Why:</b> ${sr}<br>`;
+  if(selSdg)h+=`<b>SDG:</b> ${selSdg}`;
+  document.getElementById('summary').innerHTML=h||'前のステップを埋めてから来よう!';
+}
+let selStance_val=null;
+</script>
+</body></html>

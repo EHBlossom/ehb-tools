@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>表現力トレーナー | EHB Global Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;}
+.header{background:#534AB7;color:#fff;padding:20px 24px;}
+.header h1{font-size:20px;font-weight:600;margin-bottom:4px;}
+.header p{font-size:13px;opacity:.85;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#EEEDFE;color:#3C3489;font-weight:600;margin-top:8px;}
+.container{max-width:720px;margin:0 auto;padding:20px 16px;}
+.card{background:#fff;border:1px solid #e8e6e0;border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sec{font-size:15px;font-weight:600;margin-bottom:10px;}
+.sub{font-size:13px;color:#666;line-height:1.6;margin-bottom:10px;}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;}
+.mode-card{border:1.5px solid #e8e6e0;border-radius:10px;padding:16px 10px;cursor:pointer;background:#f8f7f4;text-align:center;transition:all .15s;}
+.mode-card:hover{background:#fff;border-color:#534AB7;}
+.mode-icon{font-size:26px;margin-bottom:8px;}
+.mode-name{font-size:13px;font-weight:600;}
+.mode-ja{font-size:11px;color:#666;margin-top:3px;}
+.area{display:none;}
+.area.on{display:block;}
+textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;resize:vertical;min-height:65px;font-family:inherit;margin-top:5px;}
+.btn{padding:9px 20px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;cursor:pointer;margin-top:10px;margin-right:6px;}
+.btn.pri{background:#534AB7;color:#fff;border-color:#534AB7;}
+.chip{display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;margin:3px;transition:all .12s;}
+.chip.on{background:#EEEDFE;color:#3C3489;border-color:#534AB7;}
+.block{border-left:3px solid #534AB7;padding:10px 14px;margin-bottom:10px;background:#f8f7f4;border-radius:0 8px 8px 0;}
+.block-lbl{font-size:11px;font-weight:600;color:#3C3489;margin-bottom:3px;}
+.block-hint{font-size:12px;color:#888;margin-bottom:4px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lang-box{border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:6px;}
+.lang-en{background:#E1F5EE;color:#085041;}
+.lang-ja{background:#FAEEDA;color:#633806;}
+.lang-lbl{font-size:10px;font-weight:600;margin-bottom:4px;}
+.topic-chip{display:inline-block;font-size:12px;padding:5px 12px;border-radius:20px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;margin:3px;transition:all .12s;}
+.topic-chip.on{background:#E1F5EE;color:#085041;border-color:#1D9E75;}
+.phrase-pill{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#E1F5EE;color:#085041;cursor:pointer;margin:3px;}
+.phrase-pill.amber{background:#FAEEDA;color:#633806;}
+.phrase-pill.purple{background:#EEEDFE;color:#3C3489;}
+.chk-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid #f0ede8;font-size:13px;cursor:pointer;}
+.chk-item:last-child{border-bottom:none;}
+.chk-box{width:18px;height:18px;border-radius:4px;border:1.5px solid #ddd;background:#f8f7f4;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .12s;}
+.chk-box.done{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.preview-box{background:#f8f7f4;border-radius:8px;padding:12px 14px;font-size:13px;color:#666;line-height:1.75;margin-top:10px;min-height:60px;white-space:pre-wrap;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>表現力トレーナー</h1>
+  <p>Voice & Expression Trainer | English House Blossom</p>
+  <span class="badge">表現力 · 意見構成 · 日英対応</span>
+</div>
+<div class="container">
+
+<div class="card" id="mode-picker">
+  <p class="sec">練習したいモードを選ぼう / Choose your training mode</p>
+  <div class="mode-grid">
+    <div class="mode-card" onclick="setMode('opinion')"><div class="mode-icon">💬</div><div class="mode-name">Opinion builder</div><div class="mode-ja">意見を構成する</div></div>
+    <div class="mode-card" onclick="setMode('debate')"><div class="mode-icon">⚔️</div><div class="mode-name">Debate practice</div><div class="mode-ja">反論・討論</div></div>
+    <div class="mode-card" onclick="setMode('story')"><div class="mode-icon">📖</div><div class="mode-name">Story & experience</div><div class="mode-ja">体験を語る</div></div>
+    <div class="mode-card" onclick="setMode('present')"><div class="mode-icon">🎤</div><div class="mode-name">Mini presentation</div><div class="mode-ja">短いプレゼン</div></div>
+  </div>
+</div>
+
+<!-- OPINION -->
+<div class="area" id="area-opinion">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><span style="font-size:13px;font-weight:600;background:#EEEDFE;color:#3C3489;padding:3px 10px;border-radius:20px;">Opinion builder</span><button onclick="resetMode()" style="margin-left:auto;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">モード変更</button></div>
+    <p class="sub">お題を選ぼう / Choose a topic</p>
+    <div>
+      <span class="topic-chip" onclick="pickTopic(this,'School uniforms should be optional.')">制服は任意に</span>
+      <span class="topic-chip" onclick="pickTopic(this,'Smartphones should be allowed in class.')">授業中スマホOK</span>
+      <span class="topic-chip" onclick="pickTopic(this,'Everyone should learn a second language.')">全員が第二言語を</span>
+      <span class="topic-chip" onclick="pickTopic(this,'Homework should be abolished.')">宿題は廃止すべき</span>
+      <span class="topic-chip" onclick="pickTopic(this,'Social media does more harm than good.')">SNSは害の方が多い</span>
+      <span class="topic-chip" onclick="pickTopic(this,'AI should help grade students.')">AIで採点すべき</span>
+    </div>
+    <div id="op-topic" style="display:none;padding:10px 14px;border-radius:8px;background:#EEEDFE;color:#3C3489;font-size:14px;margin:10px 0;font-weight:600;"></div>
+    <p class="sub" style="margin-top:8px;">フレームワーク: <span class="chip on" onclick="pickFrame(this,'PREP')">PREP法</span><span class="chip" onclick="pickFrame(this,'WHY3')">理由3つ</span><span class="chip" onclick="pickFrame(this,'FREE')">自由記述</span></p>
+    <div id="op-blocks"></div>
+    <p style="font-size:12px;color:#888;margin-top:8px;">言語: <span class="chip on" onclick="setOpLang(this,'EN')">English</span><span class="chip" onclick="setOpLang(this,'JA')">日本語</span><span class="chip" onclick="setOpLang(this,'BOTH')">両方</span></p>
+    <div class="preview-box" id="op-preview">構成ブロックを埋めると、ここにプレビューが出ます。</div>
+  </div>
+</div>
+
+<!-- DEBATE -->
+<div class="area" id="area-debate">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><span style="font-size:13px;font-weight:600;background:#FAECE7;color:#712B13;padding:3px 10px;border-radius:20px;">Debate practice</span><button onclick="resetMode()" style="margin-left:auto;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">モード変更</button></div>
+    <p class="sub">論題を選ぼう</p>
+    <div>
+      <span class="topic-chip" onclick="pickDTopic(this,'Nuclear energy is necessary for climate goals.')">原発と気候変動</span>
+      <span class="topic-chip" onclick="pickDTopic(this,'Zoos should be abolished.')">動物園は廃止すべき</span>
+      <span class="topic-chip" onclick="pickDTopic(this,'Rich countries must pay for climate damage.')">先進国の責任</span>
+      <span class="topic-chip" onclick="pickDTopic(this,'The voting age should be lowered to 16.')">選挙権を16歳に</span>
+    </div>
+    <div id="db-topic" style="display:none;padding:10px 14px;border-radius:8px;background:#FAECE7;color:#712B13;font-size:14px;margin:10px 0;font-weight:600;"></div>
+    <div class="two-col">
+      <div><div class="lang-box lang-en"><div class="lang-lbl">My argument / 自分の主張</div>I believe that… because…</div><textarea id="db-for" placeholder="Write your argument…"></textarea></div>
+      <div><div class="lang-box lang-ja"><div class="lang-lbl">Counter-argument / 反論</div>Some people say… However…</div><textarea id="db-against" placeholder="反対意見 → 自分の反論を加えよう"></textarea></div>
+    </div>
+    <div style="background:#f8f7f4;border-radius:8px;padding:10px 14px;margin-top:10px;">
+      <p style="font-size:12px;font-weight:600;color:#666;margin-bottom:6px;">よく使う表現 / Useful phrases</p>
+      <span class="phrase-pill" onclick="ins('db-for','I strongly believe that ')">I strongly believe that</span>
+      <span class="phrase-pill" onclick="ins('db-for','Evidence shows that ')">Evidence shows that</span>
+      <span class="phrase-pill amber" onclick="ins('db-against','While some argue that ')">While some argue that</span>
+      <span class="phrase-pill amber" onclick="ins('db-against','However, this overlooks ')">However, this overlooks</span>
+      <span class="phrase-pill purple" onclick="ins('db-for','Therefore, I conclude that ')">Therefore, I conclude</span>
+    </div>
+  </div>
+</div>
+
+<!-- STORY -->
+<div class="area" id="area-story">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><span style="font-size:13px;font-weight:600;background:#FAEEDA;color:#633806;padding:3px 10px;border-radius:20px;">Story & experience</span><button onclick="resetMode()" style="margin-left:auto;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">モード変更</button></div>
+    <p class="sub">体験を語る力は、グローバルな場で最も強い表現です。日本語→英語の順で書く練習をしよう。</p>
+    <div>
+      <span class="topic-chip" onclick="pickSPrompt(this,'A moment that changed how I see the world')">世界観が変わった瞬間</span>
+      <span class="topic-chip" onclick="pickSPrompt(this,'A time I had to communicate across a language barrier')">言語の壁を越えた経験</span>
+      <span class="topic-chip" onclick="pickSPrompt(this,'Something I learned outside of school')">学校外で学んだこと</span>
+      <span class="topic-chip" onclick="pickSPrompt(this,'A person who inspired me')">影響を受けた人物</span>
+    </div>
+    <div id="st-prompt" style="display:none;padding:10px 14px;border-radius:8px;background:#FAEEDA;color:#633806;font-size:14px;margin:10px 0;font-weight:600;"></div>
+    <div class="two-col">
+      <div><p style="font-size:12px;color:#633806;font-weight:600;margin-bottom:4px;">Step 1: 日本語でまず書く</p><textarea id="st-ja" placeholder="まず日本語で思ったままに書こう。語順も気にしなくていい。"></textarea></div>
+      <div><p style="font-size:12px;color:#085041;font-weight:600;margin-bottom:4px;">Step 2: 英語に挑戦</p><textarea id="st-en" placeholder="Now write it in English. Don't aim for perfect — aim for honest."></textarea></div>
+    </div>
+    <div style="background:#f8f7f4;border-radius:8px;padding:10px 14px;margin-top:10px;">
+      <p style="font-size:12px;font-weight:600;color:#666;margin-bottom:6px;">体験談の構成 / Story structure</p>
+      <span style="background:#E1F5EE;color:#085041;font-size:12px;padding:4px 10px;border-radius:20px;margin-right:4px;">1. Setting 状況</span>→
+      <span style="background:#EEEDFE;color:#3C3489;font-size:12px;padding:4px 10px;border-radius:20px;margin:0 4px;">2. Problem 転機</span>→
+      <span style="background:#FAEEDA;color:#633806;font-size:12px;padding:4px 10px;border-radius:20px;margin:0 4px;">3. Action 行動</span>→
+      <span style="background:#FAECE7;color:#712B13;font-size:12px;padding:4px 10px;border-radius:20px;margin-left:4px;">4. Learning 学び</span>
+    </div>
+  </div>
+</div>
+
+<!-- PRESENT -->
+<div class="area" id="area-present">
+  <div class="card">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px;"><span style="font-size:13px;font-weight:600;background:#E1F5EE;color:#085041;padding:3px 10px;border-radius:20px;">Mini presentation</span><button onclick="resetMode()" style="margin-left:auto;font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">モード変更</button></div>
+    <p class="sub">2〜3分のミニプレゼンを組み立てよう。世界標準の構成を体に染み込ませる。</p>
+    <div class="block"><div class="block-lbl">HOOK — つかみ（15秒）</div><div class="block-hint">驚きのデータ・問いかけ・体験談で始める</div><textarea id="pr-hook" placeholder="Did you know that... / 〇〇って知ってますか?"></textarea></div>
+    <div class="block"><div class="block-lbl">CLAIM — 主張（30秒）</div><div class="block-hint">「私は〇〇だと思います。理由は3つあります」</div><textarea id="pr-claim" placeholder="I believe that... / Today I will argue that..."></textarea></div>
+    <div class="block"><div class="block-lbl">EVIDENCE — 根拠（60秒）</div><div class="block-hint">データ・体験・例で裏付ける</div><textarea id="pr-ev" placeholder="For example... / According to... / In my experience..."></textarea></div>
+    <div class="block"><div class="block-lbl">COUNTER — 反論への対応（20秒）</div><div class="block-hint">「反対意見もあります。しかし…」</div><textarea id="pr-cnt" placeholder="Some people argue... However..."></textarea></div>
+    <div class="block"><div class="block-lbl">CALL TO ACTION — 締め（15秒）</div><div class="block-hint">聴衆に何を考え・行動してほしいか</div><textarea id="pr-cta" placeholder="So I ask you to... / Together we can..."></textarea></div>
+    <div style="background:#f8f7f4;border-radius:8px;padding:12px 14px;margin-top:10px;">
+      <p style="font-size:13px;font-weight:600;margin-bottom:8px;">自己チェック / Self-check</p>
+      <div id="chklist"></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const checks=["つかみで聞き手を引きつけている","主張が1文で明確に言える","根拠に具体的なデータや例がある","反対意見を知った上で自分の立場を保てている","締めで行動・変化を呼びかけている"];
+const cl=document.getElementById('chklist');
+checks.forEach(t=>{const d=document.createElement('div');d.className='chk-item';d.innerHTML=`<div class="chk-box"></div><span>${t}</span>`;d.onclick=()=>{d.querySelector('.chk-box').classList.toggle('done');};cl.appendChild(d);});
+
+function setMode(m){document.getElementById('mode-picker').style.display='none';document.querySelectorAll('.area').forEach(a=>a.classList.remove('on'));document.getElementById('area-'+m).classList.add('on');if(m==='opinion')renderOpBlocks('PREP');}
+function resetMode(){document.getElementById('mode-picker').style.display='block';document.querySelectorAll('.area').forEach(a=>a.classList.remove('on'));}
+
+const opBlocks={
+  PREP:[{l:"P — Point（結論）",h:"まず結論から / Start with your main point.",id:"op0"},{l:"R — Reason（理由）",h:"なぜそう思うか / Why?",id:"op1"},{l:"E — Example（具体例）",h:"データ・体験・ニュース / Data, experience, news.",id:"op2"},{l:"P — Point（結論を繰り返す）",h:"もう一度、主張を締める / Restate your point.",id:"op3"}],
+  WHY3:[{l:"主張 / Claim",h:"一言で言うと? / In one sentence?",id:"op0"},{l:"理由① / Reason 1",h:"最も強い理由",id:"op1"},{l:"理由② / Reason 2",h:"2つ目の理由",id:"op2"},{l:"理由③ / Reason 3",h:"3つ目の理由",id:"op3"},{l:"まとめ / Conclusion",h:"だから私は〇〇だと思う",id:"op4"}],
+  FREE:[{l:"自由に書く / Write freely",h:"構成は気にせず、思ったことをそのまま書こう。",id:"op0"}]
+};
+let curFrame='PREP';
+function renderOpBlocks(f){curFrame=f;const b=opBlocks[f];const c=document.getElementById('op-blocks');c.innerHTML='';b.forEach(({l,h,id})=>{const d=document.createElement('div');d.className='block';d.innerHTML=`<div class="block-lbl">${l}</div><div class="block-hint">${h}</div><textarea id="${id}" oninput="updatePreview()" placeholder="Write here…"></textarea>`;c.appendChild(d);});}
+function updatePreview(){const b=opBlocks[curFrame];let t='';b.forEach(({id,l})=>{const el=document.getElementById(id);if(el&&el.value.trim())t+=l+': '+el.value.trim()+'\n\n';});document.getElementById('op-preview').textContent=t.trim()||'構成ブロックを埋めると、ここにプレビューが出ます。';}
+function pickFrame(el,f){document.querySelectorAll('.area.on .chip').forEach(c=>{if(c.textContent.includes('法')||c.textContent.includes('つ')||c.textContent.includes('由'))c.classList.remove('on');});el.classList.add('on');renderOpBlocks(f);}
+function setOpLang(el,l){[...el.parentNode.querySelectorAll('.chip')].forEach(c=>c.classList.remove('on'));el.classList.add('on');}
+function pickTopic(el,t){document.querySelectorAll('#area-opinion .topic-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');const d=document.getElementById('op-topic');d.style.display='block';d.textContent=t;}
+function pickDTopic(el,t){document.querySelectorAll('#area-debate .topic-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');const d=document.getElementById('db-topic');d.style.display='block';d.textContent=t;}
+function pickSPrompt(el,t){document.querySelectorAll('#area-story .topic-chip').forEach(c=>c.classList.remove('on'));el.classList.add('on');const d=document.getElementById('st-prompt');d.style.display='block';d.textContent=t;}
+function ins(id,phrase){const el=document.getElementById(id);if(el){el.value=(el.value?el.value+' ':'')+phrase;el.focus();}}
+</script>
+</body></html>

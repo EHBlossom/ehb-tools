@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>自律学習ダッシュボード | EHB Global Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;}
+.header{background:#1D9E75;color:#fff;padding:20px 24px;}
+.header h1{font-size:20px;font-weight:600;margin-bottom:4px;}
+.header p{font-size:13px;opacity:.85;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#E1F5EE;color:#085041;font-weight:600;margin-top:8px;}
+.container{max-width:720px;margin:0 auto;padding:20px 16px;}
+.card{background:#fff;border:1px solid #e8e6e0;border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sec{font-size:15px;font-weight:600;margin-bottom:10px;}
+.sub{font-size:13px;color:#666;line-height:1.6;margin-bottom:10px;}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:16px;}
+.metric{background:#fff;border:1px solid #e8e6e0;border-radius:10px;padding:12px;text-align:center;}
+.metric-n{font-size:24px;font-weight:600;color:#1a1a1a;}
+.metric-l{font-size:11px;color:#888;margin-top:2px;}
+.nav-tabs{display:flex;gap:6px;margin-bottom:16px;flex-wrap:wrap;}
+.ntab{padding:8px 16px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;color:#666;}
+.ntab.on{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+.section{display:none;}
+.section.on{display:block;}
+.habit-row{display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid #f0ede8;}
+.habit-row:last-child{border-bottom:none;}
+.hchk{width:20px;height:20px;border-radius:6px;border:1.5px solid #ddd;background:#f8f7f4;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .15s;font-size:12px;}
+.hchk.on{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.hname{font-size:14px;flex:1;}
+.hstreak{font-size:11px;color:#BA7517;font-weight:600;min-width:36px;text-align:right;}
+.sbar{flex:1;height:4px;background:#e8e6e0;border-radius:2px;overflow:hidden;margin-left:6px;}
+.sfill{height:100%;background:#1D9E75;border-radius:2px;transition:width .3s;}
+textarea{width:100%;padding:10px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;resize:vertical;min-height:62px;font-family:inherit;margin-top:5px;}
+input[type=text]{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:14px;font-family:inherit;}
+.btn{padding:8px 16px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;margin-top:8px;margin-right:6px;}
+.btn.pri{background:#1D9E75;color:#fff;border-color:#1D9E75;}
+.btn.sml{padding:5px 12px;font-size:12px;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.week-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px;margin-bottom:10px;}
+.day-col{display:flex;flex-direction:column;align-items:center;gap:4px;}
+.day-lbl{font-size:11px;color:#888;font-weight:600;}
+.day-dot{width:34px;height:34px;border-radius:50%;border:1.5px solid #ddd;background:#f8f7f4;cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:11px;color:#888;transition:all .15s;}
+.day-dot.done{background:#1D9E75;border-color:#1D9E75;color:#fff;}
+.day-dot.today{border:2px solid #534AB7;color:#534AB7;}
+.day-dot.today.done{background:#534AB7;border-color:#534AB7;color:#fff;}
+.mood-btn{padding:6px 14px;border-radius:20px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;margin:3px;transition:all .12s;}
+.mood-btn.on{background:#E1F5EE;color:#085041;border-color:#1D9E75;}
+.goal-item{border:1px solid #e8e6e0;border-radius:8px;padding:10px 12px;margin-bottom:8px;background:#f8f7f4;}
+.prog-bar{height:6px;background:#e8e6e0;border-radius:3px;overflow:hidden;margin-top:6px;}
+.prog-fill{height:100%;border-radius:3px;transition:width .4s;}
+.xp-bar{height:8px;background:#e8e6e0;border-radius:4px;overflow:hidden;margin:8px 0 4px;}
+.xp-fill{height:100%;background:#534AB7;border-radius:4px;transition:width .5s;}
+.lv-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:20px;background:#EEEDFE;color:#3C3489;font-size:12px;font-weight:600;}
+.log-row{display:flex;gap:10px;padding:8px 0;border-bottom:1px solid #f0ede8;font-size:13px;}
+.log-row:last-child{border-bottom:none;}
+.log-date{color:#888;min-width:68px;font-size:12px;}
+.tag{font-size:11px;padding:2px 8px;border-radius:20px;background:#E1F5EE;color:#085041;margin-bottom:3px;display:inline-block;}
+.badge-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:8px;}
+.badge-card{border:1px solid #e8e6e0;border-radius:8px;padding:10px;text-align:center;background:#f8f7f4;}
+.badge-icon{font-size:22px;margin-bottom:4px;}
+.badge-name{font-size:12px;font-weight:600;color:#1a1a1a;}
+.badge-hint{font-size:11px;color:#888;margin-top:2px;}
+@media(max-width:600px){.metric-row{grid-template-columns:repeat(2,1fr);}.two-col{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>自律学習ダッシュボード</h1>
+  <p>Autonomous Learning Dashboard | English House Blossom</p>
+  <span class="badge">習慣管理 · 目標追跡 · 振り返り</span>
+</div>
+<div class="container">
+
+<div class="metric-row">
+  <div class="metric"><div class="metric-n" id="m-streak">0</div><div class="metric-l">連続学習日数</div></div>
+  <div class="metric"><div class="metric-n" id="m-today">0/5</div><div class="metric-l">今日の習慣</div></div>
+  <div class="metric"><div class="metric-n" id="m-week">0</div><div class="metric-l">今週の学習日</div></div>
+  <div class="metric"><div class="metric-n" id="m-lv">Lv.1</div><div class="metric-l">学習レベル</div></div>
+</div>
+
+<div class="card" style="padding:14px 18px;margin-bottom:10px;">
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+    <span class="lv-badge">⭐ <span id="lv-name">Beginner explorer</span></span>
+    <span style="font-size:12px;color:#888;margin-left:6px;" id="xp-lbl">0 / 100 XP</span>
+  </div>
+  <div class="xp-bar"><div class="xp-fill" id="xp-bar" style="width:0%"></div></div>
+  <p style="font-size:11px;color:#888;">習慣1つ=10XP · 目標更新=15XP · ログ保存=20XP</p>
+</div>
+
+<div class="nav-tabs">
+  <button class="ntab on" onclick="showSec('today',this)">📅 今日</button>
+  <button class="ntab" onclick="showSec('week',this)">📆 今週</button>
+  <button class="ntab" onclick="showSec('goals',this)">🎯 目標</button>
+  <button class="ntab" onclick="showSec('reflect',this)">✍️ 振り返り</button>
+  <button class="ntab" onclick="showSec('history',this)">📋 記録</button>
+</div>
+
+<!-- TODAY -->
+<div class="section on" id="sec-today">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><p class="sec">今日の習慣</p><span id="today-date" style="font-size:12px;color:#888;"></span></div>
+    <div id="habit-list"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;"><input type="text" id="new-habit" placeholder="習慣を追加… (例: 英単語10個)" style="flex:1;"><button class="btn sml" onclick="addHabit()">追加</button></div>
+  </div>
+  <div class="card">
+    <p class="sec">気分・エネルギー</p>
+    <div id="mood-row" style="margin-bottom:10px;">
+      <button class="mood-btn" onclick="setMood(this,'最高')">最高</button>
+      <button class="mood-btn" onclick="setMood(this,'良い')">良い</button>
+      <button class="mood-btn" onclick="setMood(this,'普通')">普通</button>
+      <button class="mood-btn" onclick="setMood(this,'疲れ気味')">疲れ気味</button>
+      <button class="mood-btn" onclick="setMood(this,'しんどい')">しんどい</button>
+    </div>
+    <div class="two-col">
+      <div><p style="font-size:12px;color:#085041;font-weight:600;">今日チャレンジしたこと / English</p><textarea id="log-en" placeholder="I tried to… / I learned that…"></textarea></div>
+      <div><p style="font-size:12px;color:#633806;font-weight:600;">日本語で一言</p><textarea id="log-ja" placeholder="今日は〇〇を頑張った。〇〇がわかった。"></textarea></div>
+    </div>
+    <button class="btn pri" onclick="saveLog()">今日のログを保存 (+20XP)</button>
+  </div>
+  <div class="card">
+    <p class="sec">使ったツール</p>
+    <div id="tool-tags">
+      <span class="mood-btn" onclick="toggleTool(this)">探究ランチャー</span>
+      <span class="mood-btn" onclick="toggleTool(this)">表現力トレーナー</span>
+      <span class="mood-btn" onclick="toggleTool(this)">Crash Course Kids</span>
+      <span class="mood-btn" onclick="toggleTool(this)">読書</span>
+      <span class="mood-btn" onclick="toggleTool(this)">英単語</span>
+      <span class="mood-btn" onclick="toggleTool(this)">ディスカッション</span>
+    </div>
+  </div>
+</div>
+
+<!-- WEEK -->
+<div class="section" id="sec-week">
+  <div class="card">
+    <p class="sec" style="margin-bottom:12px;">今週のカレンダー</p>
+    <div class="week-grid" id="week-grid"></div>
+    <p style="font-size:12px;color:#888;">タップして学習した日をマーク</p>
+  </div>
+</div>
+
+<!-- GOALS -->
+<div class="section" id="sec-goals">
+  <div class="card">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;"><p class="sec">学習目標</p><button class="btn sml" onclick="document.getElementById('goal-form').style.display='block'">+ 目標を追加</button></div>
+    <div id="goals-list"></div>
+    <div id="goal-form" style="display:none;border-top:1px solid #f0ede8;margin-top:12px;padding-top:12px;">
+      <input type="text" id="goal-input" placeholder="目標タイトル…" style="margin-bottom:6px;">
+      <div style="display:flex;gap:6px;margin-top:6px;">
+        <select id="goal-type" style="flex:1;padding:8px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;"><option>探究力</option><option>表現力</option><option>英語</option><option>習慣</option><option>その他</option></select>
+        <button class="btn sml pri" onclick="addGoal()">追加</button>
+        <button class="btn sml" onclick="document.getElementById('goal-form').style.display='none'">取消</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- REFLECT -->
+<div class="section" id="sec-reflect">
+  <div class="card">
+    <p class="sec">週次振り返り</p>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div><p style="font-size:12px;color:#085041;font-weight:600;margin-bottom:4px;">今週いちばん成長を感じたこと / Biggest growth</p><textarea placeholder="English or Japanese OK…"></textarea></div>
+      <div><p style="font-size:12px;color:#3C3489;font-weight:600;margin-bottom:4px;">まだ難しいと感じること / What still feels hard</p><textarea placeholder="正直に書こう — 弱点を知ることが近道"></textarea></div>
+      <div><p style="font-size:12px;color:#633806;font-weight:600;margin-bottom:4px;">来週試したいこと / I want to try next week</p><textarea placeholder="具体的に1〜2つ書こう"></textarea></div>
+    </div>
+    <p style="font-size:13px;font-weight:600;margin:12px 0 6px;">誰かに教えた? / Did I teach someone?</p>
+    <button class="mood-btn" onclick="setMood2(this,'家族に話した')">家族に話した</button>
+    <button class="mood-btn" onclick="setMood2(this,'友達と話した')">友達と話した</button>
+    <button class="mood-btn" onclick="setMood2(this,'まだできてない')">まだできてない</button>
+  </div>
+</div>
+
+<!-- HISTORY -->
+<div class="section" id="sec-history">
+  <div class="card">
+    <p class="sec" style="margin-bottom:12px;">学習ログ</p>
+    <div id="log-list"><p style="font-size:13px;color:#888;">ログを保存するとここに記録が積み上がります。</p></div>
+  </div>
+  <div class="card">
+    <p class="sec">バッジ / Achievements</p>
+    <div class="badge-grid">
+      <div class="badge-card"><div class="badge-icon">🔥</div><div class="badge-name">3日連続</div><div class="badge-hint">3日ログを続けて獲得</div></div>
+      <div class="badge-card"><div class="badge-icon">🌍</div><div class="badge-name">世界探究者</div><div class="badge-hint">探究ランチャーを5回</div></div>
+      <div class="badge-card"><div class="badge-icon">💬</div><div class="badge-name">表現の達人</div><div class="badge-hint">表現トレーナーを10回</div></div>
+      <div class="badge-card"><div class="badge-icon">👥</div><div class="badge-name">教える人</div><div class="badge-hint">誰かに教えたと5回記録</div></div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+const DAYS=['日','月','火','水','木','金','土'];
+const today=new Date();const todayIdx=today.getDay();
+document.getElementById('today-date').textContent=today.toLocaleDateString('ja-JP',{year:'numeric',month:'long',day:'numeric',weekday:'short'});
+
+let habits=[
+  {name:'英語で何か1つ読む / Read something in English',streak:0,done:false},
+  {name:'今日の「はてな」を1つ書く / Write 1 wonder question',streak:0,done:false},
+  {name:'誰かに学んだことを話す / Teach someone today',streak:0,done:false},
+  {name:'探究・表現ツールを1つ使う / Use 1 inquiry tool',streak:0,done:false},
+  {name:'一言振り返りを書く / Write a one-line reflection',streak:0,done:false},
+];
+let goals=[
+  {title:'毎週1テーマの探究を完成させる',type:'探究力',pct:20,color:'#1D9E75'},
+  {title:'英語で意見を5文で言えるようになる',type:'表現力',pct:40,color:'#534AB7'},
+  {title:'Crash Course Kidsを週2本見る',type:'習慣',pct:60,color:'#BA7517'},
+];
+let weekDays=Array(7).fill(false);
+let xp=0,logs=[],mood='',mood2='';
+
+const levels=[{min:0,name:'Beginner explorer'},{min:50,name:'Curious thinker'},{min:150,name:'Global learner'},{min:300,name:'World citizen'},{min:500,name:'Change maker'}];
+function getLevel(x){let l=levels[0];for(const lv of levels){if(x>=lv.min)l=lv;}return l;}
+function getNextXP(x){for(let i=0;i<levels.length-1;i++){if(x<levels[i+1].min)return levels[i+1].min;}return 700;}
+
+function updateMetrics(){
+  const done=habits.filter(h=>h.done).length;
+  document.getElementById('m-today').textContent=done+'/'+habits.length;
+  document.getElementById('m-week').textContent=weekDays.filter(Boolean).length;
+  let s=0;for(let i=todayIdx;i>=0;i--){if(weekDays[i])s++;else break;}
+  document.getElementById('m-streak').textContent=s;
+  const lv=getLevel(xp);const lvIdx=levels.indexOf(lv);
+  document.getElementById('m-lv').textContent='Lv.'+(lvIdx+1);
+  document.getElementById('lv-name').textContent=lv.name;
+  const nextXP=getNextXP(xp);const pct=Math.round(Math.min(100,(xp-lv.min)/(nextXP-lv.min)*100));
+  document.getElementById('xp-bar').style.width=pct+'%';
+  document.getElementById('xp-lbl').textContent=xp+' / '+nextXP+' XP';
+}
+
+function renderHabits(){
+  const list=document.getElementById('habit-list');list.innerHTML='';
+  habits.forEach((h,i)=>{
+    const row=document.createElement('div');row.className='habit-row';
+    row.innerHTML=`<div class="hchk${h.done?' on':''}" onclick="toggleHabit(${i})">${h.done?'✓':''}</div><span class="hname"${h.done?' style="text-decoration:line-through;color:#888;"':''}>${h.name}</span><span class="hstreak">${h.streak>0?h.streak+'日':''}</span><div class="sbar"><div class="sfill" style="width:${Math.min(100,h.streak/7*100)}%"></div></div>`;
+    list.appendChild(row);
+  });
+}
+function toggleHabit(i){habits[i].done=!habits[i].done;if(habits[i].done){habits[i].streak++;xp+=10;}else{habits[i].streak=Math.max(0,habits[i].streak-1);xp=Math.max(0,xp-10);}renderHabits();updateMetrics();}
+function addHabit(){const inp=document.getElementById('new-habit');if(!inp.value.trim())return;habits.push({name:inp.value.trim(),streak:0,done:false});inp.value='';renderHabits();updateMetrics();}
+
+function renderWeek(){
+  const grid=document.getElementById('week-grid');if(!grid)return;grid.innerHTML='';
+  for(let i=0;i<7;i++){
+    const col=document.createElement('div');col.className='day-col';
+    col.innerHTML=`<div class="day-lbl">${DAYS[i]}</div><div class="day-dot${weekDays[i]?' done':''}${i===todayIdx?' today':''}" onclick="toggleDay(${i})">${i===todayIdx?'今':''}</div>`;
+    grid.appendChild(col);
+  }
+}
+function toggleDay(i){weekDays[i]=!weekDays[i];if(weekDays[i])xp+=5;else xp=Math.max(0,xp-5);renderWeek();updateMetrics();}
+
+function renderGoals(){
+  const list=document.getElementById('goals-list');if(!list)return;list.innerHTML='';
+  goals.forEach((g,i)=>{
+    const div=document.createElement('div');div.className='goal-item';
+    div.innerHTML=`<div style="display:flex;align-items:center;gap:8px;"><span style="font-size:11px;padding:2px 8px;border-radius:20px;background:#EEEDFE;color:#3C3489;font-weight:600;">${g.type}</span><span style="font-size:13px;font-weight:600;flex:1;">${g.title}</span><span style="font-size:12px;color:#888;">${g.pct}%</span><button onclick="upGoal(${i})" style="font-size:11px;padding:2px 8px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;cursor:pointer;">+10%</button></div><div class="prog-bar"><div class="prog-fill" style="width:${g.pct}%;background:${g.color};"></div></div>`;
+    list.appendChild(div);
+  });
+}
+function upGoal(i){goals[i].pct=Math.min(100,goals[i].pct+10);xp+=15;renderGoals();updateMetrics();}
+function addGoal(){const t=document.getElementById('goal-input').value.trim();if(!t)return;const type=document.getElementById('goal-type').value;const colors={'探究力':'#1D9E75','表現力':'#534AB7','英語':'#185FA5','習慣':'#BA7517','その他':'#888'};goals.push({title:t,type,pct:0,color:colors[type]||'#888'});document.getElementById('goal-input').value='';document.getElementById('goal-form').style.display='none';renderGoals();}
+
+function setMood(el,m){document.querySelectorAll('#mood-row .mood-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');mood=m;}
+function setMood2(el,m){el.closest('div').querySelectorAll('.mood-btn').forEach(b=>b.classList.remove('on'));el.classList.add('on');mood2=m;}
+function toggleTool(el){el.classList.toggle('on');}
+
+function saveLog(){
+  const en=document.getElementById('log-en').value.trim();
+  const ja=document.getElementById('log-ja').value.trim();
+  if(!en&&!ja)return;
+  const tools=[...document.querySelectorAll('#tool-tags .mood-btn.on')].map(t=>t.textContent).join(', ');
+  const d=today.toLocaleDateString('ja-JP',{month:'numeric',day:'numeric'});
+  logs.unshift({date:d,en,ja,mood,tools});xp+=20;weekDays[todayIdx]=true;
+  updateMetrics();renderLogList();renderWeek();
+  document.getElementById('log-en').value='';document.getElementById('log-ja').value='';
+  alert('保存しました！ +20 XP');
+}
+function renderLogList(){
+  const list=document.getElementById('log-list');if(!list)return;
+  if(!logs.length){list.innerHTML='<p style="font-size:13px;color:#888;">ログを保存するとここに記録が積み上がります。</p>';return;}
+  list.innerHTML='';
+  logs.forEach(l=>{const row=document.createElement('div');row.className='log-row';row.innerHTML=`<span class="log-date">${l.date}${l.mood?' · '+l.mood:''}</span><div style="flex:1;">${l.tools?`<span class="tag">${l.tools}</span><br>`:''}${l.en?`<p style="font-size:13px;">${l.en}</p>`:''}${l.ja?`<p style="font-size:12px;color:#666;">${l.ja}</p>`:''}</div>`;list.appendChild(row);});
+}
+
+function showSec(id,btn){document.querySelectorAll('.section').forEach(s=>s.classList.remove('on'));document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));document.getElementById('sec-'+id).classList.add('on');btn.classList.add('on');if(id==='week')renderWeek();if(id==='goals')renderGoals();if(id==='history')renderLogList();}
+
+renderHabits();updateMetrics();
+</script>
+</body></html>
