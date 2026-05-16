@@ -1,0 +1,559 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>National Geographic Kids 学習ページ | EHB Global Learning</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;}
+.header{background:#C8830A;color:#fff;padding:20px 24px;}
+.header h1{font-size:20px;font-weight:700;margin-bottom:4px;}
+.header p{font-size:13px;opacity:.85;}
+.badge{display:inline-block;font-size:11px;padding:3px 10px;border-radius:20px;background:#FAEEDA;color:#633806;font-weight:600;margin-top:8px;margin-right:6px;}
+.container{max-width:740px;margin:0 auto;padding:20px 16px;}
+.intro-card{background:#FAEEDA;border:1px solid #E8C170;border-radius:12px;padding:16px 20px;margin-bottom:16px;}
+.card{background:#fff;border:1px solid #e8e6e0;border-radius:12px;padding:18px 20px;margin-bottom:16px;}
+.sec{font-size:15px;font-weight:700;margin-bottom:10px;}
+.sub{font-size:13px;color:#666;line-height:1.65;margin-bottom:12px;}
+
+/* Pillar tabs */
+.pillar-tabs{display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap;}
+.ptab{padding:10px 18px;border-radius:20px;border:1.5px solid #ddd;background:#f8f7f4;font-size:13px;font-weight:600;cursor:pointer;color:#666;transition:all .15s;}
+.ptab.on{background:#C8830A;color:#fff;border-color:#C8830A;}
+.ptab:hover:not(.on){border-color:#C8830A;color:#C8830A;}
+
+.pillar-section{display:none;}
+.pillar-section.on{display:block;}
+
+/* Topic cards */
+.topic-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-bottom:16px;}
+.topic-card{border:1.5px solid #e8e6e0;border-radius:10px;overflow:hidden;background:#fff;cursor:pointer;transition:all .15s;}
+.topic-card:hover{border-color:#C8830A;transform:translateY(-1px);}
+.topic-card.sel{border:2px solid #C8830A;background:#FEF6E8;}
+.topic-thumb{height:80px;display:flex;align-items:center;justify-content:center;font-size:44px;}
+.topic-body{padding:10px 12px;}
+.topic-en{font-size:13px;font-weight:700;color:#1a1a1a;}
+.topic-ja{font-size:11px;color:#666;margin-top:2px;}
+.topic-tags{display:flex;flex-wrap:wrap;gap:3px;margin-top:6px;}
+.ttag{font-size:10px;padding:2px 7px;border-radius:20px;background:#FAEEDA;color:#633806;font-weight:500;}
+.ttag.geo{background:#E6F1FB;color:#0C447C;}
+.ttag.sci{background:#E1F5EE;color:#085041;}
+
+/* Activity area */
+.activity-area{display:none;}
+.activity-area.on{display:block;}
+.act-header{display:flex;align-items:center;gap:10px;margin-bottom:14px;}
+.act-title{font-size:16px;font-weight:700;color:#C8830A;flex:1;}
+.act-tabs{display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;}
+.atab{padding:7px 14px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;color:#666;transition:all .12s;}
+.atab.on{background:#C8830A;color:#fff;border-color:#C8830A;}
+.act-step{display:none;}
+.act-step.on{display:block;}
+
+/* Content elements */
+.fact-box{background:#FEF6E8;border-left:3px solid #C8830A;border-radius:0 8px 8px 0;padding:12px 14px;margin-bottom:10px;font-size:13px;line-height:1.7;}
+.fact-num{font-size:11px;font-weight:700;color:#C8830A;margin-bottom:3px;}
+.vocab-row{display:flex;align-items:baseline;gap:8px;padding:8px 0;border-bottom:1px solid #f0ede8;font-size:13px;}
+.vocab-row:last-child{border-bottom:none;}
+.vocab-en{font-weight:700;color:#C8830A;min-width:110px;}
+.vocab-ja{color:#666;line-height:1.5;}
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.lang-box{border-radius:8px;padding:10px 14px;font-size:13px;line-height:1.65;margin-bottom:6px;}
+.lang-en{background:#E1F5EE;color:#085041;}
+.lang-ja{background:#FAEEDA;color:#633806;}
+.lang-lbl{font-size:10px;font-weight:700;margin-bottom:4px;opacity:.8;}
+textarea{width:100%;padding:9px 12px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;resize:vertical;min-height:60px;font-family:inherit;margin-top:4px;}
+.btn-natgeo{display:inline-block;padding:8px 16px;border-radius:8px;background:#C8830A;color:#fff;font-size:13px;font-weight:600;text-decoration:none;border:none;cursor:pointer;margin-top:8px;margin-right:6px;}
+.btn-natgeo:hover{background:#A36808;}
+.btn-inq{display:inline-block;padding:8px 16px;border-radius:8px;background:#E1F5EE;color:#085041;font-size:13px;font-weight:600;border:1.5px solid #1D9E75;cursor:pointer;text-decoration:none;margin-top:8px;}
+.btn-inq:hover{background:#1D9E75;color:#fff;}
+.btn-back{padding:7px 14px;border-radius:8px;border:1px solid #ddd;background:#f8f7f4;font-size:13px;cursor:pointer;margin-top:10px;color:#666;}
+.challenge-box{background:#E1F5EE;border-radius:10px;padding:14px 18px;margin-top:12px;font-size:13px;color:#085041;line-height:1.75;}
+.map-hint{background:#E6F1FB;border-radius:8px;padding:10px 14px;font-size:13px;color:#0C447C;margin-bottom:10px;}
+.think-q{background:#f8f7f4;border-radius:8px;padding:10px 14px;font-size:13px;color:#1a1a1a;margin-bottom:8px;line-height:1.6;}
+.think-q strong{color:#C8830A;}
+.role-pill{font-size:10px;padding:2px 8px;border-radius:20px;font-weight:600;display:inline-block;margin-bottom:4px;}
+.role-bi{background:#E1F5EE;color:#085041;}
+.role-jp{background:#FAEEDA;color:#633806;}
+@media(max-width:600px){.two-col{grid-template-columns:1fr;}.topic-grid{grid-template-columns:1fr 1fr;}}
+</style>
+</head>
+<body>
+<div class="header">
+  <h1>&#127758; National Geographic Kids</h1>
+  <p>EHB Global Learning — 動物・世界・環境の探究ページ</p>
+  <span class="badge">動物</span>
+  <span class="badge">世界の国々</span>
+  <span class="badge">環境</span>
+  <span class="badge">日英対応</span>
+</div>
+<div class="container">
+
+<div class="intro-card">
+  <p style="font-size:14px;font-weight:700;color:#633806;margin-bottom:6px;">&#127758; このページの使い方</p>
+  <p style="font-size:13px;color:#633806;line-height:1.7;">3つの柱（動物・世界の国々・環境）からトピックを選ぼう。NatGeoのサイトで調べながら、学習アクティビティを進めよう。調べ終わったら探究ランチャーでさらに深く考えよう！</p>
+</div>
+
+<div class="pillar-tabs">
+  <button class="ptab on" onclick="switchPillar('animals',this)">&#128062; 動物の世界</button>
+  <button class="ptab" onclick="switchPillar('countries',this)">&#127758; 世界の国々</button>
+  <button class="ptab" onclick="switchPillar('environment',this)">&#127807; 地球と環境</button>
+</div>
+
+<!-- ANIMALS -->
+<div class="pillar-section on" id="pillar-animals">
+  <p class="sub">動物を選んで調べよう。NatGeoのサイトには100種類以上の動物プロフィールがあるよ！</p>
+  <div class="topic-grid" id="grid-animals"></div>
+</div>
+
+<!-- COUNTRIES -->
+<div class="pillar-section" id="pillar-countries">
+  <p class="sub">世界の国々を調べよう。文化・地理・歴史を英語と日本語で学ぼう。</p>
+  <div class="topic-grid" id="grid-countries"></div>
+</div>
+
+<!-- ENVIRONMENT -->
+<div class="pillar-section" id="pillar-environment">
+  <p class="sub">地球の未来を考えよう。環境問題は全員に関係している。</p>
+  <div class="topic-grid" id="grid-environment"></div>
+</div>
+
+<!-- ACTIVITY AREA -->
+<div class="activity-area" id="activity-area">
+  <div class="card" style="border-color:#C8830A;">
+    <div class="act-header">
+      <span id="act-icon" style="font-size:28px;"></span>
+      <span class="act-title" id="act-title"></span>
+      <button onclick="closeActivity()" style="font-size:12px;padding:4px 10px;border-radius:6px;border:1px solid #ddd;background:#f8f7f4;color:#666;cursor:pointer;">&#10005; 閉じる</button>
+    </div>
+    <div class="act-tabs">
+      <button class="atab on" onclick="switchAct('facts',this)">&#128218; Facts</button>
+      <button class="atab" onclick="switchAct('vocab',this)">&#128172; Vocabulary</button>
+      <button class="atab" onclick="switchAct('think',this)">&#129504; Think deeper</button>
+      <button class="atab" onclick="switchAct('create',this)">&#9998;&#65039; Create</button>
+    </div>
+
+    <!-- FACTS -->
+    <div class="act-step on" id="as-facts">
+      <p style="font-size:13px;color:#666;margin-bottom:10px;">まずNatGeoのサイトでこのトピックを調べよう。下のリンクからアクセスできるよ！</p>
+      <div id="natgeo-link-area" style="margin-bottom:12px;"></div>
+      <p style="font-size:13px;font-weight:600;margin-bottom:8px;">&#127381; Wow facts — 驚きの事実</p>
+      <div id="facts-list"></div>
+    </div>
+
+    <!-- VOCAB -->
+    <div class="act-step" id="as-vocab">
+      <p style="font-size:13px;color:#666;margin-bottom:10px;">このトピックのキーワードを覚えよう。バイリンガルの子は友達に日本語で説明してあげよう！</p>
+      <div id="vocab-list"></div>
+    </div>
+
+    <!-- THINK -->
+    <div class="act-step" id="as-think">
+      <p style="font-size:13px;color:#666;margin-bottom:12px;">調べたことをもとに、深く考えよう。正解はない — 自分の言葉で！</p>
+      <div id="think-list"></div>
+      <div class="two-col" style="margin-top:12px;">
+        <div>
+          <span class="role-pill role-bi">バイリンガル</span>
+          <textarea placeholder="Write your thoughts in English…"></textarea>
+        </div>
+        <div>
+          <span class="role-pill role-jp">日本語で</span>
+          <textarea placeholder="考えたことを日本語で書こう…"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <!-- CREATE -->
+    <div class="act-step" id="as-create">
+      <p style="font-size:13px;color:#666;margin-bottom:12px;">調べたことをアウトプットしよう！</p>
+      <div id="create-list"></div>
+      <div style="margin-top:14px;">
+        <textarea id="create-text" placeholder="ここに書こう / Write here…" style="min-height:80px;"></textarea>
+      </div>
+      <div class="challenge-box" style="margin-top:12px;">
+        <strong>&#127891; 家族への宿題チャレンジ</strong><br>
+        今日学んだことを、家に帰って家族に話してみよう！<br>
+        Challenge: Tell your family one amazing thing you learned today in Japanese!
+      </div>
+      <div style="margin-top:12px;">
+        <a href="tool1_inquiry_launcher.html" class="btn-inq">&#127757; このテーマを深く探究する &rarr;</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+var topics = {
+  animals: [
+    {
+      icon:"&#129409;", en:"Lion", ja:"ライオン",
+      tags:["哺乳類 Mammal","アフリカ Africa"],tagTypes:["","geo"],
+      url:"https://kids.nationalgeographic.com/animals/mammals/facts/lion",
+      facts:[
+        {n:"WOW 1", t:"Lions are the only cats that live in groups, called prides. A pride can have up to 40 lions! / ライオンは群れ（プライド）で生活する唯一のネコ科動物。最大40頭になることも！"},
+        {n:"WOW 2", t:"Female lions do most of the hunting, often working together as a team. / メスが主に狩りをする。チームワークで獲物を追い込む。"},
+        {n:"WOW 3", t:"A lion's roar can be heard from 8 kilometers away. / ライオンの咆哮は8キロ先まで届く。"},
+      ],
+      vocab:[
+        {en:"pride", ja:"ライオンの群れ — a group of lions living together"},
+        {en:"predator", ja:"捕食者（ほしょくしゃ）— an animal that hunts other animals"},
+        {en:"savanna", ja:"サバンナ — a flat grassland in Africa with few trees"},
+        {en:"endangered", ja:"絶滅危惧（ぜつめつきぐ）— at risk of disappearing forever"},
+        {en:"territory", ja:"なわばり — an area an animal defends as its own"},
+      ],
+      think:[
+        "&#129504; Lions are called 'king of the jungle' but actually live in grasslands. Why do you think they got this nickname? / ライオンはなぜ「百獣の王」と呼ばれる?",
+        "&#127758; Lion populations have dropped 43% in 20 years. What do you think is causing this, and what can be done? / ライオンが20年で43%減った。原因と解決策は?",
+        "&#9878;&#65039; Is it fair for humans to keep lions in zoos? What are the pros and cons? / 動物園でライオンを飼うことは正しい?"
+      ],
+      create:["ライオンのプロフィールカードを作ろう（英語と日本語で）/ Make a lion profile card in English and Japanese","もしライオンだったら1日をどう過ごす? 英語で書いてみよう / If you were a lion, how would you spend a day?"]
+    },
+    {
+      icon:"&#128011;", en:"Blue Whale", ja:"シロナガスクジラ",
+      tags:["海洋 Marine","最大 Largest"],tagTypes:["sci",""],
+      url:"https://kids.nationalgeographic.com/animals/mammals/facts/blue-whale",
+      facts:[
+        {n:"WOW 1", t:"Blue whales are the largest animals ever known to exist on Earth — up to 30 meters long! / シロナガスクジラは地球上で最大の動物。体長最大30メートル！"},
+        {n:"WOW 2", t:"A blue whale's heart is the size of a small car and beats only about 8 times per minute. / 心臓は小型車ほどの大きさで、1分に約8回しか鼓動しない。"},
+        {n:"WOW 3", t:"They can eat up to 4 tons of tiny shrimp-like creatures called krill in a single day. / 1日に4トンものオキアミを食べる。"},
+      ],
+      vocab:[
+        {en:"mammal", ja:"哺乳類（ほにゅうるい）— warm-blooded animal that feeds young milk"},
+        {en:"krill", ja:"オキアミ — tiny shrimp-like creatures whales eat"},
+        {en:"migration", ja:"回遊・渡り（かいゆう）— seasonal movement to find food"},
+        {en:"sonar", ja:"音波探知 — using sound waves to navigate"},
+        {en:"endangered", ja:"絶滅危惧（ぜつめつきぐ）— at serious risk of disappearing"},
+      ],
+      think:[
+        "&#128011; Blue whales communicate with sounds that travel thousands of kilometers. How is this similar to or different from how humans communicate? / クジラの音は数千キロ届く。人間のコミュニケーションとどう違う?",
+        "&#127758; Commercial whaling nearly wiped out blue whales. How does this connect to other human impacts on nature? / 商業捕鯨でほぼ絶滅寸前になった。他の環境問題とのつながりは?",
+        "&#127807; What responsibility do we have to protect animals we never see? / 見たこともない動物を守る責任はある?"
+      ],
+      create:["クジラのサイズを実感しよう：30メートルは何人分? / Imagine 30m: how many people standing in a row?","クジラを守るための3つのアクションを英語で書こう / Write 3 actions to protect whales in English"]
+    },
+    {
+      icon:"&#128024;", en:"Elephant", ja:"アフリカゾウ",
+      tags:["哺乳類 Mammal","絶滅危惧 Endangered"],tagTypes:["","sci"],
+      url:"https://kids.nationalgeographic.com/animals/mammals/facts/african-elephant",
+      facts:[
+        {n:"WOW 1", t:"Elephants are the largest land animals on Earth, weighing up to 7,000 kg. / ゾウは陸上最大の動物。体重最大7,000kg。"},
+        {n:"WOW 2", t:"They use their trunks — which have over 40,000 muscles — to pick up tiny objects or drink water. / 鼻には4万以上の筋肉があり、小さな物を掴んだり水を飲んだりできる。"},
+        {n:"WOW 3", t:"Elephants mourn their dead and have been observed crying. They never forget — their memory is legendary. / ゾウは死を悼み、泣くことも。記憶力は驚異的で「ゾウは忘れない」という言葉がある。"},
+      ],
+      vocab:[
+        {en:"trunk", ja:"（ゾウの）鼻 — the long nose of an elephant used for many tasks"},
+        {en:"herd", ja:"群れ — a group of animals that move together"},
+        {en:"poaching", ja:"密猟（みつりょう）— illegally hunting protected animals"},
+        {en:"ivory", ja:"象牙（ぞうげ）— the material of elephant tusks"},
+        {en:"conservation", ja:"保護・保全（ほぜん）— protecting animals from harm"},
+      ],
+      think:[
+        "&#129504; Elephants show emotions like grief, joy, and empathy. Does this change how we should treat them? / ゾウは悲しみや喜びを感じる。これは人間との関わり方を変えるべき?",
+        "&#127758; Poaching for ivory is still happening. Why is it so hard to stop, even when it's illegal? / 象牙目的の密猟はなぜなくならない?",
+        "&#128024; Elephants are called 'ecosystem engineers' because they create habitats for other species. What does this tell us about biodiversity? / ゾウは生態系のエンジニアと呼ばれる。なぜ?"
+      ],
+      create:["ゾウを守るためのポスターを日英で考えよう / Design a bilingual elephant conservation poster","象牙取引を禁止するスピーチを英語で書いてみよう / Write a short speech against ivory trade"]
+    },
+    {
+      icon:"&#128056;", en:"Sea Turtle", ja:"ウミガメ",
+      tags:["海洋 Marine","爬虫類 Reptile"],tagTypes:["sci","sci"],
+      url:"https://kids.nationalgeographic.com/animals/reptiles/facts/sea-turtles",
+      facts:[
+        {n:"WOW 1", t:"Sea turtles have been around for more than 100 million years — they lived with dinosaurs! / ウミガメは1億年以上前から生きている。恐竜と同時代の生き物。"},
+        {n:"WOW 2", t:"Female sea turtles return to the exact same beach where they were born to lay their eggs. / メスは生まれた浜辺に戻って産卵する。"},
+        {n:"WOW 3", t:"Plastic bags in the ocean look like jellyfish to turtles — eating them can be fatal. / 海のビニール袋はウミガメにはクラゲに見える。食べると命に関わる。"},
+      ],
+      vocab:[
+        {en:"reptile", ja:"爬虫類（はちゅうるい）— cold-blooded animal with scales"},
+        {en:"nesting", ja:"産卵（さんらん）— laying eggs in a nest"},
+        {en:"hatchling", ja:"孵化したばかりの子ガメ — a baby turtle just out of its egg"},
+        {en:"plastic pollution", ja:"プラスチック汚染 — harm caused by plastic in the environment"},
+        {en:"navigation", ja:"航法（こうほう）— finding direction to travel correctly"},
+      ],
+      think:[
+        "&#128056; Sea turtles survived for 100 million years but are now threatened by human activity in just decades. What does this tell us? / 1億年生き延びたのに、数十年で絶滅危機に。何が起きている?",
+        "&#127807; Plastic from Japan reaches sea turtles in other countries. How does pollution cross borders? / 日本のゴミが外国のウミガメに届く。国境を越える環境問題を考えよう",
+        "&#129504; Can reducing your plastic use actually make a difference? Why or why not? / 個人のプラスチック削減は本当に意味がある?"
+      ],
+      create:["プラスチック削減の誓いを日英で書こう / Write your plastic reduction pledge bilingually","ウミガメの一生をマンガで描いてみよう / Draw the life cycle of a sea turtle as a comic"]
+    }
+  ],
+  countries: [
+    {
+      icon:"&#127477;&#127479;", en:"Brazil", ja:"ブラジル",
+      tags:["南米 South America","SDG 15"],tagTypes:["geo",""],
+      url:"https://kids.nationalgeographic.com/geography/countries/article/brazil",
+      facts:[
+        {n:"WOW 1", t:"Brazil contains about 60% of the Amazon rainforest — the world's largest tropical forest. / ブラジルにはアマゾンの約60%が広がる。世界最大の熱帯雨林。"},
+        {n:"WOW 2", t:"Brazil is the 5th largest country in the world and home to over 215 million people. / 世界第5位の面積。人口は2億1500万人以上。"},
+        {n:"WOW 3", t:"Brazil is the only Portuguese-speaking country in South America — all its neighbors speak Spanish. / 南米で唯一のポルトガル語圏。周辺国はすべてスペイン語。"},
+      ],
+      vocab:[
+        {en:"rainforest", ja:"熱帯雨林（ねったいうりん）— dense tropical forest with high rainfall"},
+        {en:"biodiversity", ja:"生物多様性（せいぶつたようせい）— variety of life in an area"},
+        {en:"deforestation", ja:"森林破壊（しんりんはかい）— clearing forests for other uses"},
+        {en:"carnival", ja:"カーニバル — Brazil's famous annual festival"},
+        {en:"indigenous", ja:"先住民（せんじゅうみん）— people who originally lived in a place"},
+      ],
+      think:[
+        "&#127477;&#127479; Brazil is cutting down parts of the Amazon for farming. Who has the right to decide what happens to these forests? / アマゾン開発の権利は誰にある?",
+        "&#127758; The Amazon is called 'the lungs of the Earth.' If it disappears, how might it affect Japan and Kumamoto? / アマゾンがなくなると日本にどんな影響がある?",
+        "&#129504; Brazil is both very rich in nature and has millions of people in poverty. Is there a connection? / 自然豊かなのに貧困層が多い。なぜ?"
+      ],
+      create:["ブラジルの紹介カードを日英で作ろう / Make a Brazil fact card in English and Japanese","アマゾン保護のためのメッセージを英語で書こう / Write a message to protect the Amazon"]
+    },
+    {
+      icon:"&#127472;&#127466;", en:"Kenya", ja:"ケニア",
+      tags:["アフリカ Africa","野生動物 Wildlife"],tagTypes:["geo",""],
+      url:"https://kids.nationalgeographic.com/geography/countries/article/kenya",
+      facts:[
+        {n:"WOW 1", t:"Kenya is home to the Great Rift Valley — one of the most dramatic geographical features on Earth. / ケニアには地球上で最も劇的な地形のひとつ、グレート・リフトバレーがある。"},
+        {n:"WOW 2", t:"The Maasai Mara hosts one of the greatest wildlife spectacles — the Great Migration of over 2 million animals. / マサイマラでは年間200万頭以上の動物が大移動する。"},
+        {n:"WOW 3", t:"Kenya has over 42 different ethnic groups, each with its own language and cultural traditions. / ケニアには42以上の民族がおり、それぞれ独自の言語と文化を持つ。"},
+      ],
+      vocab:[
+        {en:"savanna", ja:"サバンナ — flat tropical grassland with scattered trees"},
+        {en:"migration", ja:"回遊・大移動 — seasonal movement of animals in large groups"},
+        {en:"ethnic group", ja:"民族（みんぞく）— a group sharing culture, language, and heritage"},
+        {en:"ecotourism", ja:"エコツーリズム — tourism that supports conservation"},
+        {en:"drought", ja:"干ばつ（かんばつ）— long period without rainfall"},
+      ],
+      think:[
+        "&#127472;&#127466; Kenya has 42 ethnic groups but one national identity. How does Japan compare? / ケニアには42民族。日本の多様性と比べてみよう",
+        "&#128024; Wildlife tourism brings money but also disturbs animals. Is ecotourism truly 'eco'? / エコツーリズムは本当に自然に優しい?",
+        "&#127758; Climate change is causing droughts in Kenya. Who should be responsible for helping? / 気候変動で干ばつが深刻。誰が責任を取るべき?"
+      ],
+      create:["ケニアと日本の共通点と違いをまとめよう / Compare Kenya and Japan — similarities and differences","大移動の動物になったつもりで1日を英語で書こう / Write a day in the Great Migration as an animal"]
+    },
+    {
+      icon:"&#127470;&#127480;", en:"Iceland", ja:"アイスランド",
+      tags:["ヨーロッパ Europe","再生可能エネルギー"],tagTypes:["geo","sci"],
+      url:"https://kids.nationalgeographic.com/geography/countries/article/iceland",
+      facts:[
+        {n:"WOW 1", t:"Iceland runs on nearly 100% renewable energy — mostly geothermal and hydropower. / アイスランドはほぼ100%再生可能エネルギーで動いている。地熱と水力が中心。"},
+        {n:"WOW 2", t:"Despite its name, Iceland is actually very green, while Greenland is mostly covered in ice! / 名前に反して、アイスランドは緑豊か。グリーンランドの方が氷で覆われている！"},
+        {n:"WOW 3", t:"Iceland has no army and is one of the most peaceful countries in the world. / アイスランドには軍隊がなく、世界で最も平和な国のひとつ。"},
+      ],
+      vocab:[
+        {en:"geothermal", ja:"地熱（ちねつ）— heat energy from inside the Earth"},
+        {en:"renewable energy", ja:"再生可能エネルギー — energy from sources that are naturally replenished"},
+        {en:"aurora borealis", ja:"オーロラ — colorful lights in the northern sky"},
+        {en:"geyser", ja:"間欠泉（かんけつせん）— a spring that shoots hot water into the air"},
+        {en:"Viking", ja:"バイキング — Norse seafarers who settled Iceland 1,100 years ago"},
+      ],
+      think:[
+        "&#9889; Iceland uses 100% clean energy. What would it take for Japan to do the same? / アイスランドは100%クリーンエネルギー。日本でも可能?",
+        "&#9786; Iceland has no army yet is very safe. Does a country need an army to be secure? / 軍隊なしで平和を保てる?",
+        "&#127777;&#65039; Iceland's glaciers are melting due to climate change. How might this affect the whole planet? / 氷河が溶けると地球にどんな影響が?"
+      ],
+      create:["アイスランドから日本へのエネルギー政策の提案を書こう / Write Japan an energy policy suggestion inspired by Iceland","アイスランドの国紹介を1分間スピーチにしよう / Make a 1-minute speech about Iceland"]
+    },
+    {
+      icon:"&#127470;&#127475;", en:"India", ja:"インド",
+      tags:["アジア Asia","多様性 Diversity"],tagTypes:["geo",""],
+      url:"https://kids.nationalgeographic.com/geography/countries/article/india",
+      facts:[
+        {n:"WOW 1", t:"India is the world's most populous country with over 1.4 billion people and 1,600+ languages! / インドは世界最大の人口（14億人以上）と1,600以上の言語を持つ。"},
+        {n:"WOW 2", t:"India invented the number zero and the decimal system used around the world today. / インドはゼロと十進法を発明した。現在世界中で使われている。"},
+        {n:"WOW 3", t:"India has more vegetarians than any other country in the world — about 40% of the population. / 世界で最も菜食主義者が多い国。人口の約40%がベジタリアン。"},
+      ],
+      vocab:[
+        {en:"democracy", ja:"民主主義（みんしゅしゅぎ）— government by the people"},
+        {en:"monsoon", ja:"モンスーン — seasonal wind bringing heavy rain"},
+        {en:"caste system", ja:"カースト制度 — traditional social hierarchy"},
+        {en:"Bollywood", ja:"ボリウッド — India's Hindi-language film industry"},
+        {en:"biodiversity", ja:"生物多様性 — variety of species in a region"},
+      ],
+      think:[
+        "&#127470;&#127475; India has 1,600+ languages in one country. How does language diversity make a country stronger or more complicated? / 1,600以上の言語が一国に。多言語国家の強みと課題は?",
+        "&#128218; India invented zero. How would math and technology be different without it? / ゼロがなかったら世界はどうなっていた?",
+        "&#129504; 40% of Indians are vegetarian. If more of the world ate less meat, what would change? / 肉食を減らすと世界はどう変わる?"
+      ],
+      create:["インドと日本の意外な共通点を5つ探してみよう / Find 5 surprising things India and Japan have in common","インドの多様性を一枚のポスターで表現しよう / Express India's diversity in one poster concept"]
+    }
+  ],
+  environment: [
+    {
+      icon:"&#127777;&#65039;", en:"Climate Change", ja:"気候変動",
+      tags:["SDG 13","緊急 Urgent"],tagTypes:["",""],
+      url:"https://kids.nationalgeographic.com/science/article/climate-change",
+      facts:[
+        {n:"WOW 1", t:"The last decade (2011-2020) was the hottest on record. Each of the last four decades has been hotter than the one before. / 2011〜2020年は観測史上最も暑い10年。過去40年間、毎10年が前の10年より暑い。"},
+        {n:"WOW 2", t:"Arctic sea ice is melting 13% faster every decade. This affects weather patterns across the entire planet. / 北極海の氷は10年ごとに13%速く溶けている。世界中の気象パターンに影響する。"},
+        {n:"WOW 3", t:"At 1.5°C warming, 70-90% of coral reefs could disappear. At 2°C, almost all of them. / 1.5度上昇で珊瑚礁の70〜90%が消滅。2度で、ほぼ全て。"},
+      ],
+      vocab:[
+        {en:"greenhouse gas", ja:"温室効果ガス — gases that trap heat in the atmosphere"},
+        {en:"carbon footprint", ja:"カーボンフットプリント — total greenhouse gases produced by a person"},
+        {en:"sea level rise", ja:"海面上昇（かいめんじょうしょう）— rising ocean levels due to warming"},
+        {en:"fossil fuel", ja:"化石燃料（かせきねんりょう）— coal, oil, and gas from ancient organisms"},
+        {en:"net zero", ja:"ネットゼロ — balancing carbon emissions with carbon removal"},
+      ],
+      think:[
+        "&#127777;&#65039; The countries that pollute the most are often not the ones hit hardest by climate change. Is this fair? / 最も汚染する国が最も被害を受けるわけではない。公平?",
+        "&#129504; At what age should people start taking action on climate change? What can middle schoolers actually do? / 何歳から気候変動に行動すべき? 中学生にできることは?",
+        "&#127758; Kumamoto may face more extreme weather due to climate change. What changes do you predict in your community? / 熊本の気候はどう変わる? 具体的に予測しよう"
+      ],
+      create:["熊本の未来の天気予報を2050年版で書こう / Write a weather forecast for Kumamoto in 2050","気候変動に関するアクションプランを3つ、英語で書こう / Write 3 climate action items in English"]
+    },
+    {
+      icon:"&#127381;", en:"Plastic Pollution", ja:"プラスチック汚染",
+      tags:["SDG 14","SDG 12"],tagTypes:["",""],
+      url:"https://kids.nationalgeographic.com/nature/article/plastic-pollution",
+      facts:[
+        {n:"WOW 1", t:"8 million metric tons of plastic enter the ocean every year — that's like dumping a garbage truck every minute. / 毎年800万トンのプラスチックが海に流れ込む。1分に1台のゴミ収集車分。"},
+        {n:"WOW 2", t:"Plastic takes 400-1,000 years to decompose. The plastic you use today will outlive your great-great-grandchildren. / プラスチックの分解に400〜1000年かかる。今使ったプラが子孫の時代にも残る。"},
+        {n:"WOW 3", t:"Microplastics have been found in human blood, lungs, and even unborn babies. / マイクロプラスチックは人間の血液・肺・胎児からも検出されている。"},
+      ],
+      vocab:[
+        {en:"microplastics", ja:"マイクロプラスチック — tiny plastic particles less than 5mm"},
+        {en:"biodegradable", ja:"生分解可能（せいぶんかいかのう）— can break down naturally"},
+        {en:"single-use plastic", ja:"使い捨てプラスチック — plastic used once and thrown away"},
+        {en:"recycling", ja:"リサイクル — converting waste into reusable materials"},
+        {en:"ocean gyre", ja:"海流の渦（うず）— circular ocean current that collects plastic"},
+      ],
+      think:[
+        "&#127381; Companies produce most plastic but individuals are told to recycle. Who is really responsible for plastic pollution? / プラスチックを作るのは企業。なぜ個人が責任を問われる?",
+        "&#129504; Japan is one of the world's top plastic waste producers per person. As a Japanese person, how does this make you feel? / 日本は一人当たりプラスチックごみが世界最多級。どう感じる?",
+        "&#127757; If plastic was never invented, what problems would we have instead? / プラスチックがなかったら、どんな別の問題があった?"
+      ],
+      create:["1週間、使い捨てプラスチックを使わないチャレンジ計画を立てよう / Plan a week without single-use plastics","学校でできるプラスチック削減キャンペーンを英語でプレゼンしよう / Plan a school plastic campaign in English"]
+    },
+    {
+      icon:"&#127807;", en:"Rainforests", ja:"熱帯雨林",
+      tags:["SDG 15","生物多様性"],tagTypes:["","sci"],
+      url:"https://kids.nationalgeographic.com/nature/habitats/article/rain-forest",
+      facts:[
+        {n:"WOW 1", t:"Rainforests cover only 6% of Earth's surface but contain more than half of the world's plant and animal species. / 地表の6%しか占めないのに、世界の動植物の半数以上が生息。"},
+        {n:"WOW 2", t:"One in four medicines comes from rainforest plants — many more cures may still be waiting to be discovered. / 医薬品の4分の1は熱帯雨林の植物由来。まだ発見されていない薬もある。"},
+        {n:"WOW 3", t:"Every second, a piece of rainforest the size of a football field is destroyed. / 毎秒、サッカーコート1面分の熱帯雨林が失われている。"},
+      ],
+      vocab:[
+        {en:"canopy", ja:"（森の）樹冠（じゅかん）— the uppermost layer of a forest"},
+        {en:"deforestation", ja:"森林破壊（しんりんはかい）— large-scale removal of forests"},
+        {en:"photosynthesis", ja:"光合成（こうごうせい）— plants making food from sunlight"},
+        {en:"carbon sink", ja:"炭素吸収源（たんそきゅうしゅうげん）— areas that absorb CO2"},
+        {en:"indigenous people", ja:"先住民族（せんじゅうみんぞく）— original inhabitants of a region"},
+      ],
+      think:[
+        "&#127807; Rainforests belong to individual countries but affect the whole world. Who should make decisions about them? / 熱帯雨林はその国のものだが、地球全体に影響する。誰が決定権を持つ?",
+        "&#128138; 25% of medicines come from rainforest plants. Should pharmaceutical companies share profits with the countries where these plants grow? / 薬の25%が熱帯雨林由来。利益をどう分配すべき?",
+        "&#129504; Can you live a life that helps protect rainforests from Japan? / 日本にいながら熱帯雨林を守る生き方はできる?"
+      ],
+      create:["熱帯雨林の重要性を伝えるポスターを日英で作ろう / Design a bilingual rainforest awareness poster","もし熱帯雨林の木だったら、1年間の日記を英語で書こう / Write a year's diary as a rainforest tree in English"]
+    }
+  ]
+};
+
+var currentTopic = null;
+
+function renderTopics(pillar) {
+  var grid = document.getElementById("grid-" + pillar);
+  if (!grid || grid.children.length > 0) return;
+  var list = topics[pillar];
+  list.forEach(function(t, idx) {
+    var bgColors = {animals:"#FEF6E8", countries:"#E6F1FB", environment:"#E1F5EE"};
+    var card = document.createElement("div");
+    card.className = "topic-card";
+    var tagHTML = t.tags.map(function(tag, i) {
+      return "<span class=\"ttag " + (t.tagTypes[i]||"") + "\">" + tag + "</span>";
+    }).join("");
+    card.innerHTML =
+      "<div class=\"topic-thumb\" style=\"background:" + (bgColors[pillar]||"#f8f7f4") + ";\">" + t.icon + "</div>" +
+      "<div class=\"topic-body\">" +
+        "<div class=\"topic-en\">" + t.en + "</div>" +
+        "<div class=\"topic-ja\">" + t.ja + "</div>" +
+        "<div class=\"topic-tags\">" + tagHTML + "</div>" +
+      "</div>";
+    card.onclick = function() {
+      document.querySelectorAll(".topic-card").forEach(function(c) { c.classList.remove("sel"); });
+      card.classList.add("sel");
+      openActivity(t);
+    };
+    grid.appendChild(card);
+  });
+}
+
+function switchPillar(key, btn) {
+  document.querySelectorAll(".pillar-section").forEach(function(s) { s.classList.remove("on"); });
+  document.querySelectorAll(".ptab").forEach(function(t) { t.classList.remove("on"); });
+  document.getElementById("pillar-" + key).classList.add("on");
+  btn.classList.add("on");
+  renderTopics(key);
+  closeActivity();
+}
+
+function openActivity(t) {
+  currentTopic = t;
+  document.getElementById("act-icon").innerHTML = t.icon;
+  document.getElementById("act-title").textContent = t.en + " — " + t.ja;
+
+  // NatGeo link
+  var la = document.getElementById("natgeo-link-area");
+  la.innerHTML = "<a href=\"" + t.url + "\" target=\"_blank\" class=\"btn-natgeo\">&#127758; NatGeo Kidsで調べる</a>";
+
+  // Facts
+  var fl = document.getElementById("facts-list");
+  fl.innerHTML = "";
+  t.facts.forEach(function(f) {
+    var box = document.createElement("div");
+    box.className = "fact-box";
+    box.innerHTML = "<div class=\"fact-num\">" + f.n + "</div>" + f.t;
+    fl.appendChild(box);
+  });
+
+  // Vocab
+  var vl = document.getElementById("vocab-list");
+  vl.innerHTML = "";
+  t.vocab.forEach(function(v) {
+    var row = document.createElement("div");
+    row.className = "vocab-row";
+    row.innerHTML = "<span class=\"vocab-en\">" + v.en + "</span><span style=\"color:#C8830A;\">&#8594;</span><span class=\"vocab-ja\">" + v.ja + "</span>";
+    vl.appendChild(row);
+  });
+
+  // Think
+  var tl = document.getElementById("think-list");
+  tl.innerHTML = "";
+  t.think.forEach(function(q) {
+    var box = document.createElement("div");
+    box.className = "think-q";
+    box.innerHTML = q;
+    tl.appendChild(box);
+  });
+
+  // Create
+  var cl = document.getElementById("create-list");
+  cl.innerHTML = "";
+  t.create.forEach(function(item) {
+    var box = document.createElement("div");
+    box.className = "fact-box";
+    box.innerHTML = "&#9998;&#65039; " + item;
+    cl.appendChild(box);
+  });
+
+  switchAct("facts", document.querySelectorAll(".atab")[0]);
+  var area = document.getElementById("activity-area");
+  area.classList.add("on");
+  area.scrollIntoView({behavior:"smooth"});
+}
+
+function closeActivity() {
+  document.getElementById("activity-area").classList.remove("on");
+  document.querySelectorAll(".topic-card").forEach(function(c) { c.classList.remove("sel"); });
+  currentTopic = null;
+}
+
+function switchAct(step, btn) {
+  document.querySelectorAll(".act-step").forEach(function(s) { s.classList.remove("on"); });
+  document.querySelectorAll(".atab").forEach(function(t) { t.classList.remove("on"); });
+  document.getElementById("as-" + step).classList.add("on");
+  if (btn) btn.classList.add("on");
+}
+
+// Init
+renderTopics("animals");
+</script>
+</body></html>
