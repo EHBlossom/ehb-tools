@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English House Blossom Home Practice</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --pink:       #FFB3C6;
+    --pink-deep:  #FF85A1;
+    --mint:       #B5EAD7;
+    --mint-deep:  #6DCFAF;
+    --lavender:   #C9B8F8;
+    --yellow:     #FFEAA7;
+    --white:      #FFFFFF;
+    --soft-bg:    #FFF6F9;
+    --text-dark:  #3D2C4E;
+    --text-mid:   #6A5A7A;
+    --radius-lg:  22px;
+    --radius-sm:  12px;
+    --shadow:     0 6px 24px rgba(180,120,160,0.13);
+    --shadow-card:0 4px 18px rgba(180,120,160,0.16);
+  }
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: var(--soft-bg);
+    color: var(--text-dark);
+    min-height: 100vh;
+    padding-bottom: 60px;
+  }
+  .site-header {
+    background: linear-gradient(135deg, #FFB3C6 0%, #C9B8F8 50%, #B5EAD7 100%);
+    padding: 32px 20px 24px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .site-header::before { content: '🌸'; font-size: 80px; position: absolute; top: -20px; left: -20px; opacity: 0.18; }
+  .site-header::after  { content: '✨'; font-size: 60px; position: absolute; bottom: -10px; right: 10px; opacity: 0.2; }
+  .site-header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.5rem, 5vw, 2.6rem);
+    color: var(--white);
+    text-shadow: 0 2px 8px rgba(120,60,100,0.2);
+    letter-spacing: 1px;
+  }
+  .tagline {
+    margin-top: 8px;
+    font-size: clamp(0.9rem, 3vw, 1.15rem);
+    font-weight: 700;
+    color: var(--text-dark);
+    background: rgba(255,255,255,0.55);
+    display: inline-block;
+    padding: 6px 20px;
+    border-radius: 30px;
+    backdrop-filter: blur(4px);
+  }
+  /* Voice indicator badge */
+  .voice-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    font-size: 0.72rem; font-weight: 800;
+    background: rgba(255,255,255,0.7);
+    color: var(--text-dark);
+    padding: 4px 12px;
+    border-radius: 20px;
+    margin-top: 8px;
+    letter-spacing: 0.2px;
+  }
+  .voice-badge .dot {
+    width: 7px; height: 7px; border-radius: 50%;
+    background: #6DCFAF;
+    animation: blink-dot 2s infinite;
+  }
+  @keyframes blink-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  .tab-nav { display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; padding: 20px 16px 0; }
+  .tab-btn {
+    font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.82rem;
+    border: none; border-radius: 30px; padding: 9px 16px;
+    cursor: pointer; transition: transform 0.15s, box-shadow 0.15s, opacity 0.15s;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1); letter-spacing: 0.3px;
+  }
+  .tab-btn:hover  { transform: translateY(-2px); box-shadow: 0 6px 16px rgba(0,0,0,0.13); }
+  .tab-btn.active { transform: translateY(-3px) scale(1.05); box-shadow: 0 8px 20px rgba(0,0,0,0.15); }
+  .tab-btn[data-tab="vocab"]     { background: var(--pink);    color: var(--text-dark); }
+  .tab-btn[data-tab="grammar"]   { background: var(--lavender);color: var(--text-dark); }
+  .tab-btn[data-tab="order"]     { background: var(--mint);    color: var(--text-dark); }
+  .tab-btn[data-tab="listening"] { background: var(--yellow);  color: var(--text-dark); }
+  .tab-btn[data-tab="challenge"] { background: var(--pink-deep);color: var(--white); }
+  .tab-btn[data-tab="speaking"]  { background: var(--mint-deep);color: var(--white); }
+
+  .main { max-width: 720px; margin: 0 auto; padding: 24px 16px; }
+  .section-panel { display: none; animation: fadeUp 0.35s ease; }
+  .section-panel.active { display: block; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  .card {
+    background: var(--white); border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-card); padding: 26px 24px; margin-bottom: 20px;
+    position: relative; overflow: hidden;
+  }
+  .card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0;
+    height: 5px; border-radius: var(--radius-lg) var(--radius-lg) 0 0;
+  }
+  .card.pink::before     { background: linear-gradient(90deg, var(--pink), var(--pink-deep)); }
+  .card.mint::before     { background: linear-gradient(90deg, var(--mint), var(--mint-deep)); }
+  .card.lavender::before { background: linear-gradient(90deg, var(--lavender), #a78bfa); }
+  .card.yellow::before   { background: linear-gradient(90deg, var(--yellow), #f6c90e); }
+  .section-title { font-family: 'Fredoka One', cursive; font-size: 1.55rem; color: var(--text-dark); margin-bottom: 4px; display: flex; align-items: center; gap: 10px; }
+  .section-desc  { color: var(--text-mid); font-size: 0.9rem; margin-bottom: 20px; }
+  .question-block { margin-bottom: 28px; }
+  .q-number { display: inline-block; background: var(--pink-deep); color: #fff; font-weight: 900; border-radius: 50%; width: 30px; height: 30px; text-align: center; line-height: 30px; font-size: 0.85rem; margin-bottom: 8px; }
+  .q-number.mint-num { background: var(--mint-deep); }
+  .q-number.lav-num  { background: var(--lavender); color: var(--text-dark); }
+  .q-text { font-size: 1.05rem; font-weight: 700; color: var(--text-dark); margin-bottom: 12px; line-height: 1.5; }
+  .q-audio-btn {
+    background: none; border: 2px solid var(--mint-deep); border-radius: 20px;
+    padding: 5px 14px; cursor: pointer; font-size: 0.82rem; font-weight: 700;
+    color: var(--mint-deep); transition: background 0.15s, color 0.15s;
+    margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px;
+  }
+  .q-audio-btn:hover { background: var(--mint-deep); color: #fff; }
+  .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+  @media (max-width: 420px) { .options-grid { grid-template-columns: 1fr; } }
+  .opt-btn {
+    font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.95rem;
+    border: 2.5px solid #E8D8F0; border-radius: var(--radius-sm);
+    padding: 12px 10px; background: #FAFAFA; cursor: pointer;
+    text-align: left; transition: border-color 0.15s, background 0.15s, transform 0.12s;
+    color: var(--text-dark); line-height: 1.3;
+  }
+  .opt-btn:hover:not(:disabled) { border-color: var(--pink-deep); background: #FFF0F5; transform: translateY(-2px); }
+  .opt-btn.correct { border-color: var(--mint-deep); background: #DFFBEF; color: #1a7a55; }
+  .opt-btn.wrong   { border-color: #FF8FAB; background: #FFF0F3; color: #c7244e; }
+  .opt-btn:disabled { cursor: default; transform: none; }
+  .feedback { margin-top: 10px; font-size: 0.92rem; font-weight: 700; min-height: 22px; transition: opacity 0.2s; }
+  .feedback.correct { color: var(--mint-deep); }
+  .feedback.wrong   { color: var(--pink-deep); }
+  .q-divider { border: none; border-top: 2px dashed #F0E0EA; margin: 22px 0; }
+  .word-bank  { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; min-height: 44px; }
+  .word-chip  { background: var(--lavender); color: var(--text-dark); border: none; border-radius: 20px; padding: 7px 16px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.92rem; cursor: pointer; transition: background 0.15s, transform 0.12s; box-shadow: 0 2px 6px rgba(150,100,200,0.15); }
+  .word-chip:hover { background: #a78bfa; color: #fff; transform: translateY(-2px); }
+  .word-chip.used  { opacity: 0.35; pointer-events: none; }
+  .answer-area { background: #F8F0FD; border: 2.5px dashed var(--lavender); border-radius: var(--radius-sm); min-height: 50px; padding: 10px; display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-bottom: 12px; cursor: pointer; }
+  .answer-area .word-chip { background: var(--pink); cursor: pointer; }
+  .answer-area .word-chip:hover { background: var(--pink-deep); color: #fff; }
+  .order-hint { font-size: 0.8rem; color: var(--text-mid); margin-bottom: 8px; }
+  .check-btn { background: linear-gradient(135deg, var(--pink-deep), var(--lavender)); color: #fff; border: none; border-radius: 20px; padding: 10px 26px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 0.95rem; cursor: pointer; box-shadow: 0 4px 12px rgba(200,100,150,0.25); transition: transform 0.15s, box-shadow 0.15s; }
+  .check-btn:hover { transform: translateY(-2px); box-shadow: 0 7px 18px rgba(200,100,150,0.3); }
+  .clear-btn { background: none; border: 2px solid #E8D8F0; border-radius: 20px; padding: 8px 18px; font-family: 'Nunito', sans-serif; font-weight: 700; font-size: 0.88rem; cursor: pointer; color: var(--text-mid); margin-left: 10px; transition: border-color 0.15s; }
+  .clear-btn:hover { border-color: var(--pink-deep); color: var(--pink-deep); }
+  .listen-card { background: linear-gradient(135deg, #FFFDE7, #FFF9C4); border: 2px solid var(--yellow); border-radius: var(--radius-lg); padding: 22px; margin-bottom: 16px; }
+  .big-audio-btn { background: linear-gradient(135deg, var(--yellow), #f6c90e); border: none; border-radius: var(--radius-lg); padding: 18px 30px; font-family: 'Fredoka One', cursive; font-size: 1.1rem; color: var(--text-dark); cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 14px rgba(240,200,0,0.3); transition: transform 0.15s, box-shadow 0.15s; margin-bottom: 16px; }
+  .big-audio-btn:hover { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(240,200,0,0.35); }
+  .speaker-icon { font-size: 1.5rem; animation: pulse-icon 2s infinite; }
+  @keyframes pulse-icon { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+  .listen-tip { background: rgba(255,255,255,0.7); border-radius: var(--radius-sm); padding: 12px 16px; font-size: 0.88rem; color: var(--text-mid); font-weight: 600; }
+  .challenge-hero { background: linear-gradient(135deg, var(--pink-deep) 0%, #a78bfa 100%); border-radius: var(--radius-lg); padding: 28px 24px; color: #fff; text-align: center; margin-bottom: 20px; position: relative; overflow: hidden; }
+  .challenge-hero::after { content: '⭐'; font-size: 100px; position: absolute; right: -20px; bottom: -20px; opacity: 0.12; }
+  .challenge-hero h3 { font-family: 'Fredoka One', cursive; font-size: 1.5rem; margin-bottom: 10px; }
+  .challenge-hero p { font-size: 1rem; opacity: 0.92; }
+  .challenge-task { background: rgba(255,255,255,0.25); border-radius: var(--radius-sm); padding: 12px 18px; margin-top: 14px; font-weight: 800; font-size: 1.05rem; }
+  .stamp-row { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px; }
+  .stamp { background: var(--white); border-radius: 14px; padding: 12px 16px; text-align: center; flex: 1; min-width: 120px; box-shadow: var(--shadow); cursor: pointer; transition: transform 0.2s; border: 2px solid transparent; }
+  .stamp:hover { transform: scale(1.05); }
+  .stamp.done  { border-color: var(--mint-deep); background: #DFFBEF; }
+  .stamp-icon  { font-size: 1.8rem; margin-bottom: 4px; }
+  .stamp-label { font-size: 0.78rem; font-weight: 800; color: var(--text-mid); }
+  .speaking-topics { display: flex; flex-direction: column; gap: 14px; }
+  .topic-card { background: var(--white); border-radius: var(--radius-lg); padding: 18px 20px; box-shadow: var(--shadow-card); display: flex; align-items: flex-start; gap: 14px; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; border: 2px solid transparent; }
+  .topic-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(180,120,160,0.2); }
+  .topic-card.expanded { border-color: var(--mint-deep); }
+  .topic-emoji { font-size: 2rem; flex-shrink: 0; }
+  .topic-content { flex: 1; }
+  .topic-title { font-weight: 800; font-size: 1rem; color: var(--text-dark); margin-bottom: 4px; }
+  .topic-level { font-size: 0.75rem; font-weight: 700; background: var(--mint); color: var(--text-dark); padding: 2px 10px; border-radius: 20px; display: inline-block; margin-bottom: 8px; }
+  .topic-prompts { display: none; padding-top: 10px; border-top: 2px dashed #E8F8F0; }
+  .topic-card.expanded .topic-prompts { display: block; }
+  .topic-prompts ul { list-style: none; padding: 0; }
+  .topic-prompts li { padding: 6px 0; font-size: 0.92rem; color: var(--text-mid); font-weight: 600; display: flex; align-items: flex-start; gap: 8px; }
+  .topic-prompts li::before { content: '💬'; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+  .score-board { background: linear-gradient(135deg, #FFE4ED, #EDE4FF, #DFFBEF); border-radius: var(--radius-lg); padding: 28px 24px; text-align: center; margin-top: 20px; }
+  .score-emoji  { font-size: 3rem; margin-bottom: 8px; }
+  .score-number { font-family: 'Fredoka One', cursive; font-size: 3rem; color: var(--pink-deep); }
+  .score-msg    { font-size: 1.1rem; font-weight: 700; color: var(--text-dark); margin-top: 8px; }
+  .score-sub    { font-size: 0.88rem; color: var(--text-mid); margin-top: 4px; }
+  .restart-btn  { margin-top: 18px; background: linear-gradient(135deg, var(--mint-deep), var(--mint)); border: none; border-radius: 30px; padding: 13px 32px; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 1rem; color: var(--text-dark); cursor: pointer; box-shadow: 0 4px 14px rgba(100,200,170,0.3); transition: transform 0.15s; }
+  .restart-btn:hover { transform: translateY(-3px); }
+  .progress-bar-wrap { background: #F0E8F5; border-radius: 20px; height: 10px; margin-bottom: 20px; overflow: hidden; }
+  .progress-bar { height: 100%; border-radius: 20px; background: linear-gradient(90deg, var(--pink-deep), var(--lavender)); transition: width 0.4s cubic-bezier(.4,2,.6,1); }
+  .site-footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--text-mid); font-weight: 600; }
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: linear-gradient(135deg, var(--pink-deep), var(--lavender)); color: #fff; border-radius: 30px; padding: 12px 28px; font-weight: 800; font-size: 1rem; box-shadow: 0 6px 20px rgba(200,100,150,0.4); z-index: 999; transition: transform 0.4s cubic-bezier(.4,2,.6,1); pointer-events: none; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+  @media (max-width: 500px) { .card { padding: 18px 14px; } .section-title { font-size: 1.25rem; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <h1>🌸 English House Blossom<br>Home Practice</h1>
+  <div class="tagline">✨ "Practice makes progress!" — Your teacher</div>
+  <div><span class="voice-badge" id="voice-badge"><span class="dot"></span> Loading voice…</span></div>
+</header>
+
+<nav class="tab-nav" role="tablist">
+  <button class="tab-btn active" data-tab="vocab"     onclick="switchTab('vocab')">📝 Word Quiz</button>
+  <button class="tab-btn"        data-tab="grammar"   onclick="switchTab('grammar')">📚 Grammar</button>
+  <button class="tab-btn"        data-tab="order"     onclick="switchTab('order')">🔀 Word Order</button>
+  <button class="tab-btn"        data-tab="listening" onclick="switchTab('listening')">🎧 Listening</button>
+  <button class="tab-btn"        data-tab="challenge" onclick="switchTab('challenge')">⭐ Challenge</button>
+  <button class="tab-btn"        data-tab="speaking"  onclick="switchTab('speaking')">🗣️ Speaking</button>
+</nav>
+
+<main class="main">
+
+  <!-- VOCAB -->
+  <section id="tab-vocab" class="section-panel active" role="tabpanel">
+    <div class="section-title">📝 Word Quiz</div>
+    <p class="section-desc">Choose the right answer! You can do it! 💪</p>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="vocab-progress" style="width:0%"></div></div>
+    <div class="card pink question-block" data-qid="v1">
+      <div class="q-number">1</div>
+      <p class="q-text">What is the English word for 🍎?</p>
+      <button class="q-audio-btn" onclick="speak('Apple')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'v1','vocab')">Apple</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v1','vocab')">Orange</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v1','vocab')">Banana</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v1','vocab')">Grape</button>
+      </div>
+      <div class="feedback" id="fb-v1"></div>
+    </div>
+    <div class="card pink question-block" data-qid="v2">
+      <div class="q-number">2</div>
+      <p class="q-text">Which word means a place where you sleep? 😴</p>
+      <button class="q-audio-btn" onclick="speak('Bedroom')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v2','vocab')">Kitchen</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'v2','vocab')">Bedroom</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v2','vocab')">Garden</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v2','vocab')">Classroom</button>
+      </div>
+      <div class="feedback" id="fb-v2"></div>
+    </div>
+    <div class="card pink question-block" data-qid="v3">
+      <div class="q-number">3</div>
+      <p class="q-text">What does "happy" mean?</p>
+      <button class="q-audio-btn" onclick="speak('Happy means feeling very good and joyful!')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v3','vocab')">Sad</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v3','vocab')">Angry</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'v3','vocab')">Joyful / Glad 😊</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v3','vocab')">Tired</button>
+      </div>
+      <div class="feedback" id="fb-v3"></div>
+    </div>
+    <div class="card pink question-block" data-qid="v4">
+      <div class="q-number">4</div>
+      <p class="q-text">Which animal says "Meow"? 🐾</p>
+      <button class="q-audio-btn" onclick="speak('Meow! Which animal makes this sound?')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v4','vocab')">Dog</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'v4','vocab')">Cat</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v4','vocab')">Bird</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v4','vocab')">Rabbit</button>
+      </div>
+      <div class="feedback" id="fb-v4"></div>
+    </div>
+    <div class="card pink question-block" data-qid="v5">
+      <div class="q-number">5</div>
+      <p class="q-text">What color is the sky on a clear day? ☀️</p>
+      <button class="q-audio-btn" onclick="speak('What color is the sky on a clear, sunny day?')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v5','vocab')">Green</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v5','vocab')">Red</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'v5','vocab')">Yellow</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'v5','vocab')">Blue</button>
+      </div>
+      <div class="feedback" id="fb-v5"></div>
+    </div>
+    <div id="vocab-score" class="score-board" style="display:none"></div>
+  </section>
+
+  <!-- GRAMMAR -->
+  <section id="tab-grammar" class="section-panel" role="tabpanel">
+    <div class="section-title">📚 Grammar Practice</div>
+    <p class="section-desc">Pick the best word to complete each sentence! 🌟</p>
+    <div class="progress-bar-wrap"><div class="progress-bar" id="grammar-progress" style="width:0%"></div></div>
+    <div class="card lavender question-block" data-qid="g1">
+      <div class="q-number lav-num">1</div>
+      <p class="q-text">She ___ a student at English House Blossom.</p>
+      <button class="q-audio-btn" onclick="speak('She blank a student at English House Blossom.')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'g1','grammar')">is</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g1','grammar')">are</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g1','grammar')">am</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g1','grammar')">be</button>
+      </div>
+      <div class="feedback" id="fb-g1"></div>
+    </div>
+    <div class="card lavender question-block" data-qid="g2">
+      <div class="q-number lav-num">2</div>
+      <p class="q-text">I ___ English every day at home.</p>
+      <button class="q-audio-btn" onclick="speak('I blank English every day at home.')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g2','grammar')">studys</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'g2','grammar')">study</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g2','grammar')">studied</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g2','grammar')">studies</button>
+      </div>
+      <div class="feedback" id="fb-g2"></div>
+    </div>
+    <div class="card lavender question-block" data-qid="g3">
+      <div class="q-number lav-num">3</div>
+      <p class="q-text">There ___ three cats in the garden.</p>
+      <button class="q-audio-btn" onclick="speak('There blank three cats in the garden.')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g3','grammar')">is</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'g3','grammar')">are</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g3','grammar')">am</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g3','grammar')">was</button>
+      </div>
+      <div class="feedback" id="fb-g3"></div>
+    </div>
+    <div class="card lavender question-block" data-qid="g4">
+      <div class="q-number lav-num">4</div>
+      <p class="q-text">___ you like pizza? 🍕</p>
+      <button class="q-audio-btn" onclick="speak('Do you like pizza?')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g4','grammar')">Is</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g4','grammar')">Are</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'g4','grammar')">Do</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g4','grammar')">Does</button>
+      </div>
+      <div class="feedback" id="fb-g4"></div>
+    </div>
+    <div class="card lavender question-block" data-qid="g5">
+      <div class="q-number lav-num">5</div>
+      <p class="q-text">Yesterday, I ___ to the park with my family.</p>
+      <button class="q-audio-btn" onclick="speak('Yesterday, I blank to the park with my family.')">🔊 Listen</button>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g5','grammar')">go</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g5','grammar')">goes</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'g5','grammar')">went</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'g5','grammar')">goed</button>
+      </div>
+      <div class="feedback" id="fb-g5"></div>
+    </div>
+    <div id="grammar-score" class="score-board" style="display:none"></div>
+  </section>
+
+  <!-- WORD ORDER -->
+  <section id="tab-order" class="section-panel" role="tabpanel">
+    <div class="section-title">🔀 Word Order</div>
+    <p class="section-desc">Tap the words to build the sentence in the right order! 🏗️</p>
+    <div class="card mint" id="order-card-1">
+      <div class="q-number mint-num">1</div>
+      <p class="q-text">Make a sentence: <strong>like / I / English / learning</strong></p>
+      <button class="q-audio-btn" onclick="speak('I like learning English.')">🔊 Hear the sentence</button>
+      <p class="order-hint">Tap words below → they move to the answer box. Tap them again to put back.</p>
+      <div class="word-bank" id="bank-1"></div>
+      <div class="answer-area" id="ans-1"></div>
+      <div><button class="check-btn" onclick="checkOrder(1)">✅ Check!</button><button class="clear-btn" onclick="clearOrder(1)">🔄 Clear</button></div>
+      <div class="feedback" id="fb-ord1"></div>
+    </div>
+    <div class="card mint" id="order-card-2">
+      <div class="q-number mint-num">2</div>
+      <p class="q-text">Make a sentence: <strong>name / What / your / is</strong></p>
+      <button class="q-audio-btn" onclick="speak('What is your name?')">🔊 Hear the sentence</button>
+      <p class="order-hint">Tap words below → they move to the answer box. Tap them again to put back.</p>
+      <div class="word-bank" id="bank-2"></div>
+      <div class="answer-area" id="ans-2"></div>
+      <div><button class="check-btn" onclick="checkOrder(2)">✅ Check!</button><button class="clear-btn" onclick="clearOrder(2)">🔄 Clear</button></div>
+      <div class="feedback" id="fb-ord2"></div>
+    </div>
+    <div class="card mint" id="order-card-3">
+      <div class="q-number mint-num">3</div>
+      <p class="q-text">Make a sentence: <strong>mother / My / cooking / loves</strong></p>
+      <button class="q-audio-btn" onclick="speak('My mother loves cooking.')">🔊 Hear the sentence</button>
+      <p class="order-hint">Tap words below → they move to the answer box. Tap them again to put back.</p>
+      <div class="word-bank" id="bank-3"></div>
+      <div class="answer-area" id="ans-3"></div>
+      <div><button class="check-btn" onclick="checkOrder(3)">✅ Check!</button><button class="clear-btn" onclick="clearOrder(3)">🔄 Clear</button></div>
+      <div class="feedback" id="fb-ord3"></div>
+    </div>
+  </section>
+
+  <!-- LISTENING -->
+  <section id="tab-listening" class="section-panel" role="tabpanel">
+    <div class="section-title">🎧 Listening Practice</div>
+    <p class="section-desc">Press the button and listen carefully! 👂✨</p>
+    <div class="listen-card card yellow">
+      <p style="font-weight:800;margin-bottom:10px;">🎵 Sentence 1</p>
+      <button class="big-audio-btn" onclick="speak('I go to school every Monday, Wednesday, and Friday.')"><span class="speaker-icon">🔊</span> Play &amp; Listen!</button>
+      <div class="listen-tip">💡 <strong>Try to catch:</strong> Which days does she go to school?</div>
+      <hr class="q-divider">
+      <p class="q-text" style="margin-top:0">After listening, pick the correct days:</p>
+      <div class="options-grid">
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'ls1','listening')">Mon / Wed / Fri</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls1','listening')">Tue / Thu / Sat</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls1','listening')">Every day</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls1','listening')">Mon / Fri only</button>
+      </div>
+      <div class="feedback" id="fb-ls1"></div>
+    </div>
+    <div class="listen-card card yellow">
+      <p style="font-weight:800;margin-bottom:10px;">🎵 Sentence 2</p>
+      <button class="big-audio-btn" onclick="speak('My favorite season is spring because I love cherry blossoms.')"><span class="speaker-icon">🔊</span> Play &amp; Listen!</button>
+      <div class="listen-tip">💡 <strong>Try to catch:</strong> What is her favorite season?</div>
+      <hr class="q-divider">
+      <p class="q-text" style="margin-top:0">What season does she like best?</p>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls2','listening')">Summer</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'ls2','listening')">Spring 🌸</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls2','listening')">Autumn</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls2','listening')">Winter</button>
+      </div>
+      <div class="feedback" id="fb-ls2"></div>
+    </div>
+    <div class="listen-card card yellow">
+      <p style="font-weight:800;margin-bottom:10px;">🎵 Sentence 3</p>
+      <button class="big-audio-btn" onclick="speak('There are eight planets in our solar system.')"><span class="speaker-icon">🔊</span> Play &amp; Listen!</button>
+      <div class="listen-tip">💡 <strong>Try to catch:</strong> How many planets are there?</div>
+      <hr class="q-divider">
+      <p class="q-text" style="margin-top:0">How many planets are in our solar system?</p>
+      <div class="options-grid">
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls3','listening')">7</button>
+        <button class="opt-btn" data-answer="true" onclick="checkAnswer(this,'ls3','listening')">8 🪐</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls3','listening')">9</button>
+        <button class="opt-btn"                    onclick="checkAnswer(this,'ls3','listening')">10</button>
+      </div>
+      <div class="feedback" id="fb-ls3"></div>
+    </div>
+  </section>
+
+  <!-- CHALLENGE -->
+  <section id="tab-challenge" class="section-panel" role="tabpanel">
+    <div class="section-title">⭐ Today's Challenge</div>
+    <p class="section-desc">Complete today's mini-challenges and earn your stamps! 🏆</p>
+    <div class="challenge-hero">
+      <h3>🌟 Today's Mission!</h3>
+      <p>Complete all three challenges and become an English Star! ✨</p>
+      <div class="challenge-task">🎯 Use one English sentence with your family today!</div>
+    </div>
+    <div class="stamp-row">
+      <div class="stamp" onclick="toggleStamp(this)"><div class="stamp-icon">📖</div><div class="stamp-label">Read aloud<br>for 5 min</div></div>
+      <div class="stamp" onclick="toggleStamp(this)"><div class="stamp-icon">✍️</div><div class="stamp-label">Write 3<br>new words</div></div>
+      <div class="stamp" onclick="toggleStamp(this)"><div class="stamp-icon">🗣️</div><div class="stamp-label">Say 1 sentence<br>at home</div></div>
+    </div>
+    <div class="card mint" style="margin-top:20px;">
+      <p style="font-weight:800;margin-bottom:8px;">💬 Daily Sentence Practice</p>
+      <p style="font-size:0.93rem;color:var(--text-mid);margin-bottom:14px;">Try saying these sentences at home today!</p>
+      <div id="daily-sentences"></div>
+      <button class="q-audio-btn" style="margin-top:12px;" onclick="playDailySentence()">🔊 Play today's sentence!</button>
+    </div>
+    <div class="card pink" style="margin-top:0;">
+      <p style="font-weight:800;margin-bottom:10px;">🌈 This Week's Goal</p>
+      <p style="font-size:0.95rem;color:var(--text-mid);">Practice English for <strong>10 minutes every day</strong>.<br>Small steps make BIG progress! 🚀</p>
+    </div>
+  </section>
+
+  <!-- SPEAKING -->
+  <section id="tab-speaking" class="section-panel" role="tabpanel">
+    <div class="section-title">🗣️ Speaking Practice</div>
+    <p class="section-desc">Tap a topic, read the questions, and try to answer in English! 😊</p>
+    <div class="speaking-topics" id="speaking-topics"></div>
+    <div class="card mint" style="margin-top:20px;">
+      <p style="font-weight:800;margin-bottom:8px;">💡 Speaking Tips</p>
+      <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:0.9rem;color:var(--text-mid);font-weight:600;">🎙️ Speak slowly and clearly</li>
+        <li style="font-size:0.9rem;color:var(--text-mid);font-weight:600;">😊 It's OK to make mistakes — keep going!</li>
+        <li style="font-size:0.9rem;color:var(--text-mid);font-weight:600;">🔁 Repeat the question first if you need time to think</li>
+        <li style="font-size:0.9rem;color:var(--text-mid);font-weight:600;">📱 Record yourself and listen back!</li>
+      </ul>
+    </div>
+  </section>
+
+</main>
+
+<div class="toast" id="toast"></div>
+<footer class="site-footer">🌸 English House Blossom &nbsp;|&nbsp; Keep learning every day! ✨</footer>
+
+<script>
+// ─────────────────────────────────────────────
+// 1. TAB SWITCHING
+// ─────────────────────────────────────────────
+function switchTab(tab) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-' + tab).classList.add('active');
+  document.querySelector('[data-tab="' + tab + '"]').classList.add('active');
+}
+
+// ─────────────────────────────────────────────
+// 2. TEXT-TO-SPEECH  (Web Speech API)
+//    Voice priority: Samantha > Karen > Moira >
+//    any en-US Neural/Enhanced > any en-US > any en-GB
+// ─────────────────────────────────────────────
+
+// キャッシュ: ページ読み込み後に一度だけ選ぶ
+let _preferredVoice = null;
+let _voiceLoadAttempts = 0;
+
+function _pickBestVoice() {
+  const voices = window.speechSynthesis.getVoices();
+  if (!voices.length) return null;
+
+  // 優先度リスト（名前の部分一致、大文字小文字不問）
+  const priorities = [
+    v => /samantha/i.test(v.name),                          // macOS/iOS 最高品質
+    v => /karen/i.test(v.name),                             // macOS オーストラリア英語
+    v => /moira/i.test(v.name),                             // macOS アイルランド英語
+    v => /daniel/i.test(v.name) && /en/i.test(v.lang),     // macOS イギリス英語
+    v => /ava/i.test(v.name)    && /en/i.test(v.lang),
+    v => /allison/i.test(v.name),
+    v => /susan/i.test(v.name),
+    v => /tom/i.test(v.name)    && /en/i.test(v.lang),
+    v => /(neural|enhanced|premium)/i.test(v.name) && /^en/i.test(v.lang),
+    v => /^en-US/i.test(v.lang) && v.localService,          // ローカル en-US
+    v => /^en-US/i.test(v.lang),
+    v => /^en-GB/i.test(v.lang),
+    v => /^en/i.test(v.lang),
+  ];
+
+  for (const test of priorities) {
+    const match = voices.find(test);
+    if (match) return match;
+  }
+  return voices[0]; // fallback
+}
+
+function _updateVoiceBadge() {
+  const badge = document.getElementById('voice-badge');
+  if (!badge) return;
+  if (_preferredVoice) {
+    badge.innerHTML = '<span class="dot"></span> 🎙️ ' + _preferredVoice.name;
+  }
+}
+
+function speak(text) {
+  if (!window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+
+  const _doSpeak = () => {
+    if (!_preferredVoice) {
+      _preferredVoice = _pickBestVoice();
+      // 音声リストがまだ空なら少し待って再試行（最大3回）
+      if (!_preferredVoice && _voiceLoadAttempts < 3) {
+        _voiceLoadAttempts++;
+        setTimeout(_doSpeak, 250);
+        return;
+      }
+      _updateVoiceBadge();
+    }
+
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang   = 'en-US';
+    u.rate   = 0.92;
+    u.pitch  = 1.0;
+    u.volume = 1.0;
+    if (_preferredVoice) u.voice = _preferredVoice;
+
+    // Chrome バグ対策: 長い発話が止まることがあるので14秒ごとにリジューム
+    const resumeTimer = setInterval(() => {
+      if (window.speechSynthesis.paused) window.speechSynthesis.resume();
+    }, 14000);
+    u.onend  = () => clearInterval(resumeTimer);
+    u.onerror= () => clearInterval(resumeTimer);
+
+    window.speechSynthesis.speak(u);
+  };
+
+  setTimeout(_doSpeak, 80);
+}
+
+// voiceschanged イベントでキャッシュを更新（Chrome は非同期で音声リストを返す）
+if (window.speechSynthesis) {
+  window.speechSynthesis.addEventListener('voiceschanged', () => {
+    _preferredVoice = _pickBestVoice();
+    _voiceLoadAttempts = 0;
+    _updateVoiceBadge();
+  });
+}
+
+// ─────────────────────────────────────────────
+// 3. SCORE TRACKING
+// ─────────────────────────────────────────────
+const scores = { vocab: 0, grammar: 0, listening: 0 };
+const answered = {};
+
+// ─────────────────────────────────────────────
+// 4. QUIZ ANSWER CHECKING
+// ─────────────────────────────────────────────
+const correctMessages = [
+  '⭐ Excellent! You got it!',
+  '🌟 Amazing! Keep it up!',
+  '🎉 Perfect! You\'re so smart!',
+  '✨ Wonderful! Great job!',
+  '🏆 Fantastic! You\'re a star!',
+];
+const wrongMessages = [
+  '💪 Great try! Give it another go!',
+  '🌈 You\'re getting better! Try again!',
+  '😊 Don\'t worry — keep going!',
+  '🤗 Nice effort! You can do it!',
+  '🌸 Almost there! Don\'t give up!',
+];
+
+function checkAnswer(btn, qid, section) {
+  if (answered[qid]) return;
+  answered[qid] = true;
+  const block = btn.closest('.question-block') || btn.closest('.listen-card');
+  const allOpts = block.querySelectorAll('.opt-btn');
+  allOpts.forEach(b => b.disabled = true);
+  const isCorrect = btn.dataset.answer === 'true';
+  const fb = document.getElementById('fb-' + qid);
+  if (isCorrect) {
+    btn.classList.add('correct');
+    fb.textContent = correctMessages[Math.floor(Math.random() * correctMessages.length)];
+    fb.className = 'feedback correct';
+    scores[section] = (scores[section] || 0) + 1;
+    showToast('🌟 Correct!');
+  } else {
+    btn.classList.add('wrong');
+    allOpts.forEach(b => { if (b.dataset.answer === 'true') b.classList.add('correct'); });
+    fb.textContent = wrongMessages[Math.floor(Math.random() * wrongMessages.length)];
+    fb.className = 'feedback wrong';
+    showToast('💪 Keep going!');
+  }
+  updateProgress(section);
+}
+
+function updateProgress(section) {
+  const prefixes = { vocab: 'v', grammar: 'g', listening: 'ls' };
+  const totals   = { vocab: 5, grammar: 5, listening: 3 };
+  const prefix   = prefixes[section];
+  if (!prefix) return;
+  const done = Object.keys(answered).filter(k => k.startsWith(prefix)).length;
+  const pct  = Math.round((done / totals[section]) * 100);
+  const bar  = document.getElementById(section + '-progress');
+  if (bar) bar.style.width = pct + '%';
+  if (done === totals[section]) {
+    setTimeout(() => showSectionScore(section, scores[section] || 0, totals[section]), 600);
+  }
+}
+
+// ─────────────────────────────────────────────
+// 5. SCORE DISPLAY
+// ─────────────────────────────────────────────
+function showSectionScore(section, got, total) {
+  const el = document.getElementById(section + '-score');
+  if (!el) return;
+  const pct = got / total;
+  let emoji, msg;
+  if      (pct === 1)  { emoji = '🏆'; msg = 'Perfect score! You\'re incredible! Keep shining! ✨'; }
+  else if (pct >= 0.8) { emoji = '🌟'; msg = 'Fantastic work! You\'re almost perfect! Keep it up!'; }
+  else if (pct >= 0.6) { emoji = '😊'; msg = 'Nice effort! You\'re getting better every day!'; }
+  else if (pct >= 0.4) { emoji = '💪'; msg = 'Great try! Practice makes progress!'; }
+  else                 { emoji = '🌱'; msg = 'You\'re growing! Keep going — you can do it!'; }
+  el.innerHTML = `
+    <div class="score-emoji">${emoji}</div>
+    <div class="score-number">${got} / ${total}</div>
+    <div class="score-msg">${msg}</div>
+    <div class="score-sub">Practice makes progress! 🌸</div>
+    <button class="restart-btn" onclick="restartSection('${section}')">🔄 Try Again!</button>
+  `;
+  el.style.display = 'block';
+  speak('You scored ' + got + ' out of ' + total + '! ' + msg);
+}
+
+function restartSection(section) {
+  const prefix = { vocab: 'v', grammar: 'g', listening: 'ls' }[section];
+  Object.keys(answered).filter(k => k.startsWith(prefix)).forEach(k => delete answered[k]);
+  scores[section] = 0;
+  document.querySelectorAll('#tab-' + section + ' .opt-btn').forEach(b => {
+    b.disabled = false;
+    b.classList.remove('correct','wrong');
+  });
+  document.querySelectorAll('#tab-' + section + ' .feedback').forEach(fb => {
+    fb.textContent = '';
+    fb.className = 'feedback';
+  });
+  const bar = document.getElementById(section + '-progress');
+  if (bar) bar.style.width = '0%';
+  const scoreEl = document.getElementById(section + '-score');
+  if (scoreEl) scoreEl.style.display = 'none';
+}
+
+// ─────────────────────────────────────────────
+// 6. WORD ORDER
+// ─────────────────────────────────────────────
+const orderQuestions = [
+  { id: 1, words: ['I', 'like', 'learning', 'English'],  answer: 'I like learning English' },
+  { id: 2, words: ['What', 'is', 'your', 'name'],        answer: 'What is your name' },
+  { id: 3, words: ['My', 'mother', 'loves', 'cooking'],  answer: 'My mother loves cooking' },
+];
+const orderState = {};
+
+function initOrder() {
+  orderQuestions.forEach(q => {
+    orderState[q.id] = { bankWords: [...q.words].sort(() => Math.random() - 0.5), ansWords: [] };
+    renderOrder(q.id);
+  });
+}
+function renderOrder(id) {
+  const st = orderState[id];
+  const bank = document.getElementById('bank-' + id);
+  const ans  = document.getElementById('ans-' + id);
+  if (!bank || !ans) return;
+  bank.innerHTML = '';
+  st.bankWords.forEach((word, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.textContent = word;
+    chip.onclick = () => moveToAns(id, i);
+    bank.appendChild(chip);
+  });
+  ans.innerHTML = '';
+  st.ansWords.forEach((word, i) => {
+    const chip = document.createElement('button');
+    chip.className = 'word-chip';
+    chip.textContent = word;
+    chip.onclick = () => moveToBank(id, i);
+    ans.appendChild(chip);
+  });
+}
+function moveToAns(id, idx) {
+  const st = orderState[id];
+  const word = st.bankWords.splice(idx, 1)[0];
+  st.ansWords.push(word);
+  document.getElementById('fb-ord' + id).textContent = '';
+  renderOrder(id);
+}
+function moveToBank(id, idx) {
+  const st = orderState[id];
+  const word = st.ansWords.splice(idx, 1)[0];
+  st.bankWords.push(word);
+  document.getElementById('fb-ord' + id).textContent = '';
+  renderOrder(id);
+}
+function checkOrder(id) {
+  const q  = orderQuestions.find(q => q.id === id);
+  const st = orderState[id];
+  const fb = document.getElementById('fb-ord' + id);
+  const attempt = st.ansWords.join(' ');
+  if (attempt.toLowerCase() === q.answer.toLowerCase()) {
+    fb.textContent = '🌟 ' + correctMessages[Math.floor(Math.random() * correctMessages.length)];
+    fb.className = 'feedback correct';
+    speak('Correct! ' + q.answer);
+    showToast('🎉 Perfect order!');
+  } else {
+    fb.textContent = '💪 ' + wrongMessages[Math.floor(Math.random() * wrongMessages.length)] + ' (Hint: ' + q.answer + ')';
+    fb.className = 'feedback wrong';
+    showToast('Keep trying! 💪');
+  }
+}
+function clearOrder(id) {
+  const st = orderState[id];
+  const allWords = [...st.bankWords, ...st.ansWords];
+  st.bankWords = allWords;
+  st.ansWords  = [];
+  document.getElementById('fb-ord' + id).textContent = '';
+  renderOrder(id);
+}
+
+// ─────────────────────────────────────────────
+// 7. SPEAKING TOPICS
+// ─────────────────────────────────────────────
+const speakingTopics = [
+  { emoji: '🏠', title: 'My Home & Family',    level: 'Beginner – Intermediate',    prompts: ['How many people are in your family?','What is your favourite room at home?','What does your family do on weekends?'] },
+  { emoji: '🍣', title: 'Food & Eating',        level: 'Beginner – Intermediate',    prompts: ['What is your favourite food? Why?','Can you cook? What can you make?','Describe your breakfast this morning.'] },
+  { emoji: '🎮', title: 'Hobbies & Free Time',  level: 'Intermediate',               prompts: ['What do you like to do after school?','Do you prefer indoor or outdoor activities?','If you had one free day, what would you do?'] },
+  { emoji: '🌍', title: 'Dreams & Future',      level: 'Intermediate – Advanced',    prompts: ['What do you want to be when you grow up?','Which country would you like to visit? Why?','What is one thing you want to learn this year?'] },
+  { emoji: '📚', title: 'School & Learning',    level: 'Intermediate',               prompts: ['What is your favourite subject? Why?','Describe a memorable school trip.','How do you study English at home?'] },
+];
+
+function renderSpeakingTopics() {
+  const container = document.getElementById('speaking-topics');
+  if (!container) return;
+  container.innerHTML = speakingTopics.map((t, i) => `
+    <div class="topic-card" onclick="toggleTopic(this, ${i})">
+      <div class="topic-emoji">${t.emoji}</div>
+      <div class="topic-content">
+        <div class="topic-title">${t.title}</div>
+        <div class="topic-level">🌿 ${t.level}</div>
+        <div class="topic-prompts">
+          <ul>${t.prompts.map(p => `<li>${p} <button class="q-audio-btn" style="padding:3px 10px;font-size:0.75rem;margin-left:6px;" onclick="event.stopPropagation();speak('${p.replace(/'/g,"\\'")}')">🔊</button></li>`).join('')}</ul>
+        </div>
+      </div>
+    </div>
+  `).join('');
+}
+function toggleTopic(el) { el.classList.toggle('expanded'); }
+
+// ─────────────────────────────────────────────
+// 8. DAILY SENTENCES
+// ─────────────────────────────────────────────
+const dailySentences = [
+  { jp: '今日はいい天気ですね！',  en: 'What nice weather today!' },
+  { jp: '朝ごはんを食べましょう！',en: "Let's eat breakfast!" },
+  { jp: 'どこへ行くの？',          en: 'Where are you going?' },
+  { jp: '一緒に遊ぼう！',          en: "Let's play together!" },
+  { jp: '今日も頑張ろう！',        en: "Let's do our best today!" },
+];
+let dailyIdx = Math.floor(Math.random() * dailySentences.length);
+
+function renderDailySentence() {
+  const s  = dailySentences[dailyIdx];
+  const el = document.getElementById('daily-sentences');
+  if (!el) return;
+  el.innerHTML = `
+    <div style="background:#FFF0F5;border-radius:12px;padding:14px 16px;margin-bottom:10px;">
+      <div style="font-size:0.8rem;color:var(--text-mid);font-weight:700;margin-bottom:4px;">🇯🇵 Japanese</div>
+      <div style="font-weight:800;font-size:1rem;color:var(--text-dark);">${s.jp}</div>
+    </div>
+    <div style="background:#DFFBEF;border-radius:12px;padding:14px 16px;">
+      <div style="font-size:0.8rem;color:var(--mint-deep);font-weight:700;margin-bottom:4px;">🇬🇧 English</div>
+      <div style="font-weight:800;font-size:1rem;color:var(--text-dark);">${s.en}</div>
+    </div>
+  `;
+}
+function playDailySentence() { speak(dailySentences[dailyIdx].en); }
+
+// ─────────────────────────────────────────────
+// 9. STAMP TOGGLE
+// ─────────────────────────────────────────────
+function toggleStamp(el) {
+  el.classList.toggle('done');
+  if (el.classList.contains('done')) {
+    showToast('✅ Done! ' + correctMessages[Math.floor(Math.random() * correctMessages.length)]);
+    speak('Great job! You completed the task!');
+  }
+}
+
+// ─────────────────────────────────────────────
+// 10. TOAST
+// ─────────────────────────────────────────────
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ─────────────────────────────────────────────
+// 11. INIT
+// ─────────────────────────────────────────────
+window.addEventListener('DOMContentLoaded', () => {
+  initOrder();
+  renderSpeakingTopics();
+  renderDailySentence();
+  // 初回ロード時に音声を取得しておく
+  if (window.speechSynthesis) {
+    const v = _pickBestVoice();
+    if (v) { _preferredVoice = v; _updateVoiceBadge(); }
+  }
+});
+</script>
+</body>
+</html>
