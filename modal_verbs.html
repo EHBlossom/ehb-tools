@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Modal Verbs Practice 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Lexend:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --can-c:#22d3ee;   --can-dk:#0e7490;  --can-bg:rgba(34,211,238,.1);
+  --could-c:#a78bfa; --could-dk:#5b21b6;--could-bg:rgba(167,139,250,.1);
+  --must-c:#f87171;  --must-dk:#991b1b; --must-bg:rgba(248,113,113,.1);
+  --should-c:#4ade80;--should-dk:#14532d;--should-bg:rgba(74,222,128,.1);
+  --quiz-c:#fb923c;
+  --bg:#09090b; --bg2:#18181b; --bg3:#27272a; --bg4:#3f3f46;
+  --text:#fafafa; --muted:#71717a;
+  --radius:16px;
+  --shadow:0 4px 24px rgba(0,0,0,.4);
+  --shadow-lg:0 10px 48px rgba(0,0,0,.55);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Plus Jakarta Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* ── HEADER ── */
+header{
+  padding:38px 20px 26px;text-align:center;
+  background:linear-gradient(180deg,#09090b 0%,#18181b 100%);
+  border-bottom:1px solid rgba(255,255,255,.05);
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 10% 50%,rgba(34,211,238,.1) 0%,transparent 45%),
+    radial-gradient(ellipse at 90% 50%,rgba(74,222,128,.08) 0%,transparent 45%),
+    radial-gradient(ellipse at 50% 100%,rgba(167,139,250,.07) 0%,transparent 45%);
+}
+header h1{
+  font-family:'Lexend',sans-serif;font-size:clamp(1.8rem,5vw,2.9rem);font-weight:800;
+  background:linear-gradient(90deg,#22d3ee,#a78bfa,#f87171,#4ade80);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;letter-spacing:-.03em;
+}
+header p{color:var(--muted);font-size:.9rem;font-weight:500;margin-top:6px;position:relative}
+
+#voice-badge{text-align:center;padding:6px;font-size:.72rem;color:var(--muted);font-weight:600}
+
+/* ── MEANING STRIP ── */
+.meaning-strip{
+  display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
+  max-width:880px;margin:20px auto 0;padding:0 16px;
+}
+.meaning-card{
+  border-radius:14px;padding:14px 14px 12px;
+  border:1px solid rgba(255,255,255,.07);
+  transition:transform .2s;cursor:default;
+}
+.meaning-card:hover{transform:translateY(-2px)}
+.meaning-card.can   {background:var(--can-bg);  border-color:rgba(34,211,238,.25)}
+.meaning-card.could {background:var(--could-bg);border-color:rgba(167,139,250,.25)}
+.meaning-card.must  {background:var(--must-bg); border-color:rgba(248,113,113,.25)}
+.meaning-card.should{background:var(--should-bg);border-color:rgba(74,222,128,.25)}
+.meaning-card h3{
+  font-family:'Lexend',sans-serif;font-size:1.1rem;font-weight:800;margin-bottom:6px;
+}
+.can h3   {color:var(--can-c)}
+.could h3 {color:var(--could-c)}
+.must h3  {color:var(--must-c)}
+.should h3{color:var(--should-c)}
+.meaning-card ul{list-style:none;padding:0}
+.meaning-card ul li{font-size:.72rem;font-weight:600;color:rgba(255,255,255,.75);
+  padding:2px 0;display:flex;gap:5px;align-items:flex-start;line-height:1.4}
+.meaning-card ul li::before{content:'→';opacity:.5;flex-shrink:0}
+.neg-form{display:inline-block;margin-top:8px;padding:3px 10px;border-radius:50px;
+  font-size:.68rem;font-weight:800;background:rgba(255,255,255,.08);color:var(--muted)}
+
+/* ── TABS ── */
+.tab-nav{display:flex;gap:8px;padding:20px 16px 0;overflow-x:auto;scrollbar-width:none;
+  max-width:900px;margin:0 auto;justify-content:center;flex-wrap:wrap}
+.tab-btn{padding:9px 22px;border-radius:50px;border:2px solid;
+  font-family:'Lexend',sans-serif;font-weight:700;font-size:.85rem;
+  cursor:pointer;transition:all .2s;white-space:nowrap;background:transparent}
+.tab-btn.t-all   {border-color:#3f3f46;color:var(--muted)}
+.tab-btn.t-can   {border-color:var(--can-c);   color:var(--can-c)}
+.tab-btn.t-could {border-color:var(--could-c); color:var(--could-c)}
+.tab-btn.t-must  {border-color:var(--must-c);  color:var(--must-c)}
+.tab-btn.t-should{border-color:var(--should-c);color:var(--should-c)}
+.tab-btn.t-quiz  {border-color:var(--quiz-c);  color:var(--quiz-c)}
+.tab-btn:hover,.tab-btn.active{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.35)}
+.tab-btn.t-all.active   {background:#3f3f46;color:#fff;border-color:#3f3f46}
+.tab-btn.t-can.active   {background:var(--can-dk);   border-color:var(--can-dk);   color:#fff}
+.tab-btn.t-could.active {background:var(--could-dk); border-color:var(--could-dk); color:#fff}
+.tab-btn.t-must.active  {background:var(--must-dk);  border-color:var(--must-dk);  color:#fff}
+.tab-btn.t-should.active{background:var(--should-dk);border-color:var(--should-dk);color:#fff}
+.tab-btn.t-quiz.active  {background:var(--quiz-c);   border-color:var(--quiz-c);   color:#fff}
+
+/* ── SECTIONS ── */
+.section{display:none;padding:20px 16px 60px;max-width:900px;margin:0 auto}
+.section.active{display:block}
+
+/* ── MODAL HEADER ── */
+.modal-hdr{border-radius:var(--radius);padding:22px 26px;margin-bottom:24px;
+  border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden}
+.modal-hdr.can   {background:var(--can-bg);   border-color:rgba(34,211,238,.3)}
+.modal-hdr.could {background:var(--could-bg); border-color:rgba(167,139,250,.3)}
+.modal-hdr.must  {background:var(--must-bg);  border-color:rgba(248,113,113,.3)}
+.modal-hdr.should{background:var(--should-bg);border-color:rgba(74,222,128,.3)}
+.modal-hdr h2{font-family:'Lexend',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:6px}
+.modal-hdr.can    h2{color:var(--can-c)}
+.modal-hdr.could  h2{color:var(--could-c)}
+.modal-hdr.must   h2{color:var(--must-c)}
+.modal-hdr.should h2{color:var(--should-c)}
+.modal-hdr p{font-size:.85rem;font-weight:500;line-height:1.65;color:rgba(255,255,255,.72)}
+.usage-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.usage-pill{padding:5px 14px;border-radius:50px;font-size:.78rem;font-weight:700;
+  background:rgba(255,255,255,.08);color:rgba(255,255,255,.85)}
+.form-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:10px}
+.form-chip{padding:4px 12px;border-radius:8px;font-family:'Lexend',sans-serif;
+  font-size:.78rem;font-weight:700}
+.can    .form-chip{background:rgba(34,211,238,.2);  color:var(--can-c)}
+.could  .form-chip{background:rgba(167,139,250,.2); color:var(--could-c)}
+.must   .form-chip{background:rgba(248,113,113,.2); color:var(--must-c)}
+.should .form-chip{background:rgba(74,222,128,.2);  color:var(--should-c)}
+
+/* ── USAGE SECTIONS ── */
+.usage-section{margin-bottom:32px}
+.usage-title{
+  font-family:'Lexend',sans-serif;font-size:.8rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.07em;
+  padding:10px 14px;border-radius:10px;margin-bottom:14px;
+  display:inline-flex;align-items:center;gap:8px;
+}
+.can    .usage-title{background:rgba(34,211,238,.12);  color:var(--can-c)}
+.could  .usage-title{background:rgba(167,139,250,.12); color:var(--could-c)}
+.must   .usage-title{background:rgba(248,113,113,.12); color:var(--must-c)}
+.should .usage-title{background:rgba(74,222,128,.12);  color:var(--should-c)}
+
+/* ── LEVEL LABEL ── */
+.lv-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);padding:10px 0 6px;border-bottom:1px solid rgba(255,255,255,.06);margin-bottom:12px}
+
+/* ── CARDS GRID ── */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:20px}
+
+/* ── CARD ── */
+.card{
+  background:var(--bg2);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06);
+  transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.can   ::before{background:linear-gradient(90deg,var(--can-dk),var(--can-c))}
+.card.could ::before{background:linear-gradient(90deg,var(--could-dk),var(--could-c))}
+.card.must  ::before{background:linear-gradient(90deg,var(--must-dk),var(--must-c))}
+.card.should::before{background:linear-gradient(90deg,var(--should-dk),var(--should-c))}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+
+/* USAGE BADGE on card */
+.card-usage{display:inline-block;padding:3px 10px;border-radius:50px;
+  font-size:.65rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.card.can    .card-usage{background:rgba(34,211,238,.15);  color:var(--can-c)}
+.card.could  .card-usage{background:rgba(167,139,250,.15); color:var(--could-c)}
+.card.must   .card-usage{background:rgba(248,113,113,.15); color:var(--must-c)}
+.card.should .card-usage{background:rgba(74,222,128,.15);  color:var(--should-c)}
+
+/* SENTENCES on card */
+.sent-block{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.sent{background:var(--bg3);border-radius:10px;padding:9px 12px;
+  font-size:.82rem;font-weight:600;line-height:1.5;border-left:3px solid;color:var(--text)}
+.sent em{display:block;font-style:normal;font-size:.7rem;color:var(--muted);margin-top:2px;font-weight:500}
+.sent-label{font-size:.6rem;font-weight:800;text-transform:uppercase;letter-spacing:.06em;display:block;margin-bottom:2px}
+.sent.aff .sent-label{color:var(--muted)}
+.sent.neg{background:rgba(239,68,68,.07);border-color:#ef4444}
+.sent.neg .sent-label{color:#f87171}
+.sent.que{background:rgba(251,191,36,.06);border-color:#fbbf24}
+.sent.que .sent-label{color:#fbbf24}
+.card.can    .sent.aff{border-color:var(--can-c)}
+.card.could  .sent.aff{border-color:var(--could-c)}
+.card.must   .sent.aff{border-color:var(--must-c)}
+.card.should .sent.aff{border-color:var(--should-c)}
+
+/* AUDIO ROW */
+.audio-row{display:flex;gap:6px;margin-top:10px}
+.abtn{flex:1;padding:7px 4px;border:none;border-radius:8px;cursor:pointer;
+  font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.7rem;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:3px}
+.abtn:hover{filter:brightness(1.2);transform:scale(1.03)}
+.abtn:active{transform:scale(.97)}
+.abtn.speaking{animation:pulse .5s infinite alternate}
+@keyframes pulse{from{opacity:.6}to{opacity:1}}
+.card.can    .abtn.b1{background:var(--can-dk);color:#fff}
+.card.can    .abtn.b2{background:rgba(239,68,68,.25);color:#fca5a5}
+.card.can    .abtn.b3{background:rgba(251,191,36,.18);color:#fcd34d}
+.card.could  .abtn.b1{background:var(--could-dk);color:#fff}
+.card.could  .abtn.b2{background:rgba(239,68,68,.25);color:#fca5a5}
+.card.could  .abtn.b3{background:rgba(251,191,36,.18);color:#fcd34d}
+.card.must   .abtn.b1{background:var(--must-dk);color:#fff}
+.card.must   .abtn.b2{background:rgba(239,68,68,.25);color:#fca5a5}
+.card.must   .abtn.b3{background:rgba(251,191,36,.18);color:#fcd34d}
+.card.should .abtn.b1{background:var(--should-dk);color:#fff}
+.card.should .abtn.b2{background:rgba(239,68,68,.25);color:#fca5a5}
+.card.should .abtn.b3{background:rgba(251,191,36,.18);color:#fcd34d}
+
+/* ── QUIZ ── */
+#section-quiz{max-width:680px}
+.quiz-setup{background:var(--bg2);border-radius:20px;padding:22px;
+  margin-bottom:20px;border:1px solid rgba(255,255,255,.07)}
+.quiz-setup h2{font-family:'Lexend',sans-serif;font-size:1.2rem;color:var(--quiz-c);margin-bottom:14px}
+.qctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qsel{padding:8px 14px;border-radius:50px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;
+  font-weight:600;font-size:.82rem;cursor:pointer}
+.qstart{padding:9px 22px;background:linear-gradient(135deg,var(--quiz-c),var(--could-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Lexend',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 14px rgba(251,146,60,.3)}
+.qstart:hover{transform:translateY(-2px);filter:brightness(1.08)}
+
+.qcard{background:var(--bg2);border-radius:20px;padding:26px;
+  border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);
+  animation:slideUp .3s ease;margin-bottom:20px}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.qprow{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+.qpbar{width:100%;height:6px;background:var(--bg3);border-radius:50px;margin-bottom:20px;overflow:hidden}
+.qpfill{height:100%;background:linear-gradient(90deg,var(--quiz-c),var(--could-c));border-radius:50px;transition:width .4s}
+
+.q-badge{display:inline-block;padding:4px 14px;border-radius:50px;font-family:'Lexend',sans-serif;
+  font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+  margin-bottom:12px;color:#fff}
+.q-badge.can   {background:var(--can-dk)}
+.q-badge.could {background:var(--could-dk)}
+.q-badge.must  {background:var(--must-dk)}
+.q-badge.should{background:var(--should-dk)}
+
+.q-instruct{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+.q-sent{font-family:'Lexend',sans-serif;font-size:1.1rem;font-weight:700;
+  line-height:1.7;margin-bottom:6px;color:var(--text)}
+.q-sent .blank{display:inline-block;min-width:90px;border-bottom:3px solid var(--quiz-c);
+  color:var(--quiz-c);text-align:center;padding:0 4px}
+.q-jp{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:18px;font-style:italic}
+.q-usage-hint{font-size:.75rem;font-weight:700;padding:5px 12px;border-radius:8px;
+  background:rgba(251,146,60,.1);color:var(--quiz-c);margin-bottom:14px;display:inline-block}
+
+.q-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.q-choice{padding:11px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'Lexend',sans-serif;
+  font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+.q-choice:hover:not(:disabled){border-color:var(--quiz-c);background:rgba(251,146,60,.1)}
+.q-choice.correct{border-color:#22c55e;background:rgba(34,197,94,.15);color:#86efac}
+.q-choice.wrong  {border-color:#ef4444;background:rgba(239,68,68,.15);color:#fca5a5}
+.q-choice:disabled{cursor:not-allowed;opacity:.7}
+
+.q-input{width:100%;padding:13px 18px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.12);background:var(--bg3);color:var(--text);
+  font-family:'Lexend',sans-serif;font-size:1rem;font-weight:700;
+  margin-bottom:10px;outline:none;transition:border-color .2s}
+.q-input:focus{border-color:var(--quiz-c)}
+.q-input.correct{border-color:#22c55e;background:rgba(34,197,94,.1)}
+.q-input.wrong  {border-color:#ef4444;background:rgba(239,68,68,.1)}
+
+.q-submit{width:100%;padding:13px;background:linear-gradient(135deg,var(--quiz-c),var(--could-c));
+  color:#fff;border:none;border-radius:12px;font-family:'Lexend',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer;margin-bottom:10px;transition:all .2s}
+.q-submit:hover:not(:disabled){filter:brightness(1.08)}
+.q-submit:disabled{opacity:.45;cursor:not-allowed}
+
+.q-feedback{padding:13px 16px;border-radius:12px;font-size:.88rem;font-weight:600;
+  display:none;line-height:1.6;margin-bottom:10px}
+.q-feedback.correct{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.q-feedback.wrong  {background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+
+.q-next{width:100%;padding:12px;background:var(--bg3);color:var(--text);
+  border:2px solid rgba(255,255,255,.12);border-radius:12px;
+  font-family:'Lexend',sans-serif;font-weight:700;font-size:.95rem;
+  cursor:pointer;display:none;transition:all .2s}
+.q-next:hover{background:rgba(255,255,255,.07)}
+
+.q-result{display:none;background:var(--bg2);border-radius:20px;padding:40px 24px;
+  text-align:center;border:1px solid rgba(255,255,255,.08)}
+.r-emoji{font-size:3.5rem;margin-bottom:10px}
+.r-score{font-family:'Lexend',sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(90deg,var(--quiz-c),var(--could-c));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.r-msg{color:var(--muted);font-size:1rem;font-weight:600;margin:8px 0 24px}
+.retry-btn{padding:12px 32px;background:linear-gradient(135deg,var(--quiz-c),var(--could-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Lexend',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer}
+
+/* SPEAK PANEL */
+.speak-panel{background:rgba(167,139,250,.07);border:1px solid rgba(167,139,250,.2);
+  border-radius:var(--radius);padding:20px;margin-top:28px}
+.speak-panel h3{font-family:'Lexend',sans-serif;font-size:1rem;color:var(--could-c);margin-bottom:14px}
+.speak-list{display:flex;flex-direction:column;gap:8px}
+.speak-item{background:var(--bg3);border-radius:10px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px}
+.speak-text{font-size:.82rem;font-weight:600;flex:1;line-height:1.4}
+.speak-text small{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}
+.speak-btn{background:var(--could-dk);color:#fff;border:none;border-radius:8px;
+  padding:7px 12px;font-family:'Plus Jakarta Sans',sans-serif;font-weight:700;font-size:.75rem;
+  cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.speak-btn:hover{filter:brightness(1.15)}
+.speak-all-btn{width:100%;margin-top:12px;padding:11px;
+  background:linear-gradient(135deg,var(--could-dk),var(--can-dk));
+  color:#fff;border:none;border-radius:12px;font-family:'Lexend',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s}
+.speak-all-btn:hover{filter:brightness(1.1)}
+
+@media(max-width:600px){
+  .meaning-strip{grid-template-columns:1fr 1fr}
+  .cards-grid{grid-template-columns:1fr}
+  .q-choices{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>⚡ Modal Verbs Master</h1>
+  <p>can · could · must · should — 幼児〜高校生</p>
+</header>
+<div id="voice-badge">🔊 Loading voice...</div>
+
+<!-- MEANING STRIP -->
+<div class="meaning-strip">
+  <div class="meaning-card can">
+    <h3>CAN</h3>
+    <ul>
+      <li>能力「〜できる」</li>
+      <li>許可「〜していい」</li>
+      <li>可能性「〜かもしれない」</li>
+    </ul>
+    <span class="neg-form">❌ cannot / can't</span>
+  </div>
+  <div class="meaning-card could">
+    <h3>COULD</h3>
+    <ul>
+      <li>過去の能力「〜できた」</li>
+      <li>丁寧な依頼・許可</li>
+      <li>仮定「〜できるかもしれない」</li>
+    </ul>
+    <span class="neg-form">❌ could not / couldn't</span>
+  </div>
+  <div class="meaning-card must">
+    <h3>MUST</h3>
+    <ul>
+      <li>義務「〜しなければならない」</li>
+      <li>強い推量「〜に違いない」</li>
+      <li>禁止 must not「〜してはいけない」</li>
+    </ul>
+    <span class="neg-form">❌ must not / mustn't</span>
+  </div>
+  <div class="meaning-card should">
+    <h3>SHOULD</h3>
+    <ul>
+      <li>義務・提案「〜すべき」</li>
+      <li>アドバイス「〜した方がいい」</li>
+      <li>期待「〜のはず」</li>
+    </ul>
+    <span class="neg-form">❌ should not / shouldn't</span>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn t-all    active" onclick="showTab('all')">📚 All</button>
+  <button class="tab-btn t-can"          onclick="showTab('can')">⚡ CAN</button>
+  <button class="tab-btn t-could"        onclick="showTab('could')">🌀 COULD</button>
+  <button class="tab-btn t-must"         onclick="showTab('must')">🔴 MUST</button>
+  <button class="tab-btn t-should"       onclick="showTab('should')">🟢 SHOULD</button>
+  <button class="tab-btn t-quiz"         onclick="showTab('quiz')">✏️ Quiz</button>
+</nav>
+
+<div id="section-all"    class="section active"></div>
+<div id="section-can"    class="section"></div>
+<div id="section-could"  class="section"></div>
+<div id="section-must"   class="section"></div>
+<div id="section-should" class="section"></div>
+
+<div id="section-quiz" class="section">
+  <div class="quiz-setup">
+    <h2>✏️ Modal Verbs Quiz</h2>
+    <div class="qctrls">
+      <select class="qsel" id="q-modal">
+        <option value="all">All Modals</option>
+        <option value="can">⚡ CAN</option>
+        <option value="could">🌀 COULD</option>
+        <option value="must">🔴 MUST</option>
+        <option value="should">🟢 SHOULD</option>
+      </select>
+      <select class="qsel" id="q-lv">
+        <option value="all">All Levels</option>
+        <option value="1">⭐ Level 1</option>
+        <option value="2">⭐⭐ Level 2</option>
+        <option value="3">⭐⭐⭐ Level 3</option>
+      </select>
+      <select class="qsel" id="q-type">
+        <option value="choice">Multiple Choice</option>
+        <option value="type">Type Answer</option>
+      </select>
+      <button class="qstart" onclick="startQuiz()">🎯 Start!</button>
+    </div>
+  </div>
+  <div id="quiz-area"></div>
+  <div id="quiz-result"></div>
+  <div class="speak-panel">
+    <h3>🎤 Listen &amp; Repeat — Speaking Practice</h3>
+    <div class="speak-list" id="speak-list"></div>
+    <button class="speak-all-btn" onclick="speakAll()">▶️ Play All</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  DATA
+// ══════════════════════════════════
+const DATA = {
+  can:{
+    label:'⚡ CAN',cls:'can',
+    desc:'能力・許可・可能性を表す。否定は cannot（can\'t）。疑問文は Can + 主語 + 動詞の原形？',
+    usages:[
+      {icon:'💪',name:'Ability 能力',items:[
+        {lv:1,aff:"I can swim very fast.",         neg:"I can't fly like a bird.",       que:"Can you swim?",               jp_a:"私はとても速く泳げます。",         jp_n:"鳥のように飛ぶことはできません。",jp_q:"あなたは泳げますか？"},
+        {lv:1,aff:"She can speak English well.",   neg:"She can't speak French yet.",    que:"Can she speak Japanese?",     jp_a:"彼女は英語が上手に話せます。",     jp_n:"まだフランス語は話せません。",   jp_q:"彼女は日本語が話せますか？"},
+        {lv:2,aff:"He can play the guitar and piano.", neg:"He can't read sheet music yet.",que:"Can he sing as well?",     jp_a:"彼はギターとピアノが弾けます。",   jp_n:"まだ楽譜は読めません。",         jp_q:"歌うこともできますか？"},
+        {lv:2,aff:"We can finish the project by Friday.", neg:"We can't extend the deadline.",que:"Can we meet sooner?",   jp_a:"金曜日までにプロジェクトを終えられます。",jp_n:"締め切りを延ばすことはできません。",jp_q:"もっと早く会えますか？"},
+        {lv:3,aff:"Bilingual children can switch between languages effortlessly.", neg:"They can't always translate perfectly word-for-word.",que:"Can early bilingualism improve cognitive flexibility?", jp_a:"バイリンガルの子どもは苦なく言語を切り替えられます。",jp_n:"必ずしも単語を完璧に翻訳できるわけではありません。",jp_q:"早期バイリンガル教育は認知の柔軟性を高めますか？"},
+      ]},
+      {icon:'🔓',name:'Permission 許可',items:[
+        {lv:1,aff:"You can use my eraser.",        neg:"You can't take my pencil.",      que:"Can I borrow your book?",     jp_a:"私の消しゴムを使っていいよ。",     jp_n:"私の鉛筆は持っていけません。",  jp_q:"あなたの本を借りていい？"},
+        {lv:2,aff:"You can leave early today.",    neg:"You can't skip the meeting.",   que:"Can I sit here?",             jp_a:"今日は早く帰っていいです。",       jp_n:"会議を欠席することはできません。",jp_q:"ここに座っていいですか？"},
+        {lv:3,aff:"Students can access the library until 8 PM.", neg:"They can't bring food inside.",que:"Can we use personal devices during study hall?", jp_a:"生徒は午後8時まで図書館を利用できます。",jp_n:"食べ物を中に持ち込むことはできません。",jp_q:"自習時間に個人端末を使ってもいいですか？"},
+      ]},
+    ]
+  },
+
+  could:{
+    label:'🌀 COULD',cls:'could',
+    desc:'過去の能力・丁寧な依頼・仮定的な可能性を表す。否定は couldn\'t。Can より丁寧なニュアンスを持つ。',
+    usages:[
+      {icon:'⏮️',name:'Past Ability 過去の能力',items:[
+        {lv:1,aff:"When I was little, I could eat a whole pizza!",  neg:"I couldn't eat spicy food back then.",  que:"Could you swim when you were five?",   jp_a:"小さい頃、ピザを1枚全部食べられました！",jp_n:"当時は辛い食べ物が食べられませんでした。",jp_q:"5歳の頃、泳げましたか？"},
+        {lv:2,aff:"My grandmother could speak four languages.",     neg:"She couldn't use a computer.",         que:"Could she read English?",              jp_a:"祖母は4カ国語を話せました。",           jp_n:"コンピューターは使えませんでした。",   jp_q:"彼女は英語が読めましたか？"},
+        {lv:3,aff:"Before smartphones, people could memorize many phone numbers.",neg:"They couldn't look up information instantly.",que:"Could students learn effectively without the internet?", jp_a:"スマホ以前、人々は多くの電話番号を覚えられました。",jp_n:"即座に情報を調べることはできませんでした。",jp_q:"インターネットなしで生徒は効果的に学べましたか？"},
+      ]},
+      {icon:'🙏',name:'Polite Request 丁寧な依頼',items:[
+        {lv:1,aff:"Could you pass me the salt, please?",    neg:"I couldn't hear you clearly.",    que:"Could you say that again?",           jp_a:"塩を取っていただけますか？",           jp_n:"はっきり聞こえませんでした。",       jp_q:"もう一度言ってもらえますか？"},
+        {lv:2,aff:"Could you help me with this question?", neg:"I couldn't understand the instructions.",que:"Could you explain it more slowly?", jp_a:"この問題を手伝っていただけますか？",   jp_n:"説明が理解できませんでした。",       jp_q:"もっとゆっくり説明してもらえますか？"},
+        {lv:3,aff:"Could you review my essay and give me some feedback?",neg:"I couldn't submit it on time without your help.",que:"Could we schedule a meeting to discuss this further?", jp_a:"エッセイを見てフィードバックをいただけますか？",jp_n:"あなたの助けなしでは時間内に提出できませんでした。",jp_q:"これについてさらに話し合う会議を設定できますか？"},
+      ]},
+      {icon:'💭',name:'Possibility 仮定・可能性',items:[
+        {lv:2,aff:"That could be the answer we need.",      neg:"It couldn't be that simple.",     que:"Could there be another solution?",     jp_a:"それが必要な答えかもしれません。",     jp_n:"そんなに簡単なはずがありません。",   jp_q:"別の解決策があるかもしれません？"},
+        {lv:3,aff:"Daily English input could significantly improve your fluency over time.",neg:"Progress couldn't happen without consistent effort.",que:"Could a structured home environment replace formal classes?", jp_a:"毎日の英語インプットで、徐々に流暢さは向上するかもしれません。",jp_n:"継続的な努力なしには進歩はありえません。",jp_q:"体系的な家庭環境は正式な授業に取って代われるでしょうか？"},
+      ]},
+    ]
+  },
+
+  must:{
+    label:'🔴 MUST',cls:'must',
+    desc:'義務（〜しなければならない）・強い推量（〜に違いない）を表す。must not は禁止（〜してはいけない）。',
+    usages:[
+      {icon:'📋',name:'Obligation 義務',items:[
+        {lv:1,aff:"I must brush my teeth before bed.",          neg:"I must not eat candy without brushing.",  que:"Must I finish all my vegetables?",          jp_a:"寝る前に歯を磨かなければなりません。",    jp_n:"歯を磨かずにお菓子を食べてはいけません。",jp_q:"野菜を全部食べなければなりませんか？"},
+        {lv:1,aff:"You must wear a helmet when riding a bike.", neg:"You must not ride without one.",          que:"Must we follow all the safety rules?",      jp_a:"自転車に乗る時はヘルメットをしなければなりません。",jp_n:"ヘルメットなしで乗ってはいけません。",jp_q:"安全のルールをすべて守らなければなりませんか？"},
+        {lv:2,aff:"Students must submit their homework on time.",neg:"They must not copy from each other.",    que:"Must we use a specific format for the report?",jp_a:"生徒は宿題を時間通りに提出しなければなりません。",jp_n:"お互いにコピーしてはいけません。",jp_q:"レポートは特定の形式を使わなければなりませんか？"},
+        {lv:3,aff:"To achieve fluency, learners must engage with the language every day.",neg:"You must not rely on translation alone.",que:"Must students pass both written and oral exams?", jp_a:"流暢さを達成するには、学習者は毎日言語に関わらなければなりません。",jp_n:"翻訳だけに頼ってはいけません。",jp_q:"生徒は筆記試験と口頭試験の両方に合格しなければなりませんか？"},
+      ]},
+      {icon:'🔍',name:'Strong Deduction 強い推量',items:[
+        {lv:2,aff:"She studied for weeks — she must be confident.",  neg:"She must not be nervous at all.",        que:"Must it have been a difficult exam?",     jp_a:"何週間も勉強した — きっと自信があるに違いない。",jp_n:"全く緊張していないに違いない。",jp_q:"難しい試験だったに違いありませんか？"},
+        {lv:3,aff:"Children raised in English-rich homes must develop stronger listening skills.",neg:"Lack of input must not go unnoticed.",que:"Must environment play a bigger role than genetics in language acquisition?", jp_a:"英語が豊富な家庭で育った子どもは、より強いリスニング力を持つに違いない。",jp_n:"インプット不足を見過ごしてはいけないに違いない。",jp_q:"言語習得において環境は遺伝よりも大きな役割を果たすに違いないですか？"},
+      ]},
+      {icon:'🚫',name:'Prohibition 禁止 (must not)',items:[
+        {lv:1,aff:"You must be quiet in the library.",      neg:"You must not make noise there.",          que:"Must we turn off our phones?",              jp_a:"図書館では静かにしなければなりません。",  jp_n:"そこで騒いではいけません。",             jp_q:"携帯電話の電源を切らなければなりませんか？"},
+        {lv:2,aff:"Drivers must stop at red lights.",      neg:"They must not run a red light.",          que:"Must pedestrians also follow traffic rules?", jp_a:"ドライバーは赤信号で止まらなければなりません。",jp_n:"赤信号で走り抜けてはいけません。",jp_q:"歩行者も交通ルールに従わなければなりませんか？"},
+        {lv:3,aff:"Researchers must follow ethical guidelines.",neg:"They must not fabricate or manipulate data.",que:"Must all experiments receive ethics committee approval?", jp_a:"研究者は倫理的なガイドラインに従わなければなりません。",jp_n:"データを捏造・操作してはいけません。",jp_q:"全ての実験は倫理委員会の承認を受けなければなりませんか？"},
+      ]},
+    ]
+  },
+
+  should:{
+    label:'🟢 SHOULD',cls:'should',
+    desc:'アドバイス・提案・義務感（〜すべき）を表す。must より柔らかいニュアンス。否定は shouldn\'t。',
+    usages:[
+      {icon:'💡',name:'Advice & Suggestion アドバイス・提案',items:[
+        {lv:1,aff:"You should drink more water every day.",        neg:"You shouldn't drink too much juice.",      que:"Should I eat breakfast before school?",      jp_a:"毎日もっと水を飲むべきです。",           jp_n:"ジュースを飲みすぎるべきではありません。",jp_q:"学校の前に朝ご飯を食べるべきですか？"},
+        {lv:1,aff:"You should go to bed early on school nights.",  neg:"You shouldn't stay up too late.",         que:"Should I study a little every day?",         jp_a:"学校のある日の夜は早く寝るべきです。",   jp_n:"夜更かしするべきではありません。",       jp_q:"毎日少し勉強するべきですか？"},
+        {lv:2,aff:"You should review your notes after every class.",neg:"You shouldn't cram everything the night before the test.",que:"Should students form study groups?", jp_a:"毎回の授業の後にノートを見直すべきです。",jp_n:"テスト前夜に全てを詰め込むべきではありません。",jp_q:"生徒は勉強グループを作るべきですか？"},
+        {lv:2,aff:"You should apologize when you make a mistake.",  neg:"You shouldn't make excuses.",             que:"Should we always be honest with our friends?",jp_a:"ミスをしたら謝るべきです。",               jp_n:"言い訳をするべきではありません。",       jp_q:"友達には常に正直であるべきですか？"},
+        {lv:3,aff:"Parents should create an English-rich environment at home.",neg:"They shouldn't pressure their children excessively.",que:"Should schools involve parents more actively in language learning?", jp_a:"保護者は家庭で英語が豊かな環境を作るべきです。",jp_n:"子どもに過度のプレッシャーをかけるべきではありません。",jp_q:"学校は保護者をより積極的に語学学習に関与させるべきですか？"},
+      ]},
+      {icon:'⚖️',name:'Obligation & Expectation 義務・期待',items:[
+        {lv:2,aff:"Everyone should take responsibility for their actions.",  neg:"We shouldn't blame others for our mistakes.",  que:"Should students have a say in school rules?",  jp_a:"誰もが自分の行動に責任を持つべきです。",   jp_n:"ミスを他の人のせいにするべきではありません。",jp_q:"生徒は学校のルールに意見を言えるべきですか？"},
+        {lv:3,aff:"Society should invest more in early childhood education.",neg:"We shouldn't underestimate the impact of the first five years.",que:"Should governments make preschool education free and universal?", jp_a:"社会は幼児教育にもっと投資すべきです。",   jp_n:"最初の5年間の影響を過小評価すべきではありません。",jp_q:"政府は就学前教育を無料かつ普遍的にすべきですか？"},
+        {lv:3,aff:"High school students should develop their own study strategies.",neg:"They shouldn't depend entirely on their teachers.",que:"Should self-directed learning be a core part of the curriculum?", jp_a:"高校生は自分自身の学習戦略を身につけるべきです。",jp_n:"完全に先生に依存すべきではありません。",jp_q:"自己主導型学習はカリキュラムの核となるべきですか？"},
+      ]},
+    ]
+  }
+};
+
+const MODAL_KEYS = ['can','could','must','should'];
+
+// ══════════════════════════════════
+//  TTS
+// ══════════════════════════════════
+let bestVoice=null,voicesReady=false;
+function pickVoice(vs){
+  const pri=['Samantha','Karen','Moira','Fiona','Victoria','Allison','Ava'];
+  for(const n of pri){const v=vs.find(v=>v.name===n&&v.lang.startsWith('en'));if(v)return v}
+  return vs.find(v=>v.lang.startsWith('en-'))||null;
+}
+function initVoices(){
+  const vs=speechSynthesis.getVoices();if(!vs.length)return;
+  bestVoice=pickVoice(vs);voicesReady=true;
+  const b=document.getElementById('voice-badge');
+  if(b)b.textContent=bestVoice?`🔊 Voice: ${bestVoice.name}`:'🔊 Voice ready';
+}
+speechSynthesis.onvoiceschanged=initVoices;initVoices();
+
+function esc(s){return s.replace(/'/g,"\\'")}
+function speak(text,btn){
+  if(!voicesReady)initVoices();
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  if(bestVoice)u.voice=bestVoice;
+  u.rate=0.87;u.pitch=1.0;u.lang='en-US';
+  if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');u.onerror=()=>btn.classList.remove('speaking')}
+  speechSynthesis.speak(u);
+}
+
+// ══════════════════════════════════
+//  BUILD CARDS
+// ══════════════════════════════════
+function buildCard(item,mKey,usageName){
+  return `
+  <div class="card ${mKey}">
+    <span class="card-usage">${usageName}</span>
+    <div class="sent-block">
+      <div class="sent aff">
+        <span class="sent-label">✅ Affirmative</span>
+        ${item.aff}
+        <em>${item.jp_a}</em>
+      </div>
+      <div class="sent neg">
+        <span class="sent-label">❌ Negative</span>
+        ${item.neg}
+        <em>${item.jp_n}</em>
+      </div>
+      <div class="sent que">
+        <span class="sent-label">❓ Question</span>
+        ${item.que}
+        <em>${item.jp_q}</em>
+      </div>
+    </div>
+    <div class="audio-row">
+      <button class="abtn b1" onclick="speak('${esc(item.aff)}',this)">🔊 Aff</button>
+      <button class="abtn b2" onclick="speak('${esc(item.neg)}',this)">🔊 Neg</button>
+      <button class="abtn b3" onclick="speak('${esc(item.que)}',this)">🔊 Q</button>
+    </div>
+  </div>`;
+}
+
+function buildModalSection(mKey,container){
+  const m=DATA[mKey];
+  const negForm=mKey==='can'?'cannot / can\'t':mKey==='could'?'could not / couldn\'t':mKey==='must'?'must not / mustn\'t':'should not / shouldn\'t';
+  let html=`
+  <div class="modal-hdr ${mKey}">
+    <h2>${m.label}</h2>
+    <p>${m.desc}</p>
+    <div class="form-row">
+      <span class="form-chip">✅ ${mKey} + 動詞原形</span>
+      <span class="form-chip">❌ ${negForm}</span>
+      <span class="form-chip">❓ ${mKey.charAt(0).toUpperCase()+mKey.slice(1)} + 主語 + 動詞原形?</span>
+    </div>
+  </div>`;
+
+  m.usages.forEach(usage=>{
+    html+=`<div class="usage-section ${mKey}"><div class="usage-title">${usage.icon} ${usage.name}</div>`;
+    [1,2,3].forEach(lv=>{
+      const items=usage.items.filter(i=>i.lv===lv);
+      if(!items.length)return;
+      html+=`<div class="lv-label">${'⭐'.repeat(lv)} Level ${lv}</div><div class="cards-grid">`;
+      items.forEach(i=>{html+=buildCard(i,mKey,usage.name)});
+      html+=`</div>`;
+    });
+    html+=`</div>`;
+  });
+  container.insertAdjacentHTML('beforeend',html);
+}
+
+function initSections(){
+  const allSec=document.getElementById('section-all');
+  MODAL_KEYS.forEach(k=>{
+    buildModalSection(k,allSec);
+    buildModalSection(k,document.getElementById(`section-${k}`));
+  });
+  buildSpeakList();
+}
+
+// ══════════════════════════════════
+//  SPEAK LIST
+// ══════════════════════════════════
+const SPEAK_SAMPLES=[
+  {t:"I can swim very fast.",                        s:"CAN — ability"},
+  {t:"Can you speak English?",                       s:"CAN — question"},
+  {t:"When I was little, I could eat a whole pizza!",s:"COULD — past ability"},
+  {t:"Could you help me with this question?",        s:"COULD — polite request"},
+  {t:"You must wear a helmet when riding a bike.",   s:"MUST — obligation"},
+  {t:"You must not make noise in the library.",      s:"MUST NOT — prohibition"},
+  {t:"You should drink more water every day.",       s:"SHOULD — advice"},
+  {t:"Should students form study groups?",           s:"SHOULD — question"},
+];
+function buildSpeakList(){
+  const c=document.getElementById('speak-list');
+  c.innerHTML=SPEAK_SAMPLES.map(s=>`
+    <div class="speak-item">
+      <div class="speak-text">${s.t}<small>${s.s}</small></div>
+      <button class="speak-btn" onclick="speak('${esc(s.t)}',this)">▶️ Play</button>
+    </div>`).join('');
+}
+let spkIdx=0;
+function speakAll(){spkIdx=0;spkNext()}
+function spkNext(){
+  if(spkIdx>=SPEAK_SAMPLES.length)return;
+  const s=SPEAK_SAMPLES[spkIdx++];
+  const u=new SpeechSynthesisUtterance(s.t);
+  if(bestVoice)u.voice=bestVoice;u.rate=0.85;u.lang='en-US';
+  u.onend=()=>setTimeout(spkNext,700);
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+
+// ══════════════════════════════════
+//  TABS
+// ══════════════════════════════════
+function showTab(tab){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`section-${tab}`).classList.add('active');
+  document.querySelector(`[onclick="showTab('${tab}')"]`).classList.add('active');
+}
+
+// ══════════════════════════════════
+//  QUIZ
+// ══════════════════════════════════
+// Flatten all items into quiz pool
+function flatItems(mSel,lvSel){
+  const keys=mSel==='all'?MODAL_KEYS:[mSel];
+  let pool=[];
+  keys.forEach(k=>{
+    DATA[k].usages.forEach(u=>{
+      u.items.forEach(item=>{
+        if(lvSel!=='all'&&item.lv!=lvSel)return;
+        // Quiz A: blank the modal in the affirmative sentence
+        pool.push({
+          modal:k, usageName:u.name,
+          sentence: item.aff.replace(new RegExp('\\b(can\'t|cannot|couldn\'t|could not|must not|mustn\'t|shouldn\'t|should not|can|could|must|should)\\b','i'), '___'),
+          answer: k,
+          full: item.aff, jp: item.jp_a,
+          hint: u.name,
+          allModals:['can','could','must','should'],
+        });
+        // Quiz B: blank the modal in the negative sentence — answer is the neg form
+        const negMap={can:"can't",could:"couldn't",must:"mustn't",should:"shouldn't"};
+        const negFull=negMap[k];
+        const negSentBlanked=item.neg.replace(new RegExp(negFull.replace(/'/g,"\\'"),'i'),'___');
+        pool.push({
+          modal:k, usageName:u.name,
+          sentence: negSentBlanked,
+          answer: negFull,
+          full: item.neg, jp: item.jp_n,
+          hint: u.name+' (negative)',
+          allModals:["can't","couldn't","mustn't","shouldn't"],
+        });
+      });
+    });
+  });
+  return pool.sort(()=>Math.random()-.5);
+}
+
+let qPool=[],qIdx=0,qScore=0,qAnswered=false;
+
+function startQuiz(){
+  qPool=flatItems(document.getElementById('q-modal').value,document.getElementById('q-lv').value).slice(0,15);
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML='';
+  renderQ();
+}
+
+function renderQ(){
+  if(qIdx>=qPool.length){renderResult();return}
+  const item=qPool[qIdx];
+  const type=document.getElementById('q-type').value;
+  const pct=Math.round(qIdx/qPool.length*100);
+  qAnswered=false;
+
+  const wrongs=item.allModals.filter(m=>m!==item.answer).sort(()=>Math.random()-.5).slice(0,3);
+  const choices=[item.answer,...wrongs].sort(()=>Math.random()-.5);
+
+  let inputHtml='';
+  if(type==='choice'){
+    inputHtml=`<div class="q-choices">${choices.map(c=>
+      `<button class="q-choice" onclick="chkChoice('${esc(c)}','${esc(item.answer)}','${esc(item.full)}',this)">${c}</button>`
+    ).join('')}</div>`;
+  } else {
+    inputHtml=`<input class="q-input" id="q-inp" type="text" placeholder="Type the modal verb..." autocomplete="off">
+    <button class="q-submit" id="q-sub" onclick="chkType('${esc(item.answer)}','${esc(item.full)}')">Check ✓</button>`;
+  }
+
+  document.getElementById('quiz-area').innerHTML=`
+  <div class="qcard">
+    <div class="qprow"><span>${qIdx+1} / ${qPool.length}</span><span>⭐ ${qScore}</span></div>
+    <div class="qpbar"><div class="qpfill" style="width:${pct}%"></div></div>
+    <span class="q-badge ${item.modal}">${item.modal.toUpperCase()}</span>
+    <div class="q-instruct">Fill in the blank with the correct modal verb:</div>
+    <div class="q-sent">${item.sentence.replace('___','<span class="blank">___</span>')}</div>
+    <div class="q-jp">🇯🇵 ${item.jp}</div>
+    <div class="q-usage-hint">💡 ${item.hint}</div>
+    ${inputHtml}
+    <div class="q-feedback" id="q-fb"></div>
+    <button class="q-next" id="q-next" onclick="nextQ()">Next →</button>
+  </div>`;
+
+  const inp=document.getElementById('q-inp');
+  if(inp){inp.addEventListener('keydown',e=>{if(e.key==='Enter')chkType(item.answer,item.full)});inp.focus()}
+  setTimeout(()=>speak(item.full,null),400);
+}
+
+function chkChoice(chosen,correct,full,btn){
+  if(qAnswered)return;
+  qAnswered=true;
+  document.querySelectorAll('.q-choice').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok)document.querySelectorAll('.q-choice').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});
+  showFB(ok,correct,full);
+}
+function chkType(correct,full){
+  if(qAnswered)return;
+  const inp=document.getElementById('q-inp');if(!inp)return;
+  qAnswered=true;inp.disabled=true;document.getElementById('q-sub').disabled=true;
+  const ok=inp.value.trim().toLowerCase()===correct.toLowerCase();
+  inp.classList.add(ok?'correct':'wrong');
+  showFB(ok,correct,full);
+}
+function showFB(ok,correct,full){
+  if(ok)qScore++;
+  const fb=document.getElementById('q-fb');
+  fb.style.display='block';
+  fb.className=`q-feedback ${ok?'correct':'wrong'}`;
+  fb.innerHTML=ok
+    ?`✅ Correct! &nbsp;<strong>${correct}</strong><br><em>${full}</em>`
+    :`❌ Answer: &nbsp;<strong>${correct}</strong><br><em>${full}</em>`;
+  speak(full,null);
+  document.getElementById('q-next').style.display='block';
+}
+function nextQ(){qIdx++;renderQ()}
+function renderResult(){
+  const pct=Math.round(qScore/qPool.length*100);
+  const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg=pct>=90?'Outstanding! Perfect!':pct>=70?'Great work! Keep it up!':pct>=50?'Good effort! Try again!':'Don\'t give up — practice makes perfect!';
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML=`
+  <div class="q-result" style="display:block">
+    <div class="r-emoji">${emoji}</div>
+    <div class="r-score">${qScore} / ${qPool.length}</div>
+    <div class="r-msg">${msg}</div>
+    <button class="retry-btn" onclick="startQuiz()">🔄 Try Again!</button>
+  </div>`;
+}
+
+window.addEventListener('DOMContentLoaded',initSections);
+</script>
+</body>
+</html>
