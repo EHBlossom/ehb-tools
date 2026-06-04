@@ -1,0 +1,1044 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present → Past Verb Practice 🌸</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --sky: #e0f4ff;
+    --mint: #d4f5e9;
+    --peach: #ffe8d6;
+    --lavender: #ede8ff;
+    --lv1-color: #4ade80;
+    --lv1-dark: #16a34a;
+    --lv1-bg: #f0fdf4;
+    --lv2-color: #38bdf8;
+    --lv2-dark: #0369a1;
+    --lv2-bg: #f0f9ff;
+    --lv3-color: #f97316;
+    --lv3-dark: #c2410c;
+    --lv3-bg: #fff7ed;
+    --lv4-color: #a855f7;
+    --lv4-dark: #7e22ce;
+    --lv4-bg: #faf5ff;
+    --white: #ffffff;
+    --text: #1e293b;
+    --text-light: #64748b;
+    --card-radius: 20px;
+    --shadow: 0 4px 20px rgba(0,0,0,0.08);
+    --shadow-lg: 0 8px 40px rgba(0,0,0,0.12);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Nunito', sans-serif;
+    background: linear-gradient(135deg, #e0f4ff 0%, #ede8ff 50%, #ffe8d6 100%);
+    min-height: 100vh;
+    color: var(--text);
+  }
+
+  header {
+    background: linear-gradient(135deg, #6ee7b7, #60a5fa, #a78bfa);
+    text-align: center;
+    padding: 32px 20px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  header::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.08'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  header h1 {
+    font-family: 'Fredoka One', cursive;
+    font-size: clamp(1.8rem, 5vw, 3rem);
+    color: white;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    position: relative;
+  }
+  header p {
+    color: rgba(255,255,255,0.9);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-top: 6px;
+    position: relative;
+  }
+
+  /* Stats bar */
+  .stats-bar {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 16px 20px;
+    background: white;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .stat-pill {
+    background: var(--sky);
+    border-radius: 50px;
+    padding: 8px 18px;
+    font-weight: 800;
+    font-size: 0.85rem;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .stat-pill span { font-size: 1.1rem; }
+
+  /* Tab nav */
+  .tab-nav {
+    display: flex;
+    gap: 8px;
+    padding: 20px 20px 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .tab-btn {
+    padding: 10px 20px;
+    border-radius: 50px;
+    border: 3px solid transparent;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .tab-btn[data-level="all"] { background: #f1f5f9; color: #475569; border-color: #cbd5e1; }
+  .tab-btn[data-level="1"] { background: var(--lv1-bg); color: var(--lv1-dark); border-color: var(--lv1-color); }
+  .tab-btn[data-level="2"] { background: var(--lv2-bg); color: var(--lv2-dark); border-color: var(--lv2-color); }
+  .tab-btn[data-level="3"] { background: var(--lv3-bg); color: var(--lv3-dark); border-color: var(--lv3-color); }
+  .tab-btn[data-level="4"] { background: var(--lv4-bg); color: var(--lv4-dark); border-color: var(--lv4-color); }
+  .tab-btn[data-level="quiz"] { background: #fff0f5; color: #be185d; border-color: #f9a8d4; }
+  .tab-btn.active, .tab-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+
+  /* Section */
+  .section { display: none; padding: 20px; max-width: 900px; margin: 0 auto; }
+  .section.active { display: block; }
+
+  .level-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 20px;
+    padding: 16px 20px;
+    border-radius: var(--card-radius);
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.4rem;
+  }
+  .level-header.lv1 { background: var(--lv1-bg); color: var(--lv1-dark); border: 3px solid var(--lv1-color); }
+  .level-header.lv2 { background: var(--lv2-bg); color: var(--lv2-dark); border: 3px solid var(--lv2-color); }
+  .level-header.lv3 { background: var(--lv3-bg); color: var(--lv3-dark); border: 3px solid var(--lv3-color); }
+  .level-header.lv4 { background: var(--lv4-bg); color: var(--lv4-dark); border: 3px solid var(--lv4-color); }
+
+  /* Verb cards grid */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+    margin-bottom: 32px;
+  }
+
+  .verb-card {
+    background: white;
+    border-radius: var(--card-radius);
+    padding: 18px;
+    box-shadow: var(--shadow);
+    transition: transform 0.2s, box-shadow 0.2s;
+    border-top: 5px solid;
+    position: relative;
+  }
+  .verb-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+  .verb-card.lv1 { border-top-color: var(--lv1-color); }
+  .verb-card.lv2 { border-top-color: var(--lv2-color); }
+  .verb-card.lv3 { border-top-color: var(--lv3-color); }
+  .verb-card.lv4 { border-top-color: var(--lv4-color); }
+
+  .verb-pair {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .verb-box {
+    flex: 1;
+    text-align: center;
+    padding: 8px 6px;
+    border-radius: 12px;
+  }
+  .verb-box.present { background: #f0fdf4; }
+  .verb-box.past { background: #fef3c7; }
+  .verb-box .tense-label {
+    font-size: 0.65rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: var(--text-light);
+    letter-spacing: 0.05em;
+  }
+  .verb-box .word {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.3rem;
+    color: var(--text);
+    display: block;
+    margin-top: 2px;
+  }
+  .arrow {
+    font-size: 1.2rem;
+    color: #94a3b8;
+    flex-shrink: 0;
+  }
+
+  .example-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 8px;
+    margin-bottom: 10px;
+  }
+  .example {
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 8px 10px;
+    font-size: 0.78rem;
+    line-height: 1.4;
+    color: #334155;
+    font-weight: 600;
+  }
+  .example em {
+    display: block;
+    color: #94a3b8;
+    font-style: normal;
+    font-size: 0.7rem;
+    margin-top: 2px;
+    font-weight: 400;
+  }
+
+  /* Audio buttons */
+  .audio-row {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .audio-btn {
+    flex: 1;
+    padding: 7px 4px;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.75rem;
+    transition: all 0.15s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+  }
+  .audio-btn.present-btn { background: #dcfce7; color: #16a34a; }
+  .audio-btn.past-btn { background: #fef9c3; color: #a16207; }
+  .audio-btn.example-btn { background: #e0f2fe; color: #0369a1; }
+  .audio-btn:hover { filter: brightness(0.95); transform: scale(1.03); }
+  .audio-btn:active { transform: scale(0.97); }
+  .audio-btn.speaking { animation: pulse 0.6s infinite alternate; }
+  @keyframes pulse { from { opacity: 0.7; } to { opacity: 1; } }
+
+  /* Irregular badge */
+  .irreg-badge {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    background: #fbbf24;
+    color: white;
+    font-size: 0.6rem;
+    font-weight: 800;
+    padding: 2px 7px;
+    border-radius: 50px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  /* ===== QUIZ SECTION ===== */
+  #section-quiz { max-width: 700px; }
+
+  .quiz-controls {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    align-items: center;
+  }
+  .quiz-level-select, .quiz-type-select {
+    padding: 10px 16px;
+    border-radius: 50px;
+    border: 2px solid #e2e8f0;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    background: white;
+    cursor: pointer;
+    color: var(--text);
+  }
+  .start-quiz-btn {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, #f472b6, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(168,85,247,0.3);
+  }
+  .start-quiz-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(168,85,247,0.4); }
+
+  .quiz-card {
+    background: white;
+    border-radius: 24px;
+    padding: 28px;
+    box-shadow: var(--shadow-lg);
+    margin-bottom: 20px;
+    animation: slideIn 0.3s ease;
+  }
+  @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .quiz-progress {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-light);
+  }
+  .progress-bar {
+    width: 100%;
+    height: 8px;
+    background: #f1f5f9;
+    border-radius: 50px;
+    margin-bottom: 20px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #f472b6, #a855f7);
+    border-radius: 50px;
+    transition: width 0.4s ease;
+  }
+
+  .quiz-question {
+    font-size: 1rem;
+    font-weight: 700;
+    color: var(--text-light);
+    margin-bottom: 8px;
+  }
+  .quiz-sentence {
+    font-size: 1.3rem;
+    font-weight: 800;
+    line-height: 1.5;
+    margin-bottom: 20px;
+    color: var(--text);
+  }
+  .quiz-sentence .blank {
+    display: inline-block;
+    min-width: 100px;
+    border-bottom: 3px solid #a855f7;
+    text-align: center;
+    color: #a855f7;
+    font-family: 'Fredoka One', cursive;
+    letter-spacing: 0.05em;
+  }
+
+  .quiz-input {
+    width: 100%;
+    padding: 14px 20px;
+    border: 3px solid #e2e8f0;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 12px;
+    transition: border-color 0.2s;
+    outline: none;
+    color: var(--text);
+  }
+  .quiz-input:focus { border-color: #a855f7; }
+  .quiz-input.correct { border-color: #22c55e; background: #f0fdf4; }
+  .quiz-input.wrong { border-color: #ef4444; background: #fff5f5; }
+
+  .quiz-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+  .choice-btn {
+    padding: 12px 16px;
+    border: 3px solid #e2e8f0;
+    border-radius: 14px;
+    background: white;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    color: var(--text);
+  }
+  .choice-btn:hover:not(:disabled) { border-color: #a855f7; background: #faf5ff; }
+  .choice-btn.correct { border-color: #22c55e; background: #f0fdf4; color: #16a34a; }
+  .choice-btn.wrong { border-color: #ef4444; background: #fff5f5; color: #dc2626; }
+  .choice-btn:disabled { cursor: not-allowed; }
+
+  .quiz-submit-btn {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #f472b6, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .quiz-submit-btn:hover:not(:disabled) { filter: brightness(1.05); transform: translateY(-1px); }
+  .quiz-submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .quiz-feedback {
+    padding: 14px 18px;
+    border-radius: 14px;
+    font-weight: 700;
+    font-size: 0.95rem;
+    display: none;
+    line-height: 1.5;
+  }
+  .quiz-feedback.correct { background: #f0fdf4; color: #16a34a; border: 2px solid #86efac; }
+  .quiz-feedback.wrong { background: #fff5f5; color: #dc2626; border: 2px solid #fca5a5; }
+
+  .quiz-next-btn {
+    width: 100%;
+    padding: 14px;
+    background: #1e293b;
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 10px;
+    display: none;
+  }
+  .quiz-next-btn:hover { background: #334155; }
+
+  /* Result */
+  .quiz-result {
+    text-align: center;
+    padding: 32px;
+    background: white;
+    border-radius: 24px;
+    box-shadow: var(--shadow-lg);
+    display: none;
+  }
+  .result-emoji { font-size: 3.5rem; margin-bottom: 12px; }
+  .result-score { font-family: 'Fredoka One', cursive; font-size: 3rem; color: #a855f7; }
+  .result-msg { font-size: 1.1rem; font-weight: 700; color: var(--text-light); margin: 8px 0 24px; }
+  .retry-btn {
+    padding: 12px 32px;
+    background: linear-gradient(135deg, #f472b6, #a855f7);
+    color: white;
+    border: none;
+    border-radius: 50px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
+  /* Speaking practice */
+  .speak-section {
+    background: linear-gradient(135deg, #e0f2fe, #ddd6fe);
+    border-radius: 20px;
+    padding: 20px;
+    margin-top: 24px;
+  }
+  .speak-section h3 {
+    font-family: 'Fredoka One', cursive;
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+    color: #1e40af;
+  }
+  .speak-queue {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .speak-item {
+    background: white;
+    border-radius: 14px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+  .speak-text {
+    font-weight: 700;
+    font-size: 0.9rem;
+    flex: 1;
+    color: var(--text);
+  }
+  .speak-text small {
+    display: block;
+    font-weight: 400;
+    color: var(--text-light);
+    font-size: 0.75rem;
+  }
+  .speak-play-btn {
+    background: #6366f1;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    padding: 8px 14px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-family: 'Nunito', sans-serif;
+    white-space: nowrap;
+    transition: all 0.15s;
+  }
+  .speak-play-btn:hover { background: #4f46e5; }
+
+  .speak-all-btn {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #6366f1, #8b5cf6);
+    color: white;
+    border: none;
+    border-radius: 14px;
+    font-family: 'Nunito', sans-serif;
+    font-weight: 800;
+    font-size: 0.95rem;
+    cursor: pointer;
+    margin-top: 12px;
+    transition: all 0.2s;
+  }
+  .speak-all-btn:hover { filter: brightness(1.05); }
+
+  /* Voice badge */
+  #voice-badge {
+    text-align: center;
+    padding: 8px;
+    font-size: 0.75rem;
+    color: var(--text-light);
+    font-weight: 600;
+  }
+
+  .all-section-wrapper { padding: 0 0 40px; }
+
+  @media (max-width: 600px) {
+    .cards-grid { grid-template-columns: 1fr; }
+    .example-row { grid-template-columns: 1fr; }
+    .quiz-choices { grid-template-columns: 1fr; }
+    .quiz-sentence { font-size: 1.1rem; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>🌟 Present → Past Practice</h1>
+  <p>100 everyday verbs for young learners！</p>
+</header>
+
+<div class="stats-bar">
+  <div class="stat-pill"><span>🟢</span> Level 1: 25 verbs</div>
+  <div class="stat-pill"><span>🔵</span> Level 2: 25 verbs</div>
+  <div class="stat-pill"><span>🟠</span> Level 3: 25 verbs</div>
+  <div class="stat-pill"><span>🟣</span> Level 4: 25 verbs</div>
+</div>
+<div id="voice-badge">🔊 Loading voices...</div>
+
+<nav class="tab-nav">
+  <button class="tab-btn active" data-level="all" onclick="showTab('all')">📚 All Levels</button>
+  <button class="tab-btn" data-level="1" onclick="showTab('1')">🟢 Level 1</button>
+  <button class="tab-btn" data-level="2" onclick="showTab('2')">🔵 Level 2</button>
+  <button class="tab-btn" data-level="3" onclick="showTab('3')">🟠 Level 3</button>
+  <button class="tab-btn" data-level="4" onclick="showTab('4')">🟣 Level 4</button>
+  <button class="tab-btn" data-level="quiz" onclick="showTab('quiz')">✏️ Quiz</button>
+</nav>
+
+<div id="section-all" class="section active all-section-wrapper"></div>
+<div id="section-1" class="section"></div>
+<div id="section-2" class="section"></div>
+<div id="section-3" class="section"></div>
+<div id="section-4" class="section"></div>
+
+<div id="section-quiz" class="section">
+  <div style="background:white;border-radius:24px;padding:24px;box-shadow:var(--shadow);margin-bottom:20px;">
+    <h2 style="font-family:'Fredoka One',cursive;font-size:1.5rem;margin-bottom:16px;color:#7c3aed;">✏️ Fill-in-the-Blank Quiz</h2>
+    <div class="quiz-controls">
+      <select class="quiz-level-select" id="quiz-level-select">
+        <option value="all">All Levels</option>
+        <option value="1">🟢 Level 1</option>
+        <option value="2">🔵 Level 2</option>
+        <option value="3">🟠 Level 3</option>
+        <option value="4">🟣 Level 4</option>
+      </select>
+      <select class="quiz-type-select" id="quiz-type-select">
+        <option value="type">Type the answer</option>
+        <option value="choice">Multiple choice</option>
+      </select>
+      <button class="start-quiz-btn" onclick="startQuiz()">🎯 Start Quiz!</button>
+    </div>
+  </div>
+
+  <div id="quiz-area"></div>
+
+  <!-- Speaking practice section -->
+  <div class="speak-section" id="speak-section">
+    <h3>🎤 Speaking Practice — Listen & Repeat!</h3>
+    <p style="font-size:0.8rem;font-weight:600;color:#1e40af;margin-bottom:12px;">聞いてマネしよう！</p>
+    <div class="speak-queue" id="speak-queue"></div>
+    <button class="speak-all-btn" onclick="speakAll()">▶️ Play All in Order</button>
+  </div>
+</div>
+
+<script>
+// ============ DATA ============
+const VERBS = [
+  // LEVEL 1 - Most basic daily actions (幼児〜小1)
+  {lv:1, present:"eat",    past:"ate",     irreg:true,  ex_p:"I eat breakfast every day.",         ex_pa:"I ate breakfast this morning.",      jp_p:"毎日朝ご飯を食べる", jp_pa:"今朝、朝ご飯を食べた"},
+  {lv:1, present:"drink",  past:"drank",   irreg:true,  ex_p:"I drink milk every morning.",        ex_pa:"I drank milk this morning.",         jp_p:"毎朝牛乳を飲む",     jp_pa:"今朝、牛乳を飲んだ"},
+  {lv:1, present:"sleep",  past:"slept",   irreg:true,  ex_p:"I sleep at 9 o'clock.",              ex_pa:"I slept early last night.",          jp_p:"9時に寝る",          jp_pa:"昨夜は早く寝た"},
+  {lv:1, present:"wake",   past:"woke",    irreg:true,  ex_p:"I wake up at 7.",                    ex_pa:"I woke up at 7 this morning.",       jp_p:"7時に起きる",        jp_pa:"今朝7時に起きた"},
+  {lv:1, present:"play",   past:"played",  irreg:false, ex_p:"I play outside every day.",          ex_pa:"I played outside yesterday.",        jp_p:"毎日外で遊ぶ",       jp_pa:"昨日、外で遊んだ"},
+  {lv:1, present:"run",    past:"ran",     irreg:true,  ex_p:"I run fast!",                        ex_pa:"I ran fast at sports day.",          jp_p:"速く走る",           jp_pa:"運動会で速く走った"},
+  {lv:1, present:"walk",   past:"walked",  irreg:false, ex_p:"I walk to school.",                  ex_pa:"I walked to school today.",          jp_p:"学校まで歩く",       jp_pa:"今日、学校まで歩いた"},
+  {lv:1, present:"sit",    past:"sat",     irreg:true,  ex_p:"I sit on the chair.",                ex_pa:"I sat on the floor.",                jp_p:"椅子に座る",         jp_pa:"床に座った"},
+  {lv:1, present:"stand",  past:"stood",   irreg:true,  ex_p:"I stand in line.",                   ex_pa:"I stood in line at the shop.",       jp_p:"列に並んで立つ",     jp_pa:"お店で列に並んだ"},
+  {lv:1, present:"go",     past:"went",    irreg:true,  ex_p:"I go to school every day.",          ex_pa:"I went to school yesterday.",        jp_p:"毎日学校に行く",     jp_pa:"昨日、学校に行った"},
+  {lv:1, present:"come",   past:"came",    irreg:true,  ex_p:"I come home at 3.",                  ex_pa:"I came home at 3 yesterday.",        jp_p:"3時に家に帰る",      jp_pa:"昨日3時に家に帰った"},
+  {lv:1, present:"see",    past:"saw",     irreg:true,  ex_p:"I see a bird in the tree.",          ex_pa:"I saw a bird this morning.",         jp_p:"木の上に鳥がいる",   jp_pa:"今朝、鳥を見た"},
+  {lv:1, present:"look",   past:"looked",  irreg:false, ex_p:"I look out the window.",             ex_pa:"I looked out the window.",           jp_p:"窓の外を見る",       jp_pa:"窓の外を見た"},
+  {lv:1, present:"hear",   past:"heard",   irreg:true,  ex_p:"I hear a dog barking.",              ex_pa:"I heard a dog barking.",             jp_p:"犬が吠えるのが聞こえる", jp_pa:"犬が吠えるのが聞こえた"},
+  {lv:1, present:"say",    past:"said",    irreg:true,  ex_p:"I say 'good morning' every day.",    ex_pa:"I said 'thank you' to my teacher.",  jp_p:"毎日「おはよう」と言う", jp_pa:"先生に「ありがとう」と言った"},
+  {lv:1, present:"smile",  past:"smiled",  irreg:false, ex_p:"I smile at my friends.",             ex_pa:"I smiled at the camera.",            jp_p:"友達に微笑む",       jp_pa:"カメラに向かって微笑んだ"},
+  {lv:1, present:"cry",    past:"cried",   irreg:false, ex_p:"I cry when I'm sad.",                ex_pa:"I cried when I fell down.",          jp_p:"悲しい時は泣く",     jp_pa:"転んだ時に泣いた"},
+  {lv:1, present:"laugh",  past:"laughed", irreg:false, ex_p:"I laugh at funny things.",           ex_pa:"I laughed at the funny video.",      jp_p:"面白いものに笑う",   jp_pa:"面白い動画で笑った"},
+  {lv:1, present:"jump",   past:"jumped",  irreg:false, ex_p:"I jump on my trampoline.",           ex_pa:"I jumped into the pool.",            jp_p:"トランポリンで跳ぶ", jp_pa:"プールに飛び込んだ"},
+  {lv:1, present:"sing",   past:"sang",    irreg:true,  ex_p:"I sing my favorite song.",           ex_pa:"I sang a song at school.",           jp_p:"好きな歌を歌う",     jp_pa:"学校で歌を歌った"},
+  {lv:1, present:"dance",  past:"danced",  irreg:false, ex_p:"I dance to music.",                  ex_pa:"I danced at the festival.",          jp_p:"音楽に合わせて踊る", jp_pa:"お祭りで踊った"},
+  {lv:1, present:"hug",    past:"hugged",  irreg:false, ex_p:"I hug my mom every night.",          ex_pa:"I hugged my grandma.",               jp_p:"毎晩ママを抱っこする", jp_pa:"おばあちゃんを抱っこした"},
+  {lv:1, present:"kiss",   past:"kissed",  irreg:false, ex_p:"I kiss my baby sister.",             ex_pa:"I kissed my dog on the head.",       jp_p:"赤ちゃんのほっぺにキスする", jp_pa:"犬の頭にキスした"},
+  {lv:1, present:"wave",   past:"waved",   irreg:false, ex_p:"I wave to my friends.",              ex_pa:"I waved goodbye at the station.",    jp_p:"友達に手を振る",     jp_pa:"駅でさようならと手を振った"},
+  {lv:1, present:"clap",   past:"clapped", irreg:false, ex_p:"I clap my hands.",                   ex_pa:"I clapped at the concert.",          jp_p:"手を叩く",           jp_pa:"コンサートで拍手した"},
+
+  // LEVEL 2 - Common school & home actions (小1〜小3)
+  {lv:2, present:"draw",   past:"drew",    irreg:true,  ex_p:"I draw pictures every day.",         ex_pa:"I drew a picture of my house.",      jp_p:"毎日絵を描く",       jp_pa:"家の絵を描いた"},
+  {lv:2, present:"write",  past:"wrote",   irreg:true,  ex_p:"I write in my diary.",               ex_pa:"I wrote in my diary last night.",    jp_p:"日記を書く",         jp_pa:"昨夜、日記を書いた"},
+  {lv:2, present:"read",   past:"read",    irreg:true,  ex_p:"I read a book before bed.",          ex_pa:"I read a book last night.",          jp_p:"寝る前に本を読む",   jp_pa:"昨夜、本を読んだ"},
+  {lv:2, present:"count",  past:"counted", irreg:false, ex_p:"I count to 100.",                    ex_pa:"I counted all my stickers.",         jp_p:"100まで数える",      jp_pa:"シールを全部数えた"},
+  {lv:2, present:"color",  past:"colored", irreg:false, ex_p:"I color with my crayons.",           ex_pa:"I colored a rainbow picture.",       jp_p:"クレヨンで色を塗る", jp_pa:"虹の絵を色塗りした"},
+  {lv:2, present:"cut",    past:"cut",     irreg:true,  ex_p:"I cut paper with scissors.",         ex_pa:"I cut the cake for my sister.",      jp_p:"ハサミで紙を切る",   jp_pa:"妹のためにケーキを切った"},
+  {lv:2, present:"make",   past:"made",    irreg:true,  ex_p:"I make my bed every morning.",       ex_pa:"I made a sandwich for lunch.",       jp_p:"毎朝ベッドを整える", jp_pa:"お昼にサンドイッチを作った"},
+  {lv:2, present:"build",  past:"built",   irreg:true,  ex_p:"I build a tower with blocks.",       ex_pa:"I built a castle with Lego.",        jp_p:"ブロックで塔を作る", jp_pa:"レゴでお城を作った"},
+  {lv:2, present:"throw",  past:"threw",   irreg:true,  ex_p:"I throw the ball to my friend.",     ex_pa:"I threw the ball very far.",         jp_p:"友達にボールを投げる", jp_pa:"ボールをとても遠くに投げた"},
+  {lv:2, present:"catch",  past:"caught",  irreg:true,  ex_p:"I catch the ball.",                  ex_pa:"I caught a big fish!",               jp_p:"ボールを受け取る",   jp_pa:"大きな魚を釣った！"},
+  {lv:2, present:"hit",    past:"hit",     irreg:true,  ex_p:"I hit the ball with my bat.",        ex_pa:"I hit a home run!",                  jp_p:"バットでボールを打つ", jp_pa:"ホームランを打った！"},
+  {lv:2, present:"kick",   past:"kicked",  irreg:false, ex_p:"I kick the soccer ball.",            ex_pa:"I kicked the ball into the goal.",   jp_p:"サッカーボールを蹴る", jp_pa:"ゴールにボールを蹴り込んだ"},
+  {lv:2, present:"ride",   past:"rode",    irreg:true,  ex_p:"I ride my bike to the park.",        ex_pa:"I rode my bike all the way home.",   jp_p:"自転車で公園へ行く", jp_pa:"自転車で家まで帰った"},
+  {lv:2, present:"swim",   past:"swam",    irreg:true,  ex_p:"I swim at the pool on Saturdays.",   ex_pa:"I swam 25 meters!",                  jp_p:"土曜日にプールで泳ぐ", jp_pa:"25メートル泳いだ！"},
+  {lv:2, present:"climb",  past:"climbed", irreg:false, ex_p:"I climb the jungle gym.",            ex_pa:"I climbed the big tree.",            jp_p:"ジャングルジムに登る", jp_pa:"大きな木に登った"},
+  {lv:2, present:"push",   past:"pushed",  irreg:false, ex_p:"I push my little brother on the swings.", ex_pa:"I pushed the cart at the store.",jp_p:"弟をブランコで押す", jp_pa:"お店でカートを押した"},
+  {lv:2, present:"pull",   past:"pulled",  irreg:false, ex_p:"I pull the wagon.",                  ex_pa:"I pulled the heavy bag.",            jp_p:"ワゴンを引く",       jp_pa:"重い袋を引っ張った"},
+  {lv:2, present:"clean",  past:"cleaned", irreg:false, ex_p:"I clean my room on Sundays.",        ex_pa:"I cleaned my desk after school.",    jp_p:"日曜日に部屋を掃除する", jp_pa:"放課後、机を掃除した"},
+  {lv:2, present:"help",   past:"helped",  irreg:false, ex_p:"I help my mom cook dinner.",         ex_pa:"I helped set the table.",            jp_p:"ご飯作りを手伝う",   jp_pa:"テーブルを並べるのを手伝った"},
+  {lv:2, present:"share",  past:"shared",  irreg:false, ex_p:"I share my snacks with friends.",    ex_pa:"I shared my eraser with her.",       jp_p:"おやつを友達に分ける", jp_pa:"消しゴムを貸してあげた"},
+  {lv:2, present:"carry",  past:"carried", irreg:false, ex_p:"I carry my backpack to school.",     ex_pa:"I carried the grocery bag.",         jp_p:"学校にランドセルを持っていく", jp_pa:"買い物袋を持った"},
+  {lv:2, present:"open",   past:"opened",  irreg:false, ex_p:"I open my lunchbox at noon.",        ex_pa:"I opened my birthday present!",      jp_p:"お昼にお弁当を開ける", jp_pa:"誕生日プレゼントを開けた！"},
+  {lv:2, present:"close",  past:"closed",  irreg:false, ex_p:"I close the door quietly.",          ex_pa:"I closed my book and went to sleep.", jp_p:"静かにドアを閉める", jp_pa:"本を閉じて眠った"},
+  {lv:2, present:"turn",   past:"turned",  irreg:false, ex_p:"I turn off the TV after 8.",         ex_pa:"I turned off the light.",            jp_p:"8時後にTVを消す",    jp_pa:"電気を消した"},
+  {lv:2, present:"show",   past:"showed",  irreg:false, ex_p:"I show my teacher my homework.",     ex_pa:"I showed my picture to my mom.",     jp_p:"先生に宿題を見せる", jp_pa:"ママに絵を見せた"},
+
+  // LEVEL 3 - Active/expressive actions (小3〜小5)
+  {lv:3, present:"think",  past:"thought", irreg:true,  ex_p:"I think about my friends.",          ex_pa:"I thought about the answer.",        jp_p:"友達のことを考える", jp_pa:"答えを考えた"},
+  {lv:3, present:"know",   past:"knew",    irreg:true,  ex_p:"I know all my times tables.",        ex_pa:"I knew the answer right away.",      jp_p:"九九を全部知っている", jp_pa:"すぐに答えを知っていた"},
+  {lv:3, present:"learn",  past:"learned", irreg:false, ex_p:"I learn new words every day.",       ex_pa:"I learned 10 words yesterday.",      jp_p:"毎日新しい単語を学ぶ", jp_pa:"昨日、10個の単語を学んだ"},
+  {lv:3, present:"teach",  past:"taught",  irreg:true,  ex_p:"I teach my little sister the ABCs.", ex_pa:"I taught my friend to fold origami.", jp_p:"妹にABCを教える",   jp_pa:"友達に折り紙を教えた"},
+  {lv:3, present:"ask",    past:"asked",   irreg:false, ex_p:"I ask questions in class.",          ex_pa:"I asked my teacher a question.",     jp_p:"授業で質問する",     jp_pa:"先生に質問した"},
+  {lv:3, present:"answer", past:"answered",irreg:false, ex_p:"I answer the teacher's questions.",  ex_pa:"I answered correctly!",              jp_p:"先生の質問に答える", jp_pa:"正解した！"},
+  {lv:3, present:"find",   past:"found",   irreg:true,  ex_p:"I find my pencil case in my bag.",   ex_pa:"I found a beautiful shell at the beach.", jp_p:"カバンの中から筆箱を見つける", jp_pa:"海で綺麗な貝を見つけた"},
+  {lv:3, present:"lose",   past:"lost",    irreg:true,  ex_p:"I lose my eraser sometimes.",        ex_pa:"I lost my umbrella yesterday.",      jp_p:"たまに消しゔゴムをなくす", jp_pa:"昨日、傘をなくした"},
+  {lv:3, present:"forget", past:"forgot",  irreg:true,  ex_p:"I forget things sometimes.",         ex_pa:"I forgot my homework today!",        jp_p:"たまに忘れ物をする", jp_pa:"今日、宿題を忘れた！"},
+  {lv:3, present:"remember",past:"remembered",irreg:false,ex_p:"I remember my best friend's birthday.", ex_pa:"I remembered all the words to the song.", jp_p:"親友の誕生日を覚えている", jp_pa:"歌の歌詞を全部覚えた"},
+  {lv:3, present:"try",    past:"tried",   irreg:false, ex_p:"I try my best every day.",           ex_pa:"I tried hard at swimming today.",    jp_p:"毎日ベストを尽くす", jp_pa:"今日の水泳で頑張った"},
+  {lv:3, present:"stop",   past:"stopped", irreg:false, ex_p:"I stop at the red light.",           ex_pa:"I stopped running when it rained.",  jp_p:"赤信号で止まる",     jp_pa:"雨が降って走るのを止めた"},
+  {lv:3, present:"wait",   past:"waited",  irreg:false, ex_p:"I wait for the school bus.",         ex_pa:"I waited 10 minutes for the bus.",   jp_p:"スクールバスを待つ", jp_pa:"バスを10分待った"},
+  {lv:3, present:"start",  past:"started", irreg:false, ex_p:"I start my homework after dinner.",  ex_pa:"I started a new book yesterday.",    jp_p:"夕食後に宿題を始める", jp_pa:"昨日、新しい本を始めた"},
+  {lv:3, present:"finish", past:"finished",irreg:false, ex_p:"I finish my homework before dinner.",ex_pa:"I finished all my worksheets.",      jp_p:"夕食前に宿題を終わらせる", jp_pa:"プリントを全部終わらせた"},
+  {lv:3, present:"talk",   past:"talked",  irreg:false, ex_p:"I talk with my friends at lunch.",   ex_pa:"I talked with my grandma on the phone.", jp_p:"昼休みに友達と話す", jp_pa:"電話でおばあちゃんと話した"},
+  {lv:3, present:"listen", past:"listened",irreg:false, ex_p:"I listen to English songs.",         ex_pa:"I listened to my teacher carefully.", jp_p:"英語の歌を聴く",     jp_pa:"先生の話をよく聴いた"},
+  {lv:3, present:"choose", past:"chose",   irreg:true,  ex_p:"I choose my clothes for the day.",   ex_pa:"I chose the blue T-shirt.",          jp_p:"その日の服を選ぶ",   jp_pa:"青いTシャツを選んだ"},
+  {lv:3, present:"bring",  past:"brought", irreg:true,  ex_p:"I bring my lunch to school.",        ex_pa:"I brought cookies for the class.",   jp_p:"学校にお弁当を持ってくる", jp_pa:"クラスにクッキーを持っていった"},
+  {lv:3, present:"put",    past:"put",     irreg:true,  ex_p:"I put my shoes in the shoebox.",     ex_pa:"I put my bag on my chair.",          jp_p:"靴を下駄箱にしまう", jp_pa:"バッグを椅子に置いた"},
+  {lv:3, present:"take",   past:"took",    irreg:true,  ex_p:"I take a photo of my lunch.",        ex_pa:"I took a photo at the zoo.",         jp_p:"お昼ご飯の写真を撮る", jp_pa:"動物園で写真を撮った"},
+  {lv:3, present:"give",   past:"gave",    irreg:true,  ex_p:"I give my teacher a thank-you card.",ex_pa:"I gave my mom flowers.",             jp_p:"先生にサンキューカードを渡す", jp_pa:"ママにお花を渡した"},
+  {lv:3, present:"get",    past:"got",     irreg:true,  ex_p:"I get a gold star for my work.",     ex_pa:"I got 100 on the test!",             jp_p:"頑張ったら金星がもらえる", jp_pa:"テストで100点取った！"},
+  {lv:3, present:"feel",   past:"felt",    irreg:true,  ex_p:"I feel happy at school.",            ex_pa:"I felt excited about the field trip.", jp_p:"学校で嬉しい気持ちになる", jp_pa:"遠足がすごく楽しみだった"},
+  {lv:3, present:"win",    past:"won",     irreg:true,  ex_p:"I win at card games sometimes.",     ex_pa:"I won the relay race!",              jp_p:"カードゲームで勝つことがある", jp_pa:"リレーで1位になった！"},
+
+  // LEVEL 4 - More complex / expressive (小5〜小6)
+  {lv:4, present:"explain",past:"explained",irreg:false,ex_p:"I explain my ideas clearly.",        ex_pa:"I explained my project to the class.", jp_p:"自分の考えを分かりやすく説明する", jp_pa:"クラスで自分のプロジェクトを説明した"},
+  {lv:4, present:"describe",past:"described",irreg:false,ex_p:"I describe my dream in detail.",    ex_pa:"I described the story to my friend.", jp_p:"夢を詳しく説明する",  jp_pa:"友達に話の内容を説明した"},
+  {lv:4, present:"decide",past:"decided",  irreg:false, ex_p:"I decide what to eat for lunch.",    ex_pa:"I decided to join the drama club.",   jp_p:"お昼に何を食べるか決める", jp_pa:"演劇部に入ると決めた"},
+  {lv:4, present:"plan",   past:"planned", irreg:false, ex_p:"I plan a surprise for my friend.",   ex_pa:"I planned the whole birthday party.", jp_p:"友達にサプライズを計画する", jp_pa:"誕生日パーティーを全部計画した"},
+  {lv:4, present:"practice",past:"practiced",irreg:false,ex_p:"I practice piano every evening.",  ex_pa:"I practiced my speech 5 times.",     jp_p:"毎晩ピアノを練習する", jp_pa:"スピーチを5回練習した"},
+  {lv:4, present:"prepare",past:"prepared",irreg:false, ex_p:"I prepare my bag the night before.", ex_pa:"I prepared a presentation.",         jp_p:"前日の夜にカバンを用意する", jp_pa:"発表の準備をした"},
+  {lv:4, present:"imagine",past:"imagined",irreg:false, ex_p:"I imagine going to space one day.",  ex_pa:"I imagined I was a superhero.",      jp_p:"いつか宇宙に行くことを想像する", jp_pa:"スーパーヒーローになった気分を想像した"},
+  {lv:4, present:"create", past:"created", irreg:false, ex_p:"I create videos for fun.",           ex_pa:"I created a comic book!",            jp_p:"楽しくて動画を作る",  jp_pa:"マンガを作った！"},
+  {lv:4, present:"perform",past:"performed",irreg:false,ex_p:"I perform in the school concert.",   ex_pa:"I performed on stage last week.",    jp_p:"学校のコンサートで発表する", jp_pa:"先週、舞台で発表した"},
+  {lv:4, present:"collect",past:"collected",irreg:false,ex_p:"I collect stamps from all over the world.", ex_pa:"I collected 50 different cards.", jp_p:"世界中の切手を集める", jp_pa:"50種類のカードを集めた"},
+  {lv:4, present:"compare",past:"compared",irreg:false, ex_p:"I compare prices at the store.",     ex_pa:"I compared two science books.",      jp_p:"お店で値段を比べる",  jp_pa:"科学の本を2冊比べた"},
+  {lv:4, present:"discover",past:"discovered",irreg:false,ex_p:"I discover new things every day.", ex_pa:"I discovered a new type of bug.",    jp_p:"毎日新しいことを発見する", jp_pa:"新しい種類の虫を発見した"},
+  {lv:4, present:"protect",past:"protected",irreg:false,ex_p:"I protect my little brother.",       ex_pa:"I protected the baby bird.",         jp_p:"弟を守る",           jp_pa:"赤ちゃん鳥を守った"},
+  {lv:4, present:"celebrate",past:"celebrated",irreg:false,ex_p:"I celebrate my birthday with cake.", ex_pa:"I celebrated my friend's win.",  jp_p:"ケーキで誕生日を祝う", jp_pa:"友達の勝利を祝った"},
+  {lv:4, present:"express",past:"expressed",irreg:false, ex_p:"I express my feelings in English.", ex_pa:"I expressed my thanks to my teacher.", jp_p:"英語で気持ちを表現する", jp_pa:"先生に感謝の気持ちを伝えた"},
+  {lv:4, present:"suggest",past:"suggested",irreg:false, ex_p:"I suggest a new game to play.",     ex_pa:"I suggested we eat pizza.",          jp_p:"新しいゲームを提案する", jp_pa:"ピザを食べようと提案した"},
+  {lv:4, present:"agree",  past:"agreed",  irreg:false, ex_p:"I agree with my friend's idea.",     ex_pa:"I agreed to help clean up.",         jp_p:"友達の意見に賛成する", jp_pa:"掃除を手伝うことに同意した"},
+  {lv:4, present:"disagree",past:"disagreed",irreg:false,ex_p:"I disagree politely.",             ex_pa:"I disagreed but stayed calm.",       jp_p:"礼儀正しく反対する",  jp_pa:"反対したけど落ち着いていた"},
+  {lv:4, present:"achieve",past:"achieved",irreg:false, ex_p:"I achieve my goal step by step.",    ex_pa:"I achieved my reading goal!",        jp_p:"一歩ずつ目標を達成する", jp_pa:"読書の目標を達成した！"},
+  {lv:4, present:"improve",past:"improved",irreg:false, ex_p:"I improve my English every day.",    ex_pa:"I improved my score by 10 points.", jp_p:"毎日英語を上達させる", jp_pa:"点数が10点上がった"},
+  {lv:4, present:"challenge",past:"challenged",irreg:false,ex_p:"I challenge myself to do hard things.", ex_pa:"I challenged myself and won!", jp_p:"難しいことに挑戦する", jp_pa:"挑戦して成功した！"},
+  {lv:4, present:"research",past:"researched",irreg:false,ex_p:"I research topics I'm curious about.", ex_pa:"I researched dinosaurs for my report.", jp_p:"気になることを調べる", jp_pa:"レポートのために恐竜を調べた"},
+  {lv:4, present:"memorize",past:"memorized",irreg:false,ex_p:"I memorize new vocabulary.",        ex_pa:"I memorized the whole poem!",        jp_p:"新しい語彙を覚える",  jp_pa:"詩を全部暗記した！"},
+  {lv:4, present:"organize",past:"organized",irreg:false,ex_p:"I organize my desk before studying.", ex_pa:"I organized all my books by color.", jp_p:"勉強前に机を整理する", jp_pa:"本を全部色で整理した"},
+  {lv:4, present:"communicate",past:"communicated",irreg:false,ex_p:"I communicate in English with my teacher.", ex_pa:"I communicated my idea to the group.", jp_p:"先生と英語でコミュニケーションを取る", jp_pa:"グループに自分のアイデアを伝えた"},
+];
+
+// ============ TTS ============
+let bestVoice = null;
+let voicesReady = false;
+
+function _pickBestVoice(voices) {
+  const priority = ['Samantha','Karen','Moira','Fiona','Victoria','Allison','Ava','Susan','Alex'];
+  for (const name of priority) {
+    const v = voices.find(v => v.name === name && v.lang.startsWith('en'));
+    if (v) return v;
+  }
+  return voices.find(v => v.lang.startsWith('en-')) || voices.find(v => v.lang.startsWith('en')) || null;
+}
+
+function initVoices() {
+  const voices = speechSynthesis.getVoices();
+  if (voices.length > 0) {
+    bestVoice = _pickBestVoice(voices);
+    voicesReady = true;
+    const badge = document.getElementById('voice-badge');
+    if (badge) badge.textContent = bestVoice ? `🔊 Voice: ${bestVoice.name}` : '🔊 Voice ready';
+  }
+}
+speechSynthesis.onvoiceschanged = initVoices;
+initVoices();
+
+function speak(text, btn) {
+  if (!voicesReady) { initVoices(); }
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  if (bestVoice) utt.voice = bestVoice;
+  utt.rate = 0.88;
+  utt.pitch = 1.05;
+  utt.lang = 'en-US';
+  if (btn) {
+    btn.classList.add('speaking');
+    utt.onend = () => btn.classList.remove('speaking');
+    utt.onerror = () => btn.classList.remove('speaking');
+  }
+  // Chrome bug workaround
+  const MAX = 200;
+  if (text.length > MAX) {
+    const chunks = text.match(/.{1,200}(\s|$)/g) || [text];
+    chunks.forEach((c, i) => {
+      const u2 = new SpeechSynthesisUtterance(c.trim());
+      if (bestVoice) u2.voice = bestVoice;
+      u2.rate = 0.88; u2.pitch = 1.05; u2.lang = 'en-US';
+      if (i === chunks.length - 1 && btn) { u2.onend = () => btn.classList.remove('speaking'); }
+      speechSynthesis.speak(u2);
+    });
+    return;
+  }
+  speechSynthesis.speak(utt);
+}
+
+// ============ BUILD CARDS ============
+function buildCard(v) {
+  const irreg = v.irreg ? '<div class="irreg-badge">irregular</div>' : '';
+  return `
+  <div class="verb-card lv${v.lv}">
+    ${irreg}
+    <div class="verb-pair">
+      <div class="verb-box present">
+        <span class="tense-label">Present</span>
+        <span class="word">${v.present}</span>
+      </div>
+      <div class="arrow">→</div>
+      <div class="verb-box past">
+        <span class="tense-label">Past</span>
+        <span class="word">${v.past}</span>
+      </div>
+    </div>
+    <div class="example-row">
+      <div class="example">
+        🟢 ${v.ex_p}
+        <em>（${v.jp_p}）</em>
+      </div>
+      <div class="example">
+        ⭐ ${v.ex_pa}
+        <em>（${v.jp_pa}）</em>
+      </div>
+    </div>
+    <div class="audio-row">
+      <button class="audio-btn present-btn" onclick="speak('${v.present}', this)">🔊 ${v.present}</button>
+      <button class="audio-btn past-btn" onclick="speak('${v.past}', this)">🔊 ${v.past}</button>
+      <button class="audio-btn example-btn" onclick="speak('${v.ex_p} ... ${v.ex_pa}', this)">🔊 Examples</button>
+    </div>
+  </div>`;
+}
+
+const levelMeta = {
+  1: { label: '🟢 Level 1 — Basic Daily Actions', sub: '幼児〜小学校1年生', cls: 'lv1' },
+  2: { label: '🔵 Level 2 — School & Home', sub: '小学校1〜3年生', cls: 'lv2' },
+  3: { label: '🟠 Level 3 — Active & Expressive', sub: '小学校3〜5年生', cls: 'lv3' },
+  4: { label: '🟣 Level 4 — Think & Communicate', sub: '小学校5〜6年生', cls: 'lv4' },
+};
+
+function buildLevelSection(lvNum, container) {
+  const m = levelMeta[lvNum];
+  let html = `<div class="level-header ${m.cls}">
+    <div>
+      <div>${m.label}</div>
+      <div style="font-size:0.8rem;font-weight:400;opacity:0.8;font-family:sans-serif">${m.sub}</div>
+    </div>
+  </div>
+  <div class="cards-grid">`;
+  VERBS.filter(v => v.lv === lvNum).forEach(v => { html += buildCard(v); });
+  html += '</div>';
+  container.insertAdjacentHTML('beforeend', html);
+}
+
+function initSections() {
+  const allSec = document.getElementById('section-all');
+  const s1 = document.getElementById('section-1');
+  const s2 = document.getElementById('section-2');
+  const s3 = document.getElementById('section-3');
+  const s4 = document.getElementById('section-4');
+
+  for (let lv = 1; lv <= 4; lv++) {
+    buildLevelSection(lv, allSec);
+    buildLevelSection(lv, document.getElementById(`section-${lv}`));
+  }
+
+  // Build speaking queue in quiz section
+  buildSpeakQueue();
+}
+
+// ============ SPEAK QUEUE ============
+function buildSpeakQueue() {
+  const container = document.getElementById('speak-queue');
+  // Pick 10 varied verbs
+  const sample = VERBS.filter((_, i) => i % 10 === 0).slice(0, 10);
+  container.innerHTML = sample.map(v => `
+    <div class="speak-item">
+      <div class="speak-text">
+        ${v.ex_p}
+        <small>→ ${v.ex_pa}</small>
+      </div>
+      <button class="speak-play-btn" onclick="speak('${v.ex_p}. ${v.ex_pa}.', this)">▶️ Play</button>
+    </div>`).join('');
+}
+
+let speakAllIdx = 0;
+let speakAllItems = [];
+function speakAll() {
+  speakAllItems = VERBS.filter((_, i) => i % 10 === 0).slice(0, 10);
+  speakAllIdx = 0;
+  speakNext();
+}
+function speakNext() {
+  if (speakAllIdx >= speakAllItems.length) return;
+  const v = speakAllItems[speakAllIdx];
+  speakAllIdx++;
+  const utt1 = new SpeechSynthesisUtterance(v.ex_p);
+  const utt2 = new SpeechSynthesisUtterance(v.ex_pa);
+  [utt1, utt2].forEach(u => { if (bestVoice) u.voice = bestVoice; u.rate = 0.85; u.lang = 'en-US'; });
+  utt2.onend = () => { setTimeout(speakNext, 600); };
+  speechSynthesis.speak(utt1);
+  setTimeout(() => speechSynthesis.speak(utt2), 900);
+}
+
+// ============ TABS ============
+function showTab(level) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(`section-${level}`).classList.add('active');
+  document.querySelector(`[data-level="${level}"]`).classList.add('active');
+}
+
+// ============ QUIZ ============
+let quizItems = [];
+let quizIdx = 0;
+let quizScore = 0;
+let quizAnswered = false;
+
+function startQuiz() {
+  const lvl = document.getElementById('quiz-level-select').value;
+  const pool = lvl === 'all' ? VERBS : VERBS.filter(v => v.lv == lvl);
+  // shuffle
+  quizItems = [...pool].sort(() => Math.random() - 0.5).slice(0, 15);
+  quizIdx = 0;
+  quizScore = 0;
+  document.getElementById('quiz-area').innerHTML = '';
+  document.querySelector('.quiz-result') && document.querySelector('.quiz-result').remove();
+  showQuizQuestion();
+}
+
+function showQuizQuestion() {
+  if (quizIdx >= quizItems.length) { showQuizResult(); return; }
+  const v = quizItems[quizIdx];
+  const type = document.getElementById('quiz-type-select').value;
+  const isPresent = Math.random() > 0.5; // randomly ask present or past
+  const questionWord = isPresent ? v.past : v.present;
+  const answerWord = isPresent ? v.present : v.past;
+  const questionEx = isPresent ? v.ex_pa : v.ex_p;
+  const answerEx = isPresent ? v.ex_p : v.ex_pa;
+  const direction = isPresent ? 'past → present' : 'present → past';
+  quizAnswered = false;
+
+  const progress = Math.round((quizIdx / quizItems.length) * 100);
+
+  let inputHtml = '';
+  if (type === 'type') {
+    inputHtml = `
+      <input type="text" class="quiz-input" id="quiz-input" placeholder="Type the ${isPresent ? 'present' : 'past'} form..." autocomplete="off">
+      <button class="quiz-submit-btn" id="quiz-submit" onclick="checkAnswer('${answerWord}', '${answerEx}')">Check ✓</button>`;
+  } else {
+    // generate 4 choices
+    const wrongPool = VERBS.filter(w => w.present !== v.present);
+    const wrongs = wrongPool.sort(() => Math.random() - 0.5).slice(0, 3).map(w => isPresent ? w.present : w.past);
+    const choices = [answerWord, ...wrongs].sort(() => Math.random() - 0.5);
+    inputHtml = `<div class="quiz-choices">${choices.map(c =>
+      `<button class="choice-btn" onclick="checkChoiceAnswer('${c}', '${answerWord}', '${answerEx}', this)">${c}</button>`
+    ).join('')}</div>`;
+  }
+
+  const card = `
+  <div class="quiz-card" id="quiz-card">
+    <div class="quiz-progress">
+      <span>Question ${quizIdx + 1} / ${quizItems.length}</span>
+      <span>Score: ${quizScore} ⭐</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width:${progress}%"></div></div>
+    <div class="quiz-question">What is the ${isPresent ? 'present' : 'past'} form? (${direction})</div>
+    <div class="quiz-sentence">
+      "<span style="color:#a855f7;font-family:'Fredoka One',cursive">${questionWord}</span>" → <span class="blank">___?</span>
+    </div>
+    <div class="quiz-sentence" style="font-size:1rem;font-weight:600;color:#475569">
+      Example: <em>${questionEx}</em>
+    </div>
+    <div style="margin:16px 0">${inputHtml}</div>
+    <div class="quiz-feedback" id="quiz-feedback"></div>
+    <button class="quiz-next-btn" id="quiz-next" onclick="nextQuestion()">Next →</button>
+  </div>`;
+
+  document.getElementById('quiz-area').innerHTML = card;
+
+  // Enter key for type mode
+  const inp = document.getElementById('quiz-input');
+  if (inp) {
+    inp.addEventListener('keydown', e => {
+      if (e.key === 'Enter') checkAnswer(answerWord, answerEx);
+    });
+    inp.focus();
+  }
+
+  // Play question audio
+  setTimeout(() => speak(questionWord + '...', null), 400);
+}
+
+function checkAnswer(correct, answerEx) {
+  if (quizAnswered) return;
+  const inp = document.getElementById('quiz-input');
+  if (!inp) return;
+  const val = inp.value.trim().toLowerCase();
+  showFeedback(val === correct.toLowerCase(), correct, answerEx, inp);
+}
+
+function checkChoiceAnswer(chosen, correct, answerEx, btn) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach(b => b.disabled = true);
+  const isCorrect = chosen === correct;
+  btn.classList.add(isCorrect ? 'correct' : 'wrong');
+  if (!isCorrect) btns.forEach(b => { if (b.textContent === correct) b.classList.add('correct'); });
+  showFeedbackUI(isCorrect, correct, answerEx);
+}
+
+function showFeedback(isCorrect, correct, answerEx, inp) {
+  if (quizAnswered) return;
+  quizAnswered = true;
+  inp.disabled = true;
+  const submitBtn = document.getElementById('quiz-submit');
+  if (submitBtn) submitBtn.disabled = true;
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  showFeedbackUI(isCorrect, correct, answerEx);
+}
+
+function showFeedbackUI(isCorrect, correct, answerEx) {
+  if (isCorrect) quizScore++;
+  const fb = document.getElementById('quiz-feedback');
+  fb.style.display = 'block';
+  fb.className = `quiz-feedback ${isCorrect ? 'correct' : 'wrong'}`;
+  fb.innerHTML = isCorrect
+    ? `✅ Great job! The answer is "<strong>${correct}</strong>"<br><em>${answerEx}</em>`
+    : `❌ The correct answer is "<strong>${correct}</strong>"<br><em>${answerEx}</em>`;
+  speak(isCorrect ? 'Great job! ' + answerEx : 'The answer is ' + correct + '. ' + answerEx, null);
+  document.getElementById('quiz-next').style.display = 'block';
+}
+
+function nextQuestion() {
+  quizIdx++;
+  showQuizQuestion();
+}
+
+function showQuizResult() {
+  const pct = Math.round((quizScore / quizItems.length) * 100);
+  const emoji = pct >= 90 ? '🏆' : pct >= 70 ? '🌟' : pct >= 50 ? '😊' : '💪';
+  const msg = pct >= 90 ? 'Perfect! You\'re amazing!' : pct >= 70 ? 'Great work! Keep it up!' : pct >= 50 ? 'Good try! Practice more!' : 'Don\'t give up! Try again!';
+  document.getElementById('quiz-area').innerHTML = `
+  <div class="quiz-result" style="display:block">
+    <div class="result-emoji">${emoji}</div>
+    <div class="result-score">${quizScore} / ${quizItems.length}</div>
+    <div class="result-msg">${msg}</div>
+    <button class="retry-btn" onclick="startQuiz()">🔄 Try Again!</button>
+  </div>`;
+}
+
+// ============ INIT ============
+window.addEventListener('DOMContentLoaded', initSections);
+</script>
+</body>
+</html>

@@ -1,0 +1,1167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Present & Past Tense Practice | English House Blossom</title>
+<style>
+/* ===== FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Quicksand:wght@400;500;600;700&display=swap');
+
+/* ===== ROOT VARIABLES ===== */
+:root {
+  --sky: #e0f4ff;
+  --sky-mid: #b8e6ff;
+  --emerald: #34c98a;
+  --emerald-dark: #28a870;
+  --emerald-light: #d0f5e8;
+  --coral: #ff7f6b;
+  --coral-light: #ffe5e0;
+  --gold: #ffcc44;
+  --gold-light: #fff5cc;
+  --purple: #a78bfa;
+  --purple-light: #ede9fe;
+  --navy: #1e3a5f;
+  --navy-mid: #2d5282;
+  --text: #2d3748;
+  --text-light: #718096;
+  --white: #ffffff;
+  --card-bg: rgba(255,255,255,0.92);
+  --radius: 20px;
+  --radius-sm: 12px;
+  --shadow: 0 8px 32px rgba(30,58,95,0.12);
+  --shadow-hover: 0 16px 48px rgba(30,58,95,0.18);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Quicksand', sans-serif;
+  background: linear-gradient(145deg, #e0f4ff 0%, #d0f5e8 50%, #fef9e7 100%);
+  min-height: 100vh;
+  color: var(--text);
+}
+
+/* ===== HEADER ===== */
+.header {
+  background: linear-gradient(135deg, var(--navy) 0%, var(--navy-mid) 100%);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 20px rgba(30,58,95,0.25);
+}
+.header-title {
+  font-family: 'Nunito', sans-serif;
+  font-size: 1.2rem;
+  font-weight: 900;
+  color: var(--white);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.header-title span { font-size: 1.4rem; }
+.voice-badge {
+  background: var(--emerald);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 4px 10px;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+/* ===== MAIN TABS ===== */
+.tab-bar {
+  display: flex;
+  gap: 8px;
+  padding: 16px 20px 0;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+.tab-bar::-webkit-scrollbar { display: none; }
+.tab-btn {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.85rem;
+  padding: 10px 18px;
+  border-radius: 30px 30px 0 0;
+  border: none;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s;
+  background: rgba(255,255,255,0.5);
+  color: var(--navy-mid);
+}
+.tab-btn.active {
+  background: var(--white);
+  color: var(--navy);
+  box-shadow: 0 -4px 12px rgba(30,58,95,0.1);
+}
+
+/* ===== SECTION PANELS ===== */
+.section-panel {
+  display: none;
+  padding: 20px;
+  max-width: 860px;
+  margin: 0 auto;
+}
+.section-panel.active { display: block; }
+
+/* ===== LEVEL SELECTOR ===== */
+.level-bar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+.level-btn {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  font-size: 0.8rem;
+  padding: 7px 16px;
+  border-radius: 20px;
+  border: 2.5px solid transparent;
+  cursor: pointer;
+  transition: all 0.2s;
+  background: var(--white);
+  color: var(--text-light);
+}
+.level-btn.active { border-color: var(--emerald); color: var(--emerald-dark); background: var(--emerald-light); }
+.level-btn:hover { border-color: var(--emerald); }
+
+/* ===== CARD ===== */
+.card {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 28px;
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  backdrop-filter: blur(10px);
+  border: 1.5px solid rgba(255,255,255,0.7);
+}
+.card-title {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 1.1rem;
+  color: var(--navy);
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* ===== SCORE BAR ===== */
+.score-bar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  background: var(--navy);
+  color: white;
+  border-radius: var(--radius);
+  padding: 14px 20px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+.score-item { font-family:'Nunito',sans-serif; font-weight:700; font-size:0.9rem; display:flex; align-items:center; gap:6px; }
+.score-num { font-size:1.3rem; font-weight:900; color: var(--gold); }
+.stamps-row { display:flex; gap:4px; flex-wrap:wrap; margin-left:auto; }
+.stamp { font-size:1.4rem; filter: grayscale(1) opacity(0.3); transition:all 0.3s; }
+.stamp.earned { filter: none; animation: stampPop 0.4s ease; }
+@keyframes stampPop { 0%{transform:scale(0)} 60%{transform:scale(1.3)} 100%{transform:scale(1)} }
+
+/* ===== QUESTION CARD ===== */
+.question-scene {
+  font-size:0.78rem;
+  font-weight:700;
+  color: var(--emerald-dark);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.question-type-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 800;
+  padding: 3px 10px;
+  border-radius: 20px;
+  margin-bottom: 10px;
+}
+.type-choose { background: var(--purple-light); color: var(--purple); }
+.type-fill { background: var(--gold-light); color: #b7791f; }
+.type-sort { background: var(--coral-light); color: var(--coral); }
+.type-translate { background: var(--emerald-light); color: var(--emerald-dark); }
+.type-question { background: var(--sky-mid); color: var(--navy-mid); }
+.type-dialog { background: var(--navy); color: white; }
+
+.question-text {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1.6;
+  margin-bottom: 6px;
+}
+.question-jp {
+  font-size: 0.85rem;
+  color: var(--text-light);
+  margin-bottom: 16px;
+  line-height: 1.5;
+}
+
+/* ===== SPEAK BUTTON ===== */
+.speak-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: linear-gradient(135deg, var(--navy-mid), var(--navy));
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 7px 14px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 12px;
+}
+.speak-btn:hover { transform: translateY(-1px); box-shadow: 0 4px 12px rgba(30,58,95,0.3); }
+.speak-btn.speaking { background: linear-gradient(135deg, var(--emerald), var(--emerald-dark)); }
+
+/* ===== CHOICES ===== */
+.choices { display: flex; flex-direction: column; gap: 10px; }
+.choice-btn {
+  text-align: left;
+  background: var(--white);
+  border: 2.5px solid #e2e8f0;
+  border-radius: var(--radius-sm);
+  padding: 12px 16px;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  color: var(--text);
+}
+.choice-btn:hover { border-color: var(--emerald); background: var(--emerald-light); }
+.choice-btn.correct { border-color: var(--emerald); background: var(--emerald-light); color: var(--emerald-dark); }
+.choice-btn.wrong { border-color: var(--coral); background: var(--coral-light); color: var(--coral); }
+
+/* ===== INPUT ===== */
+.answer-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 2.5px solid #e2e8f0;
+  font-family: 'Quicksand', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.2s;
+  background: var(--white);
+}
+.answer-input:focus { border-color: var(--emerald); }
+.answer-input.correct { border-color: var(--emerald); background: var(--emerald-light); }
+.answer-input.wrong { border-color: var(--coral); background: var(--coral-light); }
+
+/* ===== SORT TOKENS ===== */
+.sort-area { display: flex; flex-wrap: wrap; gap: 8px; min-height: 44px; padding: 8px; border: 2px dashed #cbd5e0; border-radius: var(--radius-sm); background: rgba(255,255,255,0.7); margin-bottom: 10px; }
+.sort-bank { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 14px; }
+.token {
+  background: var(--navy);
+  color: white;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  user-select: none;
+  transition: all 0.15s;
+  font-family: 'Nunito', sans-serif;
+}
+.token:hover { transform: translateY(-2px); background: var(--navy-mid); }
+.token.in-area { background: var(--emerald-dark); }
+
+/* ===== FEEDBACK ===== */
+.feedback {
+  display: none;
+  padding: 14px 18px;
+  border-radius: var(--radius-sm);
+  font-weight: 700;
+  font-size: 0.9rem;
+  margin-top: 12px;
+  line-height: 1.5;
+}
+.feedback.show { display: block; }
+.feedback.correct-fb { background: var(--emerald-light); color: var(--emerald-dark); border-left: 4px solid var(--emerald); }
+.feedback.wrong-fb { background: var(--coral-light); color: #c53030; border-left: 4px solid var(--coral); }
+
+/* ===== BUTTONS ===== */
+.btn-primary {
+  background: linear-gradient(135deg, var(--emerald), var(--emerald-dark));
+  color: white;
+  border: none;
+  border-radius: 30px;
+  padding: 12px 28px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.95rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 12px;
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 20px rgba(52,201,138,0.35); }
+.btn-secondary {
+  background: var(--white);
+  color: var(--navy);
+  border: 2.5px solid var(--navy);
+  border-radius: 30px;
+  padding: 10px 22px;
+  font-family: 'Nunito', sans-serif;
+  font-size: 0.88rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: 10px;
+  margin-left: 8px;
+}
+.btn-secondary:hover { background: var(--navy); color: white; }
+
+/* ===== PROGRESS BAR ===== */
+.progress-wrap { background: #e2e8f0; border-radius: 10px; height: 8px; margin-bottom: 16px; overflow: hidden; }
+.progress-fill { height: 100%; border-radius: 10px; background: linear-gradient(90deg, var(--emerald), var(--gold)); transition: width 0.5s ease; }
+
+/* ===== SHADOWING PANEL ===== */
+.shadow-example {
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  border-radius: var(--radius);
+  padding: 20px 24px;
+  color: white;
+  margin-bottom: 14px;
+}
+.shadow-en { font-size: 1.1rem; font-weight: 700; margin-bottom: 4px; }
+.shadow-jp { font-size: 0.85rem; opacity: 0.75; }
+.shadow-controls { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+.shadow-step {
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 2px solid rgba(255,255,255,0.4);
+  background: rgba(255,255,255,0.1);
+  color: white;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.shadow-step:hover, .shadow-step.active { background: var(--emerald); border-color: var(--emerald); }
+
+/* ===== DIALOG ===== */
+.dialog-scene-info {
+  background: linear-gradient(135deg, var(--navy), var(--navy-mid));
+  color: white;
+  border-radius: var(--radius) var(--radius) 0 0;
+  padding: 16px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.dialog-body { padding: 0; }
+.dialog-line {
+  display: flex;
+  gap: 12px;
+  padding: 14px 20px;
+  border-bottom: 1px solid rgba(226,232,240,0.6);
+  align-items: flex-start;
+}
+.dialog-line:last-child { border-bottom: none; }
+.dialog-speaker {
+  font-family: 'Nunito', sans-serif;
+  font-weight: 900;
+  font-size: 0.78rem;
+  min-width: 52px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  text-align: center;
+  white-space: nowrap;
+}
+.speaker-a { background: var(--emerald-light); color: var(--emerald-dark); }
+.speaker-b { background: var(--purple-light); color: var(--purple); }
+.dialog-line-text { flex: 1; }
+.dialog-en { font-weight: 700; font-size: 0.95rem; color: var(--navy); }
+.dialog-jp { font-size: 0.78rem; color: var(--text-light); margin-top: 2px; }
+.dialog-line-controls { display: flex; gap: 6px; align-items: center; }
+
+/* ===== ROLE PLAY ===== */
+.role-play-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  flex-wrap: wrap;
+  padding: 14px 20px;
+  background: var(--gold-light);
+  border-radius: 0 0 var(--radius) var(--radius);
+}
+.role-label { font-weight: 800; font-size: 0.85rem; color: #744210; }
+.role-select { padding: 6px 12px; border-radius: 20px; border: 2px solid #f6c94e; font-family:'Nunito',sans-serif; font-weight:700; font-size:0.82rem; background:white; cursor:pointer; }
+.play-role-btn { background: linear-gradient(135deg, var(--gold), #f6ad55); color: white; border:none; border-radius:30px; padding:8px 18px; font-family:'Nunito',sans-serif; font-weight:800; font-size:0.82rem; cursor:pointer; transition:all 0.2s; }
+.play-role-btn:hover { transform:translateY(-1px); box-shadow:0 4px 12px rgba(246,173,85,0.4); }
+
+/* ===== RESULTS ===== */
+.results-card {
+  text-align: center;
+  padding: 40px 30px;
+}
+.results-emoji { font-size: 4rem; margin-bottom: 16px; }
+.results-title { font-family:'Nunito',sans-serif; font-weight:900; font-size:1.8rem; color:var(--navy); margin-bottom:8px; }
+.results-score { font-size:3rem; font-weight:900; color:var(--emerald); font-family:'Nunito',sans-serif; }
+.results-msg { color:var(--text-light); font-size:0.95rem; margin-top:8px; margin-bottom:24px; }
+.results-stamps { font-size:2rem; margin-bottom:20px; }
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 600px) {
+  .card { padding: 18px; }
+  .question-text { font-size: 1rem; }
+  .score-bar { gap: 10px; }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes slideUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+.card { animation: slideUp 0.3s ease; }
+@keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.05)} }
+.score-num.bump { animation: pulse 0.3s ease; }
+
+/* ===== MIC INDICATOR ===== */
+.mic-bar {
+  display: none;
+  align-items: center;
+  gap: 10px;
+  background: var(--coral-light);
+  border-radius: var(--radius-sm);
+  padding: 10px 16px;
+  margin-top: 10px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--coral);
+}
+.mic-bar.show { display: flex; }
+.mic-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--coral); animation: blink 0.8s infinite; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.2} }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-title">
+    <span>🌸</span> Present &amp; Past Tense Practice
+  </div>
+  <div class="voice-badge" id="voiceBadge">🔊 Loading voice...</div>
+</div>
+
+<!-- TABS -->
+<div class="tab-bar">
+  <button class="tab-btn active" onclick="switchTab('quiz')">📝 Quiz</button>
+  <button class="tab-btn" onclick="switchTab('shadow')">🎙️ Shadowing</button>
+  <button class="tab-btn" onclick="switchTab('dialog')">💬 Dialogue</button>
+</div>
+
+<!-- ==================== QUIZ TAB ==================== -->
+<div class="section-panel active" id="tab-quiz">
+  <!-- Level Selector -->
+  <div class="card" style="padding:18px 22px; margin-top:16px;">
+    <div style="font-family:'Nunito',sans-serif;font-weight:800;font-size:0.85rem;color:var(--navy);margin-bottom:10px;">📊 英検レベルを選んでください</div>
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setLevel(5,this)">5級</button>
+      <button class="level-btn" onclick="setLevel(4,this)">4級</button>
+      <button class="level-btn" onclick="setLevel(3,this)">3級</button>
+      <button class="level-btn" onclick="setLevel('pre2',this)">準2級</button>
+      <button class="level-btn" onclick="setLevel(2,this)">2級</button>
+    </div>
+  </div>
+
+  <!-- Score Bar -->
+  <div class="score-bar">
+    <div class="score-item">✅ Correct <span class="score-num" id="scoreCorrect">0</span></div>
+    <div class="score-item">❌ Wrong <span class="score-num" id="scoreWrong">0</span></div>
+    <div class="score-item">🔥 Streak <span class="score-num" id="scoreStreak">0</span></div>
+    <div class="stamps-row" id="stampsRow">
+      <span class="stamp">⭐</span><span class="stamp">⭐</span><span class="stamp">⭐</span>
+      <span class="stamp">⭐</span><span class="stamp">⭐</span>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="progress-wrap">
+    <div class="progress-fill" id="progressFill" style="width:0%"></div>
+  </div>
+
+  <!-- Question Area -->
+  <div id="questionArea"></div>
+</div>
+
+<!-- ==================== SHADOWING TAB ==================== -->
+<div class="section-panel" id="tab-shadow">
+  <div class="card" style="margin-top:16px; padding:18px 22px;">
+    <div class="card-title">🎙️ Shadowing Practice</div>
+    <div style="font-size:0.85rem;color:var(--text-light);margin-bottom:14px;">英文を聞いて、まねして話す練習です。<br>① Listen → ② Repeat → ③ Shadow（同時に話す）の順で練習しましょう！</div>
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setShadowLevel(5,this)">5級</button>
+      <button class="level-btn" onclick="setShadowLevel(4,this)">4級</button>
+      <button class="level-btn" onclick="setShadowLevel(3,this)">3級</button>
+      <button class="level-btn" onclick="setShadowLevel('pre2',this)">準2級</button>
+      <button class="level-btn" onclick="setShadowLevel(2,this)">2級</button>
+    </div>
+  </div>
+  <div id="shadowingArea"></div>
+</div>
+
+<!-- ==================== DIALOGUE TAB ==================== -->
+<div class="section-panel" id="tab-dialog">
+  <div class="card" style="margin-top:16px; padding:18px 22px;">
+    <div class="card-title">💬 Scene Dialogues</div>
+    <div style="font-size:0.85rem;color:var(--text-light);margin-bottom:14px;">場面ごとのダイアローグを音声で聞いて、ロールプレイ練習をしましょう！</div>
+    <div class="level-bar">
+      <button class="level-btn active" onclick="setDialogLevel(5,this)">5級</button>
+      <button class="level-btn" onclick="setDialogLevel(4,this)">4級</button>
+      <button class="level-btn" onclick="setDialogLevel(3,this)">3級</button>
+      <button class="level-btn" onclick="setDialogLevel('pre2',this)">準2級</button>
+      <button class="level-btn" onclick="setDialogLevel(2,this)">2級</button>
+    </div>
+  </div>
+  <div id="dialogArea"></div>
+</div>
+
+<script>
+// ===========================
+// VOICE SYSTEM
+// ===========================
+let bestVoice = null;
+const VOICE_PRIORITY = [
+  v => /samantha/i.test(v.name),
+  v => /google us english/i.test(v.name),
+  v => /karen/i.test(v.name),
+  v => /zira/i.test(v.name),
+  v => v.lang === 'en-US',
+  v => v.lang.startsWith('en'),
+];
+function _pickBestVoice() {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return null;
+  for (const test of VOICE_PRIORITY) {
+    const found = voices.find(test);
+    if (found) return found;
+  }
+  return voices[0];
+}
+function initVoice() {
+  bestVoice = _pickBestVoice();
+  if (!bestVoice) {
+    speechSynthesis.onvoiceschanged = () => {
+      bestVoice = _pickBestVoice();
+      updateVoiceBadge();
+    };
+    setTimeout(() => { bestVoice = _pickBestVoice(); updateVoiceBadge(); }, 500);
+  } else {
+    updateVoiceBadge();
+  }
+}
+function updateVoiceBadge() {
+  const badge = document.getElementById('voiceBadge');
+  if (bestVoice) {
+    badge.textContent = '🔊 ' + bestVoice.name.split(' ').slice(0,2).join(' ');
+  } else {
+    badge.textContent = '🔊 Default';
+  }
+}
+function speak(text, rate=0.92, onEnd=null) {
+  speechSynthesis.cancel();
+  const utt = new SpeechSynthesisUtterance(text);
+  if (bestVoice) utt.voice = bestVoice;
+  utt.lang = 'en-US';
+  utt.rate = rate;
+  utt.pitch = 1.05;
+  if (onEnd) utt.onend = onEnd;
+  // Chrome stall fix
+  const timer = setInterval(() => {
+    if (!speechSynthesis.speaking) clearInterval(timer);
+    else { speechSynthesis.pause(); speechSynthesis.resume(); }
+  }, 10000);
+  speechSynthesis.speak(utt);
+}
+function speakWithBtn(text, btn) {
+  btn.classList.add('speaking');
+  btn.textContent = '🔊 Speaking...';
+  speak(text, 0.88, () => {
+    btn.classList.remove('speaking');
+    btn.innerHTML = '🔊 Listen';
+  });
+}
+initVoice();
+
+// ===========================
+// DATA — QUESTIONS BY LEVEL
+// ===========================
+const DATA = {
+  5: {
+    questions: [
+      // TYPE: choose (4択)
+      { type:'choose', scene:'🏫 School', q:'I ___ to school every day.', jp:'私は毎日学校に行きます。', choices:['go','went','goes','going'], answer:'go', expl:'「毎日」という習慣にはpresent tense。I go を使います。' },
+      { type:'choose', scene:'🏠 Home', q:'She ___ dinner last night.', jp:'彼女は昨夜夕食を作りました。', choices:['cook','cooked','cooks','cooking'], answer:'cooked', expl:'「last night（昨夜）」がキー。過去のことなのでcooked。' },
+      { type:'choose', scene:'🐶 Daily Life', q:'My dog ___ water now.', jp:'私の犬は今水を飲んでいます。', choices:['drink','drank','drinks','drinking'], answer:'drinks', expl:'3人称単数の現在形。dog = heと同じ。drinks。' },
+      // TYPE: fill
+      { type:'fill', scene:'🌅 Morning', q:'I ___ (eat) breakfast at seven every morning.', jp:'私は毎朝7時に朝食を食べます。', answer:'eat', hint:'動詞 eat を正しい形で入れてね。', expl:'習慣を表す現在形。I eat が正解。' },
+      { type:'fill', scene:'📅 Yesterday', q:'Tom ___ (play) soccer yesterday.', jp:'トムは昨日サッカーをしました。', answer:'played', hint:'yesterday があるので過去形。play の過去形は？', expl:'play → played（規則動詞）' },
+      // TYPE: sort
+      { type:'sort', scene:'🏠 Home', q:'並び替えて文を作ろう', jp:'彼は毎日テレビを見ます。', words:['He','every','day','watches','TV'], answer:'He watches TV every day', expl:'3人称単数現在。watch → watches。' },
+      { type:'sort', scene:'📅 Last Week', q:'並び替えて文を作ろう', jp:'私たちは先週図書館に行きました。', words:['last','went','to','We','week','the library'], answer:'We went to the library last week', expl:'go → went（不規則動詞）。last weekで過去形。' },
+      // TYPE: translate
+      { type:'translate', scene:'🌤️ Daily', q:'私は毎朝ジュースを飲みます。', jp:'', answer:'I drink juice every morning', hint:'drink / every morning', expl:'習慣→現在形。I drink juice every morning.' },
+      { type:'translate', scene:'📅 Past', q:'彼女は昨日本を読みました。', jp:'', answer:'She read a book yesterday', hint:'read の過去形も read（発音は「レッド」）', expl:'She read a book yesterday.' },
+      // TYPE: closed/open question
+      { type:'question', scene:'❓ Closed Q', qtype:'closed', q:'Do you ___ to school by bus? (go)', jp:'あなたはバスで学校に行きますか？', choices:['go','went','goes','going'], answer:'go', expl:'Do you ...? の疑問文では原形を使う。' },
+      { type:'question', scene:'❓ Open Q', qtype:'open', q:'___ time did you ___ up this morning? (What / get)', jp:'今朝は何時に起きましたか？（オープン質問）', choices:['What / get','What / got','How / get','When / gets'], answer:'What / get', expl:'What time ... did you get up? 疑問文はdid + 原形。' },
+    ],
+    shadowing: [
+      { en:'I go to school every day.', jp:'私は毎日学校に行きます。' },
+      { en:'She cooked dinner last night.', jp:'彼女は昨夜夕食を作りました。' },
+      { en:'I ate breakfast at seven this morning.', jp:'私は今朝7時に朝食を食べました。' },
+      { en:'He watches TV every evening.', jp:'彼は毎晩テレビを見ます。' },
+      { en:'We played in the park yesterday.', jp:'私たちは昨日公園で遊びました。' },
+    ],
+    dialogues: [
+      {
+        scene:'🏫 School Morning', sceneJp:'学校の朝',
+        lines:[
+          { speaker:'A', en:"Good morning! Do you walk to school?", jp:'おはよう！学校まで歩いてきますか？' },
+          { speaker:'B', en:"Yes, I walk every day. I walked here today too.", jp:'はい、毎日歩きます。今日も歩いてきました。' },
+          { speaker:'A', en:"What time did you leave home?", jp:'何時に家を出ましたか？' },
+          { speaker:'B', en:"I left at seven thirty. I always leave early.", jp:'7時半に出ました。いつも早く出ます。' },
+          { speaker:'A', en:"Me too! I went to bed early last night.", jp:'私も！昨夜は早く寝ました。' },
+        ]
+      }
+    ]
+  },
+  4: {
+    questions: [
+      { type:'choose', scene:'🛒 Shopping', q:'My mother ___ vegetables at the supermarket every week.', jp:'母は毎週スーパーで野菜を買います。', choices:['buy','buys','bought','buying'], answer:'buys', expl:'3人称単数 + every week → buys（現在形）' },
+      { type:'choose', scene:'🏖️ Last Summer', q:'We ___ to the beach last summer.', jp:'去年の夏、私たちはビーチに行きました。', choices:['go','goes','went','going'], answer:'went', expl:'last summer →過去。go の不規則過去形 went。' },
+      { type:'choose', scene:'📱 Habits', q:'He ___ social media every evening.', jp:'彼は毎晩SNSをチェックします。', choices:['check','checks','checked','checking'], answer:'checks', expl:'3人称単数の習慣 → checks' },
+      { type:'fill', scene:'🍜 Lunch', q:'We ___ (have) lunch at the cafeteria every day.', jp:'私たちは毎日食堂でランチを食べます。', answer:'have', hint:'have の3人称以外の現在形は？', expl:'We → have（原形のまま）' },
+      { type:'fill', scene:'📅 Last Month', q:'She ___ (visit) her grandparents last month.', jp:'彼女は先月祖父母を訪ねました。', answer:'visited', hint:'visit + ed → 過去形', expl:'visit → visited（規則動詞）' },
+      { type:'sort', scene:'🎵 Hobby', q:'並び替えて文を作ろう', jp:'私は毎日音楽を聴きます。', words:['listen','I','to music','every day'], answer:'I listen to music every day', expl:'現在形の習慣。listen to music。' },
+      { type:'sort', scene:'📅 Weekend', q:'並び替えて文を作ろう', jp:'彼らは先週末映画を見ました。', words:['They','a movie','last weekend','watched'], answer:'They watched a movie last weekend', expl:'watch → watched（過去形）' },
+      { type:'translate', scene:'🐾 Pet', q:'私の猫は毎朝私を起こします。', jp:'', answer:'My cat wakes me up every morning', hint:'wake up / every morning / 3人称単数', expl:'My cat wakes me up every morning.' },
+      { type:'translate', scene:'📅 Yesterday', q:'私は昨日友達にメールを送りました。', jp:'', answer:'I sent an email to my friend yesterday', hint:'send の過去形は sent', expl:'send → sent（不規則動詞）' },
+      { type:'question', scene:'❓ Closed Q', qtype:'closed', q:'___ your sister study English every day? (Does / Did)', jp:'あなたのお姉さんは毎日英語を勉強しますか？', choices:['Does','Did','Is','Do'], answer:'Does', expl:'3人称単数の現在のYes/No質問 → Does' },
+      { type:'question', scene:'❓ Open Q', qtype:'open', q:'___ did you ___ last weekend? (What / do)', jp:'先週末、何をしましたか？（オープン質問）', choices:['What / do','What / did','How / do','When / does'], answer:'What / do', expl:'What did you do ...? ← did の後は原形。' },
+    ],
+    shadowing: [
+      { en:'My mother buys vegetables every week.', jp:'母は毎週野菜を買います。' },
+      { en:'We went to the beach last summer.', jp:'去年の夏、ビーチに行きました。' },
+      { en:'He checks social media every evening.', jp:'彼は毎晩SNSをチェックします。' },
+      { en:'She visited her grandparents last month.', jp:'彼女は先月祖父母を訪ねました。' },
+      { en:'They watched a movie last weekend.', jp:'彼らは先週末映画を見ました。' },
+    ],
+    dialogues: [
+      {
+        scene:'🛒 At the Supermarket', sceneJp:'スーパーで',
+        lines:[
+          { speaker:'A', en:"Do you often come to this supermarket?", jp:'このスーパーによく来ますか？' },
+          { speaker:'B', en:"Yes, I come here every week. I came yesterday too.", jp:'はい、毎週来ます。昨日も来ました。' },
+          { speaker:'A', en:"What did you buy yesterday?", jp:'昨日は何を買いましたか？' },
+          { speaker:'B', en:"I bought vegetables and some fruit. I always buy fresh food.", jp:'野菜とフルーツを買いました。いつも新鮮なものを買います。' },
+          { speaker:'A', en:"Me too. I usually shop on weekends.", jp:'私も。いつも週末に買い物をします。' },
+        ]
+      }
+    ]
+  },
+  3: {
+    questions: [
+      { type:'choose', scene:'💼 Work', q:'She ___ to the office by train every morning.', jp:'彼女は毎朝電車でオフィスに通っています。', choices:['commute','commutes','commuted','commuting'], answer:'commutes', expl:'習慣（現在）+ 3人称単数 → commutes' },
+      { type:'choose', scene:'🌍 Travel', q:'They ___ abroad for the first time last year.', jp:'彼らは昨年初めて海外に行きました。', choices:['travel','traveled','travels','traveling'], answer:'traveled', expl:'last year →過去。travel → traveled（規則動詞）' },
+      { type:'choose', scene:'📰 News', q:'The company ___ a new product every spring.', jp:'その会社は毎春新製品を発売します。', choices:['launch','launches','launched','launching'], answer:'launches', expl:'3人称単数の習慣 → launches' },
+      { type:'fill', scene:'🎓 Study', q:'He ___ (study) English for two hours every night.', jp:'彼は毎晩2時間英語を勉強します。', answer:'studies', hint:'study の3人称単数形は？ y→i+es', expl:'study → studies（y→ies）' },
+      { type:'fill', scene:'📅 Last Year', q:'I ___ (receive) a scholarship last year.', jp:'私は昨年奨学金を受け取りました。', answer:'received', hint:'receive + d → 過去形', expl:'receive → received（規則動詞）' },
+      { type:'sort', scene:'🏃 Exercise', q:'並び替えて文を作ろう', jp:'彼女は健康のために毎日ジョギングします。', words:['She','jogs','every day','for her health'], answer:'She jogs every day for her health', expl:'jog → jogs（3人称単数）' },
+      { type:'sort', scene:'📅 Past Event', q:'並び替えて文を作ろう', jp:'私たちは会議で重要な決定をしました。', words:['made','We','an important','decision','at the meeting'], answer:'We made an important decision at the meeting', expl:'make → made（不規則過去形）' },
+      { type:'translate', scene:'🌐 Technology', q:'彼は毎日仕事でパソコンを使います。', jp:'', answer:'He uses a computer for work every day', hint:'use → uses（3人称単数）', expl:'He uses a computer for work every day.' },
+      { type:'translate', scene:'📅 Last Month', q:'私たちは先月新しいプロジェクトを始めました。', jp:'', answer:'We started a new project last month', hint:'start → started', expl:'start → started（規則動詞）' },
+      { type:'question', scene:'❓ Closed Q', qtype:'closed', q:'___ the train usually arrive on time? (Does / Did)', jp:'その電車はいつも時間通りに着きますか？', choices:['Does','Did','Is','Do'], answer:'Does', expl:'3人称単数の習慣的なYes/No質問 → Does' },
+      { type:'question', scene:'❓ Open Q', qtype:'open', q:'___ did you ___ the most in your trip? (What / enjoy)', jp:'旅行で一番楽しんだことは何ですか？', choices:['What / enjoy','What / enjoyed','Where / enjoy','How / enjoys'], answer:'What / enjoy', expl:'What did you enjoy most? → did + 原形' },
+    ],
+    shadowing: [
+      { en:'She commutes to the office by train every morning.', jp:'彼女は毎朝電車で通勤します。' },
+      { en:'They traveled abroad for the first time last year.', jp:'彼らは昨年初めて海外に行きました。' },
+      { en:'He studies English for two hours every night.', jp:'彼は毎晩2時間英語を勉強します。' },
+      { en:'We made an important decision at the meeting.', jp:'私たちは会議で重要な決定をしました。' },
+      { en:'I received a scholarship last year.', jp:'私は昨年奨学金を受け取りました。' },
+    ],
+    dialogues: [
+      {
+        scene:'💼 At the Office', sceneJp:'職場で',
+        lines:[
+          { speaker:'A', en:"How do you usually get to work?", jp:'いつも何で通勤していますか？' },
+          { speaker:'B', en:"I commute by train. It takes about 40 minutes.", jp:'電車で通います。約40分かかります。' },
+          { speaker:'A', en:"Did you come by train today too?", jp:'今日も電車で来ましたか？' },
+          { speaker:'B', en:"Actually, I drove today. The trains were delayed.", jp:'実は今日は車で来ました。電車が遅れていて。' },
+          { speaker:'A', en:"That happens a lot. Do you prefer driving?", jp:'それよくありますよね。運転の方が好きですか？' },
+          { speaker:'B', en:"Sometimes. But I usually enjoy reading on the train.", jp:'ときどきは。でもいつも電車で本を読むのが好きです。' },
+        ]
+      }
+    ]
+  },
+  pre2: {
+    questions: [
+      { type:'choose', scene:'🏥 Health', q:'Regular exercise ___ stress and improves mental health.', jp:'定期的な運動はストレスを軽減し、精神的な健康を改善します。', choices:['reduce','reduces','reduced','reducing'], answer:'reduces', expl:'The subject is "Regular exercise" (3rd person singular) → reduces' },
+      { type:'choose', scene:'📚 History', q:'The invention of the internet ___ the way people communicate.', jp:'インターネットの発明は人々のコミュニケーション方法を変えました。', choices:['transform','transforms','transformed','transforming'], answer:'transformed', expl:'A completed historical event → past tense: transformed' },
+      { type:'fill', scene:'💡 Science', q:'Scientists ___ (discover) a new species in the rainforest recently.', jp:'科学者たちは最近、熱帯雨林で新種を発見しました。', answer:'discovered', hint:'recently + 発見 → 過去形', expl:'discover → discovered' },
+      { type:'fill', scene:'🌏 Culture', q:'Many young people ___ (prefer) online communication these days.', jp:'最近多くの若者はオンラインコミュニケーションを好みます。', answer:'prefer', hint:'現在の傾向 → 現在形。主語は many young people', expl:'Many young people (plural) → prefer（原形）' },
+      { type:'sort', scene:'📊 Business', q:'並び替えて文を作ろう', jp:'その会社は昨年度の売上を大幅に伸ばしました。', words:['significantly','The company','its sales','increased','last fiscal year'], answer:'The company significantly increased its sales last fiscal year', expl:'increase → increased（規則過去形）' },
+      { type:'sort', scene:'🌿 Environment', q:'並び替えて文を作ろう', jp:'再生可能エネルギーは近年急速に成長しています。', words:['Renewable energy','in recent years','rapidly','has grown'], answer:'Renewable energy has grown rapidly in recent years', expl:'現在完了形の語順。has + 過去分詞。' },
+      { type:'translate', scene:'🎓 Academic', q:'その研究者は10年前に重要な発見をしました。', jp:'', answer:'The researcher made an important discovery ten years ago', hint:'make → made / discovery', expl:'make → made + ten years ago（過去形）' },
+      { type:'translate', scene:'📰 Media', q:'ソーシャルメディアは現代社会で重要な役割を果たしています。', jp:'', answer:'Social media plays an important role in modern society', hint:'play → plays（3人称単数）', expl:'Social media plays... (単数扱い)' },
+      { type:'question', scene:'❓ Closed Q', qtype:'closed', q:'___ the new policy affect local businesses significantly? (Does / Did)', jp:'その新しい政策は地域のビジネスに大きな影響を与えましたか？', choices:['Does','Did','Has','Do'], answer:'Did', expl:'過去の出来事についての質問 → Did（new policy is singular）' },
+      { type:'question', scene:'❓ Open Q', qtype:'open', q:'___ factors ___ to the success of the project? (What / contributed)', jp:'何がプロジェクトの成功に貢献しましたか？', choices:['What / contributed','Which / contribute','What / contribute','How / contributed'], answer:'What / contributed', expl:'What factors contributed ...? → 過去の疑問文で動詞はそのまま過去形。' },
+    ],
+    shadowing: [
+      { en:'Regular exercise reduces stress and improves mental health.', jp:'定期的な運動はストレスを軽減し、精神的な健康を改善します。' },
+      { en:'The invention of the internet transformed the way people communicate.', jp:'インターネットの発明は人々のコミュニケーション方法を変えました。' },
+      { en:'Scientists discovered a new species in the rainforest recently.', jp:'科学者たちは最近、熱帯雨林で新種を発見しました。' },
+      { en:'The company significantly increased its sales last fiscal year.', jp:'その会社は昨年度の売上を大幅に伸ばしました。' },
+      { en:'Social media plays an important role in modern society.', jp:'ソーシャルメディアは現代社会で重要な役割を果たしています。' },
+    ],
+    dialogues: [
+      {
+        scene:'🎓 Study Abroad Planning', sceneJp:'留学の計画',
+        lines:[
+          { speaker:'A', en:"Do you plan to study abroad in the future?", jp:'将来留学するつもりですか？' },
+          { speaker:'B', en:"Yes, I applied to a program in Canada last month.", jp:'はい、先月カナダのプログラムに申し込みました。' },
+          { speaker:'A', en:"Really? What motivated you to choose Canada?", jp:'本当に？なぜカナダを選んだのですか？' },
+          { speaker:'B', en:"I visited Toronto two years ago and loved the atmosphere.", jp:'2年前にトロントを訪れて、その雰囲気が大好きになりました。' },
+          { speaker:'A', en:"Did the experience change your perspective?", jp:'その経験は視野を広げましたか？' },
+          { speaker:'B', en:"Absolutely. It inspired me to pursue international opportunities.", jp:'もちろんです。国際的なチャンスを追求する意欲が湧きました。' },
+        ]
+      }
+    ]
+  },
+  2: {
+    questions: [
+      { type:'choose', scene:'🏛️ Society', q:'Globalization ___ significant cultural and economic shifts worldwide.', jp:'グローバル化は世界中で大きな文化的・経済的変化をもたらしています。', choices:['drive','drives','drove','driving'], answer:'drives', expl:'Ongoing truth in the present → drives（3人称単数）' },
+      { type:'choose', scene:'📜 History', q:'The Industrial Revolution ___ the foundations of modern economies.', jp:'産業革命は現代経済の基盤を確立しました。', choices:['establish','establishes','established','establishing'], answer:'established', expl:'Completed historical event → past tense: established' },
+      { type:'fill', scene:'🔬 Research', q:'The latest data ___ (suggest) a strong correlation between sleep and cognitive performance.', jp:'最新データは睡眠と認知パフォーマンスの間に強い相関関係があることを示唆しています。', answer:'suggests', hint:'現在の研究成果を述べる → 現在形。主語は The latest data（単数扱い）', expl:'The latest data → suggests（単数扱い）' },
+      { type:'fill', scene:'💹 Economics', q:'The government ___ (implement) a series of reforms in response to public pressure last year.', jp:'政府は昨年、社会的圧力に応じて一連の改革を実施しました。', answer:'implemented', hint:'last year → 過去形', expl:'implement → implemented（規則動詞）' },
+      { type:'sort', scene:'🌐 Tech', q:'並び替えて文を作ろう', jp:'人工知能はさまざまな産業のあり方を根本的に変えつつあります。', words:['Artificial intelligence','the way','fundamentally','transforms','various industries','operate'], answer:'Artificial intelligence fundamentally transforms the way various industries operate', expl:'現在形で習慣的・一般的事実を述べる。' },
+      { type:'sort', scene:'📅 Policy', q:'並び替えて文を作ろう', jp:'その委員会は昨年度、包括的な報告書を作成しました。', words:['The committee','a comprehensive report','compiled','during the previous fiscal year'], answer:'The committee compiled a comprehensive report during the previous fiscal year', expl:'compile → compiled（規則過去形）' },
+      { type:'translate', scene:'🏢 Corporate', q:'その会社は持続可能な経営のために革新的な戦略を採用しています。', jp:'', answer:'The company adopts innovative strategies for sustainable management', hint:'adopt → adopts（3人称単数）', expl:'adopts → 現在形で方針・習慣を述べる。' },
+      { type:'translate', scene:'📜 History', q:'その条約は二国間の長年の紛争を終結させました。', jp:'', answer:'The treaty ended the long-standing conflict between the two nations', hint:'end → ended / long-standing / conflict', expl:'ended → 完了した歴史的出来事（過去形）。' },
+      { type:'question', scene:'❓ Closed Q', qtype:'closed', q:'___ technological innovation consistently ___ economic inequality? (Does / reduce)', jp:'技術革新は経済的不平等を常に縮小させていますか？', choices:['Does / reduce','Does / reduces','Did / reduce','Do / reduces'], answer:'Does / reduce', expl:'Does + 主語 + 動詞原形？ → Does ... reduce（現在形のYes/No疑問）' },
+      { type:'question', scene:'❓ Open Q', qtype:'open', q:'___ the shift toward renewable energy ___ in terms of policy development? (How / manifest)', jp:'再生可能エネルギーへの移行は政策発展の面でどのように現れましたか？', choices:['How / manifested','How / manifest','What / manifested','When / manifest'], answer:'How / manifested', expl:'How did the shift ... manifest? → 過去疑問文：did + 主語 + 原形。But 主語なしのHow + V-ed も可。Here: How did it manifest → manifested（過去の観点）' },
+    ],
+    shadowing: [
+      { en:'Globalization drives significant cultural and economic shifts worldwide.', jp:'グローバル化は世界中で大きな文化的・経済的変化をもたらしています。' },
+      { en:'The Industrial Revolution established the foundations of modern economies.', jp:'産業革命は現代経済の基盤を確立しました。' },
+      { en:'The latest data suggests a strong correlation between sleep and cognitive performance.', jp:'最新データは睡眠と認知パフォーマンスの強い相関を示しています。' },
+      { en:'Artificial intelligence fundamentally transforms the way various industries operate.', jp:'AIはさまざまな産業のあり方を根本的に変えています。' },
+      { en:'The treaty ended the long-standing conflict between the two nations.', jp:'その条約は二国間の長年の紛争を終結させました。' },
+    ],
+    dialogues: [
+      {
+        scene:'🏢 Business Meeting', sceneJp:'ビジネスミーティング',
+        lines:[
+          { speaker:'A', en:"Does your company currently operate in overseas markets?", jp:'御社は現在、海外市場で事業を展開していますか？' },
+          { speaker:'B', en:"Yes, we expanded into Southeast Asia two years ago.", jp:'はい、2年前に東南アジアに進出しました。' },
+          { speaker:'A', en:"What challenges did you encounter initially?", jp:'最初はどのような課題がありましたか？' },
+          { speaker:'B', en:"Regulatory compliance proved difficult at first, but we adapted our approach.", jp:'最初は法規制の遵守が難しかったですが、アプローチを適応させました。' },
+          { speaker:'A', en:"Does the local workforce generally embrace your corporate culture?", jp:'現地の従業員は貴社の企業文化を受け入れていますか？' },
+          { speaker:'B', en:"By and large, yes. We invested heavily in cultural training from the outset.", jp:'概ね、はい。最初から文化的研修に多大な投資をしました。' },
+        ]
+      }
+    ]
+  }
+};
+
+// ===========================
+// QUIZ ENGINE
+// ===========================
+let currentLevel = 5;
+let qIndex = 0;
+let correct = 0;
+let wrong = 0;
+let streak = 0;
+let stampsEarned = 0;
+let answered = false;
+let sortSelected = [];
+let questions = [];
+
+function setLevel(lvl, btn) {
+  currentLevel = lvl;
+  document.querySelectorAll('#tab-quiz .level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  resetQuiz();
+}
+
+function resetQuiz() {
+  qIndex = 0; correct = 0; wrong = 0; streak = 0; stampsEarned = 0;
+  document.getElementById('scoreCorrect').textContent = 0;
+  document.getElementById('scoreWrong').textContent = 0;
+  document.getElementById('scoreStreak').textContent = 0;
+  document.querySelectorAll('.stamp').forEach(s => s.classList.remove('earned'));
+  document.getElementById('progressFill').style.width = '0%';
+  questions = [...DATA[currentLevel].questions].sort(() => Math.random() - 0.5);
+  renderQuestion();
+}
+
+function renderQuestion() {
+  const area = document.getElementById('questionArea');
+  if (qIndex >= questions.length) { showResults(); return; }
+  const q = questions[qIndex];
+  const pct = Math.round((qIndex / questions.length) * 100);
+  document.getElementById('progressFill').style.width = pct + '%';
+  answered = false;
+  sortSelected = [];
+
+  let typeClass = '', typeLabel = '';
+  if (q.type === 'choose') { typeClass='type-choose'; typeLabel='📌 Choose'; }
+  else if (q.type === 'fill') { typeClass='type-fill'; typeLabel='✏️ Fill in'; }
+  else if (q.type === 'sort') { typeClass='type-sort'; typeLabel='🔀 Sort Words'; }
+  else if (q.type === 'translate') { typeClass='type-translate'; typeLabel='🌐 Translate'; }
+  else if (q.type === 'question') {
+    typeClass='type-question';
+    typeLabel = q.qtype==='closed' ? '❓ Closed Question' : '🔓 Open Question';
+  }
+
+  let innerHTML = `
+    <div class="question-scene">${q.scene}</div>
+    <div class="question-type-badge ${typeClass}">${typeLabel}</div>
+    <div class="question-text">${q.q}</div>
+    ${q.jp ? `<div class="question-jp">🇯🇵 ${q.jp}</div>` : ''}
+  `;
+
+  // Speak button for question
+  const speakText = q.q.replace(/_+/g,'blank').replace(/\(.*?\)/g,'');
+  innerHTML += `<button class="speak-btn" id="speakQBtn" onclick="speakQ('${escQ(speakText)}')">🔊 Listen</button>`;
+
+  // Render by type
+  if (q.type === 'choose' || q.type === 'question') {
+    innerHTML += `<div class="choices" id="choicesArea">`;
+    q.choices.forEach((c, i) => {
+      innerHTML += `<button class="choice-btn" id="ch${i}" onclick="checkChoice('${escQ(c)}','${escQ(q.answer)}',${i})">${c}</button>`;
+    });
+    innerHTML += `</div>`;
+  } else if (q.type === 'fill') {
+    innerHTML += `<div style="font-size:0.8rem;color:var(--text-light);margin-bottom:6px;">💡 ${q.hint||''}</div>`;
+    innerHTML += `<input class="answer-input" id="fillInput" placeholder="Type your answer..." onkeydown="if(event.key==='Enter')checkFill()"/>`;
+    innerHTML += `<br><button class="btn-primary" onclick="checkFill()">Check ✓</button>`;
+  } else if (q.type === 'sort') {
+    const shuffled = [...q.words].sort(() => Math.random() - 0.5);
+    innerHTML += `<div class="sort-area" id="sortArea" onclick="handleSortAreaClick(event)"></div>`;
+    innerHTML += `<div class="sort-bank" id="sortBank">`;
+    shuffled.forEach((w,i) => {
+      innerHTML += `<span class="token" id="tok${i}" onclick="addToken('${escQ(w)}','tok${i}')">${w}</span>`;
+    });
+    innerHTML += `</div>`;
+    innerHTML += `<button class="btn-primary" onclick="checkSort()">Check ✓</button>`;
+    innerHTML += `<button class="btn-secondary" onclick="clearSort()">Clear</button>`;
+  } else if (q.type === 'translate') {
+    innerHTML += `<div style="font-size:0.8rem;color:var(--text-light);margin-bottom:6px;">💡 ${q.hint||''}</div>`;
+    innerHTML += `<input class="answer-input" id="transInput" placeholder="Type in English..." onkeydown="if(event.key==='Enter')checkTranslate()"/>`;
+    innerHTML += `<br><button class="btn-primary" onclick="checkTranslate()">Check ✓</button>`;
+  }
+
+  innerHTML += `<div class="feedback" id="feedbackBox"></div>`;
+
+  const card = document.createElement('div');
+  card.className = 'card';
+  card.innerHTML = innerHTML;
+  area.innerHTML = '';
+  area.appendChild(card);
+}
+
+function escQ(s){ return s.replace(/'/g,"\\'"); }
+
+function speakQ(text){
+  const btn = document.getElementById('speakQBtn');
+  if(btn) speakWithBtn(text, btn);
+}
+
+function checkChoice(chosen, answer, idx) {
+  if (answered) return;
+  answered = true;
+  const isCorrect = chosen.trim().toLowerCase() === answer.trim().toLowerCase();
+  const btns = document.querySelectorAll('.choice-btn');
+  btns.forEach((b,i) => {
+    if (b.textContent.trim().toLowerCase() === answer.trim().toLowerCase()) b.classList.add('correct');
+  });
+  if (!isCorrect) btns[idx].classList.add('wrong');
+  showFeedback(isCorrect, questions[qIndex].expl, answer);
+  updateScore(isCorrect);
+  addNextButton();
+}
+
+function checkFill() {
+  if (answered) return;
+  const inp = document.getElementById('fillInput');
+  if (!inp) return;
+  const val = inp.value.trim().toLowerCase();
+  const ans = questions[qIndex].answer.trim().toLowerCase();
+  const isCorrect = val === ans;
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  answered = true;
+  showFeedback(isCorrect, questions[qIndex].expl, questions[qIndex].answer);
+  updateScore(isCorrect);
+  addNextButton();
+}
+
+function checkTranslate() {
+  if (answered) return;
+  const inp = document.getElementById('transInput');
+  if (!inp) return;
+  const val = inp.value.trim().toLowerCase().replace(/[.!?,]/g,'');
+  const ans = questions[qIndex].answer.trim().toLowerCase().replace(/[.!?,]/g,'');
+  const isCorrect = val === ans;
+  inp.classList.add(isCorrect ? 'correct' : 'wrong');
+  answered = true;
+  showFeedback(isCorrect, questions[qIndex].expl, questions[qIndex].answer);
+  updateScore(isCorrect);
+  addNextButton();
+}
+
+let sortTokens = []; // {word, tokId}
+function addToken(word, tokId) {
+  const tok = document.getElementById(tokId);
+  if (!tok || tok.classList.contains('in-area')) return;
+  tok.classList.add('in-area');
+  sortTokens.push({word, tokId});
+  renderSortArea();
+}
+function renderSortArea() {
+  const area = document.getElementById('sortArea');
+  if (!area) return;
+  area.innerHTML = '';
+  sortTokens.forEach((t,i) => {
+    const span = document.createElement('span');
+    span.className = 'token in-area';
+    span.textContent = t.word;
+    span.onclick = () => removeToken(i);
+    area.appendChild(span);
+  });
+}
+function removeToken(i) {
+  const t = sortTokens[i];
+  const orig = document.getElementById(t.tokId);
+  if (orig) orig.classList.remove('in-area');
+  sortTokens.splice(i,1);
+  renderSortArea();
+}
+function handleSortAreaClick(){}
+function clearSort() { sortTokens=[]; document.querySelectorAll('.token').forEach(t=>t.classList.remove('in-area')); renderSortArea(); }
+function checkSort() {
+  if (answered) return;
+  const assembled = sortTokens.map(t=>t.word).join(' ').trim().toLowerCase().replace(/[.!?]/g,'');
+  const ans = questions[qIndex].answer.trim().toLowerCase().replace(/[.!?]/g,'');
+  const isCorrect = assembled === ans;
+  answered = true;
+  showFeedback(isCorrect, questions[qIndex].expl, questions[qIndex].answer);
+  updateScore(isCorrect);
+  addNextButton();
+}
+
+function showFeedback(isCorrect, expl, answer) {
+  const fb = document.getElementById('feedbackBox');
+  if (!fb) return;
+  fb.className = 'feedback show ' + (isCorrect ? 'correct-fb' : 'wrong-fb');
+  if (isCorrect) {
+    const msgs = ['🎉 Excellent! Perfect answer!','✅ Great job!','🌟 That\'s right!','👏 Well done!','💯 Correct!'];
+    fb.innerHTML = msgs[Math.floor(Math.random()*msgs.length)] + '<br>' + expl;
+    speak(answer);
+  } else {
+    fb.innerHTML = '❌ Not quite. The answer is: <strong>' + answer + '</strong><br>' + expl;
+    speak(answer);
+  }
+}
+
+function updateScore(isCorrect) {
+  if (isCorrect) {
+    correct++;
+    streak++;
+    document.getElementById('scoreCorrect').textContent = correct;
+    document.getElementById('scoreStreak').textContent = streak;
+    if (streak > 0 && stampsEarned < 5) {
+      const stamps = document.querySelectorAll('.stamp');
+      stamps[stampsEarned].classList.add('earned');
+      stampsEarned++;
+    }
+  } else {
+    wrong++;
+    streak = 0;
+    document.getElementById('scoreWrong').textContent = wrong;
+    document.getElementById('scoreStreak').textContent = 0;
+  }
+}
+
+function addNextButton() {
+  const card = document.querySelector('#questionArea .card');
+  if (!card) return;
+  const btn = document.createElement('button');
+  btn.className = 'btn-primary';
+  btn.textContent = qIndex < questions.length - 1 ? 'Next Question →' : 'See Results 🏆';
+  btn.style.marginLeft = '8px';
+  btn.onclick = () => { qIndex++; renderQuestion(); };
+  card.appendChild(btn);
+}
+
+function showResults() {
+  const total = correct + wrong;
+  const pct = total > 0 ? Math.round((correct/total)*100) : 0;
+  let emoji = '😊', msg = '';
+  if (pct >= 90) { emoji='🏆'; msg='Outstanding! You mastered this level!'; }
+  else if (pct >= 70) { emoji='🌟'; msg='Great work! Keep it up!'; }
+  else if (pct >= 50) { emoji='💪'; msg='Good effort! Practice makes perfect.'; }
+  else { emoji='🌱'; msg='Keep studying — you can do it!'; }
+  const stamps = Array.from({length:stampsEarned}, ()=>'⭐').join('');
+  document.getElementById('questionArea').innerHTML = `
+    <div class="card results-card">
+      <div class="results-emoji">${emoji}</div>
+      <div class="results-title">Results</div>
+      <div class="results-score">${pct}%</div>
+      <div class="results-msg">${correct} correct / ${wrong} wrong — ${msg}</div>
+      <div class="results-stamps">${stamps || '—'}</div>
+      <button class="btn-primary" onclick="resetQuiz()">🔄 Try Again</button>
+    </div>`;
+}
+
+// ===========================
+// SHADOWING ENGINE
+// ===========================
+let shadowLevel = 5;
+function setShadowLevel(lvl, btn) {
+  shadowLevel = lvl;
+  document.querySelectorAll('#tab-shadow .level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderShadowing();
+}
+function renderShadowing() {
+  const data = DATA[shadowLevel].shadowing;
+  const area = document.getElementById('shadowingArea');
+  let html = '';
+  data.forEach((s, i) => {
+    html += `
+    <div class="card" style="padding:20px;">
+      <div class="shadow-example">
+        <div class="shadow-en">🇺🇸 ${s.en}</div>
+        <div class="shadow-jp">🇯🇵 ${s.jp}</div>
+        <div class="shadow-controls">
+          <button class="shadow-step" onclick="shadowSpeak('${escQ(s.en)}', 0.8, this, 'listen')">① Listen (slow)</button>
+          <button class="shadow-step" onclick="shadowSpeak('${escQ(s.en)}', 0.95, this, 'normal')">② Normal speed</button>
+          <button class="shadow-step" onclick="startShadow('${escQ(s.en)}', this)">③ Shadow mode 🎙️</button>
+        </div>
+      </div>
+    </div>`;
+  });
+  area.innerHTML = html;
+}
+function shadowSpeak(text, rate, btn, mode) {
+  document.querySelectorAll('.shadow-step').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  speak(text, rate, () => btn.classList.remove('active'));
+}
+function startShadow(text, btn) {
+  btn.classList.add('active');
+  speak(text, 1.0, () => btn.classList.remove('active'));
+}
+
+// ===========================
+// DIALOGUE ENGINE
+// ===========================
+let dialogLevel = 5;
+function setDialogLevel(lvl, btn) {
+  dialogLevel = lvl;
+  document.querySelectorAll('#tab-dialog .level-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderDialogs();
+}
+function renderDialogs() {
+  const dialogs = DATA[dialogLevel].dialogues;
+  const area = document.getElementById('dialogArea');
+  let html = '';
+  dialogs.forEach((d, di) => {
+    html += `<div class="card" style="padding:0;overflow:hidden;">
+      <div class="dialog-scene-info">🎬 ${d.scene} — ${d.sceneJp}</div>
+      <div class="dialog-body">`;
+    d.lines.forEach((l, li) => {
+      html += `
+      <div class="dialog-line">
+        <div class="dialog-speaker speaker-${l.speaker.toLowerCase()}">${l.speaker}</div>
+        <div class="dialog-line-text">
+          <div class="dialog-en">${l.en}</div>
+          <div class="dialog-jp">${l.jp}</div>
+        </div>
+        <div class="dialog-line-controls">
+          <button class="speak-btn" style="padding:5px 10px;font-size:0.72rem;" onclick="speakDialogLine('${escQ(l.en)}',this)">🔊</button>
+        </div>
+      </div>`;
+    });
+    html += `</div>
+      <div class="role-play-bar">
+        <span class="role-label">🎭 Role Play:</span>
+        <span style="font-size:0.82rem;font-weight:600;">Play as</span>
+        <select class="role-select" id="roleSelect${di}">
+          <option value="A">Speaker A</option>
+          <option value="B">Speaker B</option>
+        </select>
+        <button class="play-role-btn" onclick="playRoleDialog(${di})">▶ Start Role Play</button>
+        <button class="play-role-btn" style="background:linear-gradient(135deg,var(--navy-mid),var(--navy));" onclick="playFullDialog(${di})">🔊 Full Audio</button>
+      </div>
+    </div>`;
+  });
+  area.innerHTML = html;
+}
+function speakDialogLine(text, btn) { speakWithBtn(text, btn); }
+
+async function playFullDialog(di) {
+  const d = DATA[dialogLevel].dialogues[di];
+  for (let i = 0; i < d.lines.length; i++) {
+    await new Promise(res => { speak(d.lines[i].en, 0.9, res); setTimeout(res, 4000); });
+    await new Promise(res => setTimeout(res, 500));
+  }
+}
+async function playRoleDialog(di) {
+  const d = DATA[dialogLevel].dialogues[di];
+  const userRole = document.getElementById('roleSelect'+di).value;
+  for (let i = 0; i < d.lines.length; i++) {
+    const l = d.lines[i];
+    if (l.speaker !== userRole) {
+      await new Promise(res => { speak(l.en, 0.9, res); setTimeout(res, 4000); });
+      await new Promise(res => setTimeout(res, 400));
+    } else {
+      await new Promise(res => setTimeout(res, 2500));
+    }
+  }
+}
+
+// ===========================
+// TAB SWITCHING
+// ===========================
+function switchTab(name) {
+  document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  event.target.classList.add('active');
+}
+
+// ===========================
+// INIT
+// ===========================
+resetQuiz();
+renderShadowing();
+renderDialogs();
+</script>
+</body>
+</html>
