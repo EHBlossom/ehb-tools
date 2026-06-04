@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WH Questions Practice 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --who-c:   #f97316; --who-bg:   #fff7ed; --who-dk:  #c2410c;
+  --what-c:  #8b5cf6; --what-bg:  #f5f3ff; --what-dk: #6d28d9;
+  --when-c:  #0ea5e9; --when-bg:  #f0f9ff; --when-dk: #0369a1;
+  --where-c: #10b981; --where-bg: #ecfdf5; --where-dk:#065f46;
+  --why-c:   #ec4899; --why-bg:   #fdf2f8; --why-dk:  #9d174d;
+  --how-c:   #eab308; --how-bg:   #fefce8; --how-dk:  #a16207;
+  --which-c: #06b6d4; --which-bg: #ecfeff; --which-dk:#0e7490;
+  --whose-c: #6366f1; --whose-bg: #eef2ff; --whose-dk:#3730a3;
+  --quiz-c:  #db2777;
+  --bg:      #0f172a;
+  --bg2:     #1e293b;
+  --bg3:     #334155;
+  --text:    #f1f5f9;
+  --muted:   #94a3b8;
+  --radius:  16px;
+  --shadow:  0 4px 20px rgba(0,0,0,0.25);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+header{
+  background:linear-gradient(135deg,#0f172a,#1a2744,#0f172a);
+  padding:36px 20px 24px;text-align:center;
+  border-bottom:1px solid rgba(255,255,255,0.06);
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 20% 50%,rgba(249,115,22,0.1) 0%,transparent 55%),
+             radial-gradient(ellipse at 80% 50%,rgba(139,92,246,0.1) 0%,transparent 55%);
+}
+header h1{
+  font-family:'Sora',sans-serif;font-size:clamp(1.8rem,5vw,2.8rem);font-weight:800;
+  background:linear-gradient(90deg,#f97316,#8b5cf6,#0ea5e9,#10b981,#ec4899);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;
+}
+header p{color:var(--muted);font-size:.9rem;font-weight:600;margin-top:6px;position:relative}
+
+/* VOICE */
+#voice-badge{text-align:center;padding:6px;font-size:.72rem;color:var(--muted);font-weight:600}
+
+/* WH REFERENCE STRIP */
+.wh-strip{
+  display:flex;gap:8px;padding:16px 16px 0;overflow-x:auto;scrollbar-width:none;
+  max-width:960px;margin:0 auto;justify-content:center;flex-wrap:wrap;
+}
+.wh-pill{
+  padding:7px 16px;border-radius:50px;font-family:'Sora',sans-serif;
+  font-size:.8rem;font-weight:700;cursor:pointer;transition:all .2s;border:2px solid;
+  background:transparent;white-space:nowrap;
+}
+.wh-pill:hover,.wh-pill.active{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,0.3)}
+.wh-pill.who  {border-color:var(--who-c);  color:var(--who-c)}
+.wh-pill.what {border-color:var(--what-c); color:var(--what-c)}
+.wh-pill.when {border-color:var(--when-c); color:var(--when-c)}
+.wh-pill.where{border-color:var(--where-c);color:var(--where-c)}
+.wh-pill.why  {border-color:var(--why-c);  color:var(--why-c)}
+.wh-pill.how  {border-color:var(--how-c);  color:var(--how-c)}
+.wh-pill.which{border-color:var(--which-c);color:var(--which-c)}
+.wh-pill.whose{border-color:var(--whose-c);color:var(--whose-c)}
+.wh-pill.all  {border-color:#475569;color:var(--muted)}
+.wh-pill.quiz {border-color:var(--quiz-c);color:var(--quiz-c)}
+.wh-pill.who.active  {background:var(--who-c);  color:#fff}
+.wh-pill.what.active {background:var(--what-c); color:#fff}
+.wh-pill.when.active {background:var(--when-c); color:#fff}
+.wh-pill.where.active{background:var(--where-c);color:#fff}
+.wh-pill.why.active  {background:var(--why-c);  color:#fff}
+.wh-pill.how.active  {background:var(--how-c);  color:#fff}
+.wh-pill.which.active{background:var(--which-c);color:#fff}
+.wh-pill.whose.active{background:var(--whose-c);color:#fff}
+.wh-pill.all.active  {background:#334155;color:#fff}
+.wh-pill.quiz.active {background:var(--quiz-c);color:#fff}
+
+/* SECTIONS */
+.section{display:none;padding:20px 16px 60px;max-width:960px;margin:0 auto}
+.section.active{display:block}
+
+/* WH HEADER */
+.wh-header{
+  border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;
+  border-left:6px solid;display:flex;align-items:flex-start;gap:20px;
+}
+.wh-emoji{font-size:2.5rem;flex-shrink:0}
+.wh-header h2{font-family:'Sora',sans-serif;font-size:1.5rem;font-weight:800;margin-bottom:4px}
+.wh-header p{font-size:.85rem;font-weight:500;line-height:1.6;color:rgba(255,255,255,.75)}
+.wh-header .meaning{
+  display:inline-block;margin-top:8px;padding:4px 14px;
+  border-radius:50px;font-size:.8rem;font-weight:700;
+  background:rgba(255,255,255,.15);
+}
+
+/* LEVEL LABEL */
+.level-label{
+  font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);padding:12px 0 6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:14px;
+}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+
+/* CARD */
+.card{
+  background:var(--bg2);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06);
+  transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;
+}
+.card::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 32px rgba(0,0,0,.4)}
+
+/* per-wh card accent */
+.card.who::after  {background:linear-gradient(90deg,var(--who-dk),var(--who-c))}
+.card.what::after {background:linear-gradient(90deg,var(--what-dk),var(--what-c))}
+.card.when::after {background:linear-gradient(90deg,var(--when-dk),var(--when-c))}
+.card.where::after{background:linear-gradient(90deg,var(--where-dk),var(--where-c))}
+.card.why::after  {background:linear-gradient(90deg,var(--why-dk),var(--why-c))}
+.card.how::after  {background:linear-gradient(90deg,var(--how-dk),var(--how-c))}
+.card.which::after{background:linear-gradient(90deg,var(--which-dk),var(--which-c))}
+.card.whose::after{background:linear-gradient(90deg,var(--whose-dk),var(--whose-c))}
+
+/* QA pair */
+.qa-block{margin-bottom:12px}
+.q-row{
+  display:flex;gap:8px;align-items:flex-start;margin-bottom:6px;
+}
+.wh-tag{
+  flex-shrink:0;padding:3px 10px;border-radius:50px;
+  font-family:'Sora',sans-serif;font-size:.75rem;font-weight:800;
+  margin-top:1px;
+}
+.card.who   .wh-tag{background:var(--who-c);   color:#fff}
+.card.what  .wh-tag{background:var(--what-c);  color:#fff}
+.card.when  .wh-tag{background:var(--when-c);  color:#fff}
+.card.where .wh-tag{background:var(--where-c); color:#fff}
+.card.why   .wh-tag{background:var(--why-c);   color:#fff}
+.card.how   .wh-tag{background:var(--how-c);   color:#000}
+.card.which .wh-tag{background:var(--which-c); color:#fff}
+.card.whose .wh-tag{background:var(--whose-c); color:#fff}
+
+.q-text{font-size:.88rem;font-weight:700;line-height:1.5;color:var(--text)}
+.a-row{
+  background:var(--bg3);border-radius:10px;padding:8px 12px;
+  font-size:.82rem;font-weight:600;line-height:1.5;border-left:3px solid;
+  margin-bottom:4px;color:var(--text);
+}
+.card.who   .a-row{border-color:var(--who-c)}
+.card.what  .a-row{border-color:var(--what-c)}
+.card.when  .a-row{border-color:var(--when-c)}
+.card.where .a-row{border-color:var(--where-c)}
+.card.why   .a-row{border-color:var(--why-c)}
+.card.how   .a-row{border-color:var(--how-c)}
+.card.which .a-row{border-color:var(--which-c)}
+.card.whose .a-row{border-color:var(--whose-c)}
+
+.a-row em{display:block;font-style:normal;font-size:.72rem;color:var(--muted);margin-top:2px;font-weight:500}
+
+/* AUDIO ROW */
+.audio-row{display:flex;gap:6px;margin-top:10px}
+.abtn{
+  flex:1;padding:7px 4px;border:none;border-radius:8px;
+  cursor:pointer;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.72rem;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:3px;color:#fff;
+}
+.abtn:hover{filter:brightness(1.15);transform:scale(1.03)}
+.abtn:active{transform:scale(.97)}
+.abtn.speaking{animation:pulse .5s infinite alternate}
+@keyframes pulse{from{opacity:.6}to{opacity:1}}
+.card.who   .abtn.q{background:var(--who-dk)}  .card.who   .abtn.a{background:var(--who-c)}
+.card.what  .abtn.q{background:var(--what-dk)} .card.what  .abtn.a{background:var(--what-c)}
+.card.when  .abtn.q{background:var(--when-dk)} .card.when  .abtn.a{background:var(--when-c)}
+.card.where .abtn.q{background:var(--where-dk)}.card.where .abtn.a{background:var(--where-c)}
+.card.why   .abtn.q{background:var(--why-dk)}  .card.why   .abtn.a{background:var(--why-c)}
+.card.how   .abtn.q{background:var(--how-dk)}  .card.how   .abtn.a{background:var(--how-c);color:#000}
+.card.which .abtn.q{background:var(--which-dk)}.card.which .abtn.a{background:var(--which-c)}
+.card.whose .abtn.q{background:var(--whose-dk)}.card.whose .abtn.a{background:var(--whose-c)}
+.abtn.both{background:var(--bg3);color:var(--muted)}
+
+/* ── QUIZ ── */
+#section-quiz{max-width:680px}
+.quiz-setup{
+  background:var(--bg2);border-radius:20px;padding:22px;
+  margin-bottom:20px;border:1px solid rgba(255,255,255,.07)
+}
+.quiz-setup h2{font-family:'Sora',sans-serif;font-size:1.2rem;color:var(--quiz-c);margin-bottom:14px}
+.qcontrols{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qsel{
+  padding:8px 14px;border-radius:50px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'Space Grotesk',sans-serif;
+  font-weight:600;font-size:.82rem;cursor:pointer
+}
+.qstart{
+  padding:9px 22px;background:linear-gradient(135deg,var(--quiz-c),var(--what-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Sora',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 14px rgba(219,39,119,.3)
+}
+.qstart:hover{transform:translateY(-2px);filter:brightness(1.08)}
+
+.qcard{
+  background:var(--bg2);border-radius:20px;padding:26px;
+  border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);
+  animation:slideUp .3s ease;margin-bottom:20px;
+}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.qprog-row{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+.qprog-bar{width:100%;height:6px;background:var(--bg3);border-radius:50px;margin-bottom:20px;overflow:hidden}
+.qprog-fill{height:100%;background:linear-gradient(90deg,var(--quiz-c),var(--what-c));border-radius:50px;transition:width .4s}
+
+.q-wh-badge{
+  display:inline-block;padding:4px 14px;border-radius:50px;
+  font-family:'Sora',sans-serif;font-size:.72rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;color:#fff;
+}
+.q-instruction{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.q-sentence{
+  font-family:'Sora',sans-serif;font-size:1.15rem;font-weight:700;
+  line-height:1.6;margin-bottom:6px;color:var(--text)
+}
+.q-sentence .blank{
+  display:inline-block;min-width:80px;border-bottom:3px solid var(--quiz-c);
+  color:var(--quiz-c);text-align:center;padding:0 4px
+}
+.q-jp{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:18px;font-style:italic}
+
+.q-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.q-choice{
+  padding:12px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'Sora',sans-serif;
+  font-size:.95rem;font-weight:700;cursor:pointer;transition:all .15s;text-align:center
+}
+.q-choice:hover:not(:disabled){border-color:var(--quiz-c);background:rgba(219,39,119,.12)}
+.q-choice.correct{border-color:#22c55e;background:rgba(34,197,94,.15);color:#86efac}
+.q-choice.wrong  {border-color:#ef4444;background:rgba(239,68,68,.15); color:#fca5a5}
+.q-choice:disabled{cursor:not-allowed;opacity:.7}
+
+.q-input{
+  width:100%;padding:13px 18px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.12);background:var(--bg3);color:var(--text);
+  font-family:'Sora',sans-serif;font-size:1.05rem;font-weight:700;
+  margin-bottom:10px;outline:none;transition:border-color .2s
+}
+.q-input:focus{border-color:var(--quiz-c)}
+.q-input.correct{border-color:#22c55e;background:rgba(34,197,94,.1)}
+.q-input.wrong  {border-color:#ef4444;background:rgba(239,68,68,.1)}
+
+.q-submit{
+  width:100%;padding:13px;background:linear-gradient(135deg,var(--quiz-c),var(--what-c));
+  color:#fff;border:none;border-radius:12px;font-family:'Sora',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer;margin-bottom:10px;transition:all .2s
+}
+.q-submit:hover:not(:disabled){filter:brightness(1.08)}
+.q-submit:disabled{opacity:.45;cursor:not-allowed}
+
+.q-feedback{
+  padding:13px 16px;border-radius:12px;font-size:.88rem;font-weight:600;
+  display:none;line-height:1.6;margin-bottom:10px
+}
+.q-feedback.correct{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.q-feedback.wrong  {background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+
+.q-next{
+  width:100%;padding:12px;background:var(--bg3);color:var(--text);
+  border:2px solid rgba(255,255,255,.12);border-radius:12px;
+  font-family:'Sora',sans-serif;font-weight:700;font-size:.95rem;
+  cursor:pointer;display:none;transition:all .2s
+}
+.q-next:hover{background:rgba(255,255,255,.08)}
+
+.q-result{
+  display:none;background:var(--bg2);border-radius:20px;padding:40px 24px;
+  text-align:center;border:1px solid rgba(255,255,255,.08)
+}
+.r-emoji{font-size:3.5rem;margin-bottom:10px}
+.r-score{
+  font-family:'Sora',sans-serif;font-size:3rem;font-weight:800;
+  background:linear-gradient(90deg,var(--quiz-c),var(--what-c));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text
+}
+.r-msg{color:var(--muted);font-size:1rem;font-weight:600;margin:8px 0 24px}
+.retry-btn{
+  padding:12px 32px;background:linear-gradient(135deg,var(--quiz-c),var(--what-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Sora',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer
+}
+
+/* SPEAK PANEL */
+.speak-panel{
+  background:rgba(14,165,233,.07);border:1px solid rgba(14,165,233,.2);
+  border-radius:var(--radius);padding:20px;margin-top:28px
+}
+.speak-panel h3{font-family:'Sora',sans-serif;font-size:1rem;color:var(--when-c);margin-bottom:14px}
+.speak-list{display:flex;flex-direction:column;gap:8px}
+.speak-item{
+  background:var(--bg3);border-radius:10px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px
+}
+.speak-text{font-size:.82rem;font-weight:600;flex:1;line-height:1.4}
+.speak-text small{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}
+.speak-btn{
+  background:var(--when-c);color:#fff;border:none;border-radius:8px;
+  padding:7px 12px;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:.75rem;
+  cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0
+}
+.speak-btn:hover{filter:brightness(1.1)}
+.speak-all-btn{
+  width:100%;margin-top:12px;padding:11px;
+  background:linear-gradient(135deg,var(--when-c),var(--where-c));
+  color:#fff;border:none;border-radius:12px;font-family:'Sora',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s
+}
+.speak-all-btn:hover{filter:brightness(1.08)}
+
+@media(max-width:600px){
+  .cards-grid{grid-template-columns:1fr}
+  .q-choices{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>❓ WH Questions Master</h1>
+  <p>Who · What · When · Where · Why · How · Which · Whose — 幼児〜高校生</p>
+</header>
+<div id="voice-badge">🔊 Loading voice...</div>
+
+<nav class="wh-strip">
+  <button class="wh-pill all active" onclick="showTab('all')">📚 All</button>
+  <button class="wh-pill who"   onclick="showTab('who')">WHO</button>
+  <button class="wh-pill what"  onclick="showTab('what')">WHAT</button>
+  <button class="wh-pill when"  onclick="showTab('when')">WHEN</button>
+  <button class="wh-pill where" onclick="showTab('where')">WHERE</button>
+  <button class="wh-pill why"   onclick="showTab('why')">WHY</button>
+  <button class="wh-pill how"   onclick="showTab('how')">HOW</button>
+  <button class="wh-pill which" onclick="showTab('which')">WHICH</button>
+  <button class="wh-pill whose" onclick="showTab('whose')">WHOSE</button>
+  <button class="wh-pill quiz"  onclick="showTab('quiz')">✏️ Quiz</button>
+</nav>
+
+<div id="section-all"   class="section active"></div>
+<div id="section-who"   class="section"></div>
+<div id="section-what"  class="section"></div>
+<div id="section-when"  class="section"></div>
+<div id="section-where" class="section"></div>
+<div id="section-why"   class="section"></div>
+<div id="section-how"   class="section"></div>
+<div id="section-which" class="section"></div>
+<div id="section-whose" class="section"></div>
+
+<div id="section-quiz" class="section">
+  <div class="quiz-setup">
+    <h2>✏️ WH Questions Quiz</h2>
+    <div class="qcontrols">
+      <select class="qsel" id="qwh">
+        <option value="all">All WH words</option>
+        <option value="who">WHO</option>
+        <option value="what">WHAT</option>
+        <option value="when">WHEN</option>
+        <option value="where">WHERE</option>
+        <option value="why">WHY</option>
+        <option value="how">HOW</option>
+        <option value="which">WHICH</option>
+        <option value="whose">WHOSE</option>
+      </select>
+      <select class="qsel" id="qlv">
+        <option value="all">All Levels</option>
+        <option value="1">⭐ Level 1</option>
+        <option value="2">⭐⭐ Level 2</option>
+        <option value="3">⭐⭐⭐ Level 3</option>
+      </select>
+      <select class="qsel" id="qtype">
+        <option value="choice">Multiple Choice</option>
+        <option value="type">Type Answer</option>
+      </select>
+      <button class="qstart" onclick="startQuiz()">🎯 Start!</button>
+    </div>
+  </div>
+  <div id="quiz-area"></div>
+  <div id="quiz-result"></div>
+
+  <div class="speak-panel">
+    <h3>🎤 Listen & Repeat</h3>
+    <div class="speak-list" id="speak-list"></div>
+    <button class="speak-all-btn" onclick="speakAll()">▶️ Play All</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════════
+//  DATA
+// ══════════════════════════════════════
+const WH = {
+  who: {
+    emoji:'👤', meaning:'誰が / 誰を',
+    color:'var(--who-c)', bg:'var(--who-bg)', dk:'var(--who-dk)',
+    desc:'人について尋ねる。主語にも目的語にもなる。',
+    items:[
+      // Level 1
+      {lv:1, q:"Who is she?",        a:"She is my mom.",         jp_q:"彼女は誰ですか？",       jp_a:"私のお母さんです。"},
+      {lv:1, q:"Who is he?",         a:"He is my teacher.",      jp_q:"彼は誰ですか？",         jp_a:"私の先生です。"},
+      {lv:1, q:"Who is your best friend?", a:"My best friend is Yuki.", jp_q:"あなたの親友は誰ですか？", jp_a:"私の親友はユキです。"},
+      {lv:1, q:"Who made this cake?",a:"My grandma made it.",    jp_q:"このケーキを作ったのは誰ですか？",jp_a:"おばあちゃんが作りました。"},
+      // Level 2
+      {lv:2, q:"Who do you live with?",        a:"I live with my parents and sister.",jp_q:"誰と一緒に住んでいますか？",jp_a:"両親と妹と住んでいます。"},
+      {lv:2, q:"Who did you play with at recess?",a:"I played with Kenta and Hana.", jp_q:"休み時間に誰と遊びましたか？",jp_a:"ケンタとハナと遊びました。"},
+      {lv:2, q:"Who is your favorite singer?",  a:"My favorite singer is BTS.",      jp_q:"好きな歌手は誰ですか？",    jp_a:"好きな歌手はBTSです。"},
+      {lv:2, q:"Who taught you English?",       a:"My English teacher, Ms. Maki.",   jp_q:"誰があなたに英語を教えましたか？",jp_a:"英語の先生のMaki先生です。"},
+      // Level 3
+      {lv:3, q:"Who is responsible for this project?", a:"Our team leader is responsible.", jp_q:"このプロジェクトの担当者は誰ですか？",jp_a:"チームリーダーが担当です。"},
+      {lv:3, q:"Who would you consult about career choices?", a:"I would consult my parents and a counselor.", jp_q:"進路について誰に相談しますか？",jp_a:"両親とカウンセラーに相談します。"},
+      {lv:3, q:"Who influenced your way of thinking the most?", a:"My mother influenced me the most.", jp_q:"あなたの考え方に最も影響を与えたのは誰ですか？",jp_a:"母が最も影響を与えてくれました。"},
+    ]
+  },
+  what: {
+    emoji:'🔍', meaning:'何が / 何を',
+    color:'var(--what-c)', bg:'var(--what-bg)', dk:'var(--what-dk)',
+    desc:'物・こと・情報について尋ねる。最も使われるWH語。',
+    items:[
+      {lv:1, q:"What is this?",           a:"It is a pencil.",           jp_q:"これは何ですか？",         jp_a:"鉛筆です。"},
+      {lv:1, q:"What is your name?",      a:"My name is Hana.",          jp_q:"あなたの名前は何ですか？", jp_a:"ハナです。"},
+      {lv:1, q:"What do you like?",       a:"I like dogs and cookies.",  jp_q:"何が好きですか？",         jp_a:"犬とクッキーが好きです。"},
+      {lv:1, q:"What color is it?",       a:"It is blue.",               jp_q:"何色ですか？",             jp_a:"青です。"},
+      {lv:2, q:"What subject do you like best?",   a:"I like science best.",          jp_q:"何の教科が一番好きですか？",jp_a:"理科が一番好きです。"},
+      {lv:2, q:"What did you eat for lunch?",       a:"I had rice, miso soup and fish.",jp_q:"お昼ご飯に何を食べましたか？",jp_a:"ご飯と味噌汁と魚を食べました。"},
+      {lv:2, q:"What time does school start?",      a:"School starts at 8:30.",        jp_q:"学校は何時に始まりますか？",jp_a:"8時30分に始まります。"},
+      {lv:2, q:"What kind of music do you enjoy?",  a:"I enjoy J-pop and classical.",  jp_q:"どんな音楽が好きですか？",  jp_a:"J-POPとクラシックが好きです。"},
+      {lv:3, q:"What do you think is the biggest challenge facing your generation?", a:"I think climate change is the biggest challenge.", jp_q:"あなたの世代が直面する最大の課題は何だと思いますか？",jp_a:"気候変動が最大の課題だと思います。"},
+      {lv:3, q:"What career are you considering after graduation?",  a:"I am considering a career in engineering.", jp_q:"卒業後はどんな職業を考えていますか？",jp_a:"エンジニアの仕事を考えています。"},
+      {lv:3, q:"What makes a good leader, in your opinion?", a:"Empathy and clear communication make a good leader.", jp_q:"良いリーダーとはどういう人だと思いますか？",jp_a:"共感力と明確なコミュニケーション能力を持つ人です。"},
+    ]
+  },
+  when: {
+    emoji:'🕐', meaning:'いつ',
+    color:'var(--when-c)', bg:'var(--when-bg)', dk:'var(--when-dk)',
+    desc:'時間・時期について尋ねる。',
+    items:[
+      {lv:1, q:"When is your birthday?",    a:"My birthday is March 5th.",     jp_q:"あなたの誕生日はいつですか？",jp_a:"3月5日です。"},
+      {lv:1, q:"When do you wake up?",      a:"I wake up at 7 o'clock.",       jp_q:"何時に起きますか？",          jp_a:"7時に起きます。"},
+      {lv:1, q:"When does school end?",     a:"School ends at 3:30.",          jp_q:"学校はいつ終わりますか？",    jp_a:"3時30分に終わります。"},
+      {lv:1, q:"When did you eat breakfast?",a:"I ate breakfast this morning.", jp_q:"いつ朝ご飯を食べましたか？", jp_a:"今朝食べました。"},
+      {lv:2, q:"When do you usually do your homework?", a:"I usually do it right after dinner.", jp_q:"いつ宿題をしますか？",      jp_a:"夕食のすぐ後にします。"},
+      {lv:2, q:"When did the school festival take place?", a:"It was last Saturday.",           jp_q:"学校祭はいつありましたか？", jp_a:"先週の土曜日でした。"},
+      {lv:2, q:"When are you going to visit your grandparents?", a:"We are going next Golden Week.", jp_q:"いつ祖父母を訪ねますか？",jp_a:"次のゴールデンウィークに行きます。"},
+      {lv:2, q:"When will the test results come out?",          a:"They will come out on Friday.",  jp_q:"テストの結果はいつ出ますか？",jp_a:"金曜日に出ます。"},
+      {lv:3, q:"When do you feel most motivated to study?",     a:"I feel most motivated late in the evening.", jp_q:"いつ一番勉強のやる気が出ますか？",jp_a:"夜遅い時間が一番やる気が出ます。"},
+      {lv:3, q:"When should a student start preparing for university entrance exams?", a:"Students should start at least a year in advance.", jp_q:"大学入試の準備はいつ始めるべきですか？",jp_a:"少なくとも1年前から始めるべきです。"},
+      {lv:3, q:"When was the last time you stepped out of your comfort zone?", a:"I stepped out of my comfort zone when I gave a speech in English.", jp_q:"最後にコンフォートゾーンから出たのはいつですか？",jp_a:"英語でスピーチをした時です。"},
+    ]
+  },
+  where: {
+    emoji:'📍', meaning:'どこに / どこで',
+    color:'var(--where-c)', bg:'var(--where-bg)', dk:'var(--where-dk)',
+    desc:'場所・位置について尋ねる。',
+    items:[
+      {lv:1, q:"Where is the cat?",        a:"The cat is under the table.",    jp_q:"猫はどこにいますか？",        jp_a:"テーブルの下にいます。"},
+      {lv:1, q:"Where do you live?",       a:"I live in Kumamoto.",            jp_q:"どこに住んでいますか？",      jp_a:"熊本に住んでいます。"},
+      {lv:1, q:"Where is your school?",    a:"My school is near the station.", jp_q:"あなたの学校はどこですか？",  jp_a:"駅の近くにあります。"},
+      {lv:1, q:"Where did you go yesterday?",a:"I went to the park.",          jp_q:"昨日どこに行きましたか？",    jp_a:"公園に行きました。"},
+      {lv:2, q:"Where do you want to travel someday?",  a:"I want to travel to Canada.",    jp_q:"いつかどこへ旅行したいですか？",jp_a:"カナダに旅行したいです。"},
+      {lv:2, q:"Where did you put your pencil case?",   a:"I put it in my desk drawer.",    jp_q:"筆箱をどこに置きましたか？",jp_a:"机の引き出しに入れました。"},
+      {lv:2, q:"Where is the library in your school?",  a:"It is on the third floor.",      jp_q:"図書室は学校のどこにありますか？",jp_a:"3階にあります。"},
+      {lv:2, q:"Where would you like to study abroad?", a:"I would like to study in the UK.", jp_q:"どこへ留学したいですか？",  jp_a:"イギリスへ行きたいです。"},
+      {lv:3, q:"Where do you see yourself in 10 years?",a:"I see myself working abroad as an engineer.", jp_q:"10年後の自分はどこにいると思いますか？",jp_a:"エンジニアとして海外で働いていると思います。"},
+      {lv:3, q:"Where did the Industrial Revolution begin?", a:"It began in Britain in the 18th century.", jp_q:"産業革命はどこで始まりましたか？",jp_a:"18世紀のイギリスで始まりました。"},
+      {lv:3, q:"Where can young people find reliable information about career paths?", a:"They can find it at career centers and from trusted websites.", jp_q:"若者はどこで進路に関する信頼できる情報を得られますか？",jp_a:"進路センターや信頼できるウェブサイトで得られます。"},
+    ]
+  },
+  why: {
+    emoji:'💡', meaning:'なぜ / どうして',
+    color:'var(--why-c)', bg:'var(--why-bg)', dk:'var(--why-dk)',
+    desc:'理由・原因について尋ねる。答えは "Because..." で始まることが多い。',
+    items:[
+      {lv:1, q:"Why do you like dogs?",     a:"Because they are cute and fun!", jp_q:"なぜ犬が好きなのですか？",    jp_a:"かわいくて楽しいからです！"},
+      {lv:1, q:"Why are you tired?",        a:"Because I ran a lot today.",     jp_q:"なぜ疲れているのですか？",    jp_a:"今日たくさん走ったからです。"},
+      {lv:1, q:"Why is the sky blue?",      a:"Because of how sunlight scatters.", jp_q:"なぜ空は青いのですか？",  jp_a:"光の散乱の仕方によるからです。"},
+      {lv:1, q:"Why do you study English?", a:"Because I want to talk with people around the world.", jp_q:"なぜ英語を勉強するのですか？",jp_a:"世界中の人と話したいからです。"},
+      {lv:2, q:"Why did you choose this club?",          a:"Because I love soccer and wanted to improve.", jp_q:"なぜこの部活を選びましたか？",jp_a:"サッカーが好きで上手くなりたいからです。"},
+      {lv:2, q:"Why is exercise important?",             a:"Because it keeps our body and mind healthy.",  jp_q:"なぜ運動は大切ですか？",      jp_a:"体と心を健康に保つからです。"},
+      {lv:2, q:"Why do some animals hibernate?",        a:"Because they need to survive the cold winter.", jp_q:"なぜ冬眠する動物がいるのですか？",jp_a:"寒い冬を生き抜くためです。"},
+      {lv:2, q:"Why did you decide to study harder this semester?", a:"Because I want to pass the entrance exam.", jp_q:"なぜ今学期もっと頑張ることにしたのですか？",jp_a:"入試に合格したいからです。"},
+      {lv:3, q:"Why is critical thinking an important skill for the 21st century?", a:"Because information is everywhere and we need to evaluate it carefully.", jp_q:"なぜ批判的思考は21世紀に重要なスキルなのですか？",jp_a:"情報があふれており、慎重に評価する必要があるからです。"},
+      {lv:3, q:"Why do some countries invest heavily in renewable energy?", a:"To reduce CO2 emissions and achieve energy independence.", jp_q:"なぜ再生可能エネルギーに多額の投資をする国があるのですか？",jp_a:"CO2排出量を減らし、エネルギー自立を達成するためです。"},
+      {lv:3, q:"Why might studying abroad change a person's perspective?", a:"Because exposure to different cultures challenges your assumptions and broadens your thinking.", jp_q:"なぜ留学は人の視野を広げるのでしょうか？",jp_a:"異文化に触れることで、自分の思い込みに気づき、思考が広がるからです。"},
+    ]
+  },
+  how: {
+    emoji:'🛠️', meaning:'どうやって / どのくらい',
+    color:'var(--how-c)', bg:'var(--how-bg)', dk:'var(--how-dk)',
+    desc:'方法・程度について尋ねる。How old / How long / How many など派生形も豊富。',
+    items:[
+      {lv:1, q:"How are you?",              a:"I am great, thank you!",         jp_q:"元気ですか？",              jp_a:"元気です、ありがとう！"},
+      {lv:1, q:"How old are you?",          a:"I am 9 years old.",              jp_q:"何歳ですか？",              jp_a:"9歳です。"},
+      {lv:1, q:"How do you go to school?",  a:"I walk to school.",              jp_q:"どうやって学校に行きますか？",jp_a:"歩いて行きます。"},
+      {lv:1, q:"How many siblings do you have?", a:"I have two sisters.",       jp_q:"きょうだいは何人ですか？",  jp_a:"姉が2人います。"},
+      {lv:2, q:"How long does it take to get to school?", a:"It takes about 20 minutes.", jp_q:"学校まで何分かかりますか？",jp_a:"約20分かかります。"},
+      {lv:2, q:"How often do you practice piano?",        a:"I practice every day after school.", jp_q:"何回ピアノを練習しますか？",jp_a:"毎日放課後に練習します。"},
+      {lv:2, q:"How much does the school lunch cost?",    a:"It costs 280 yen.",  jp_q:"給食はいくらですか？",      jp_a:"280円です。"},
+      {lv:2, q:"How do you deal with stress?",           a:"I listen to music or talk to a friend.", jp_q:"ストレスはどう対処しますか？",jp_a:"音楽を聴いたり友達と話したりします。"},
+      {lv:3, q:"How has technology changed the way we learn?", a:"It has made information more accessible and learning more flexible.", jp_q:"テクノロジーはどのように学習を変えましたか？",jp_a:"情報へのアクセスが容易になり、学習がより柔軟になりました。"},
+      {lv:3, q:"How can Japan address its declining birth rate?", a:"By improving work-life balance and expanding childcare support.", jp_q:"日本は少子化にどのように対処できますか？",jp_a:"ワークライフバランスを改善し、育児支援を拡大することで対処できます。"},
+      {lv:3, q:"How would you describe your learning style?", a:"I am a visual learner who benefits from diagrams and color-coding.", jp_q:"あなたの学習スタイルをどのように説明しますか？",jp_a:"図や色分けから得るものが多い、視覚型の学習者です。"},
+    ]
+  },
+  which: {
+    emoji:'🔀', meaning:'どちら / どれ',
+    color:'var(--which-c)', bg:'var(--which-bg)', dk:'var(--which-dk)',
+    desc:'選択肢の中から選ぶ時に使う。"Which + noun" の形もよく使う。',
+    items:[
+      {lv:1, q:"Which color do you like — red or blue?", a:"I like blue.",             jp_q:"赤と青、どちらが好きですか？",jp_a:"青が好きです。"},
+      {lv:1, q:"Which is your bag?",                    a:"This yellow one is mine.", jp_q:"どれがあなたのカバンですか？",jp_a:"この黄色いのが私のです。"},
+      {lv:1, q:"Which animal do you prefer, cats or dogs?", a:"I prefer dogs.",       jp_q:"猫と犬、どちらが好きですか？",jp_a:"犬の方が好きです。"},
+      {lv:1, q:"Which season is your favorite?",        a:"My favorite season is autumn.", jp_q:"好きな季節はどれですか？",jp_a:"秋が好きです。"},
+      {lv:2, q:"Which club do you belong to?",          a:"I belong to the tennis club.", jp_q:"どの部活に入っていますか？",jp_a:"テニス部に入っています。"},
+      {lv:2, q:"Which language would you most like to learn?", a:"I would most like to learn Spanish.", jp_q:"どの言語を一番学びたいですか？",jp_a:"スペイン語を一番学びたいです。"},
+      {lv:2, q:"Which do you think is more important — talent or effort?", a:"I think effort is more important.", jp_q:"才能と努力、どちらが大切だと思いますか？",jp_a:"努力の方が大切だと思います。"},
+      {lv:2, q:"Which city in Japan would you recommend to a foreign visitor?",a:"I would recommend Kyoto for its temples and history.", jp_q:"外国人観光客に日本のどの都市をおすすめしますか？",jp_a:"寺院と歴史のある京都をおすすめします。"},
+      {lv:3, q:"Which university are you hoping to apply to?", a:"I am hoping to apply to Kumamoto University.", jp_q:"どの大学を志望していますか？",jp_a:"熊本大学を志望しています。"},
+      {lv:3, q:"Which global issue do you feel most passionate about?", a:"I feel most passionate about environmental sustainability.", jp_q:"どのグローバルな問題に最も関心を持っていますか？",jp_a:"環境の持続可能性に最も関心があります。"},
+      {lv:3, q:"Which skill do you think will be most valuable in the future job market?", a:"I think AI literacy and adaptability will be most valuable.", jp_q:"将来の就職市場でどのスキルが最も価値を持つと思いますか？",jp_a:"AIリテラシーと適応力が最も価値を持つと思います。"},
+    ]
+  },
+  whose: {
+    emoji:'🏷️', meaning:'誰の',
+    color:'var(--whose-c)', bg:'var(--whose-bg)', dk:'var(--whose-dk)',
+    desc:'所有者について尋ねる。"Whose + noun + is/are this/these?" の形が基本。',
+    items:[
+      {lv:1, q:"Whose bag is this?",         a:"It is Yuki's bag.",            jp_q:"これは誰のカバンですか？",  jp_a:"ユキのカバンです。"},
+      {lv:1, q:"Whose cat is that?",         a:"That is our neighbor's cat.",  jp_q:"あれは誰の猫ですか？",      jp_a:"お隣さんの猫です。"},
+      {lv:1, q:"Whose shoes are these?",     a:"They are my brother's shoes.", jp_q:"これは誰の靴ですか？",      jp_a:"弟の靴です。"},
+      {lv:1, q:"Whose turn is it?",          a:"It is your turn!",             jp_q:"誰の番ですか？",            jp_a:"あなたの番ですよ！"},
+      {lv:2, q:"Whose idea was it to start this project?", a:"It was our teacher's idea.", jp_q:"このプロジェクトを始めたのは誰のアイデアですか？",jp_a:"先生のアイデアです。"},
+      {lv:2, q:"Whose responsibility is it to clean the classroom?", a:"It is everyone's responsibility.", jp_q:"教室の掃除は誰の責任ですか？",jp_a:"全員の責任です。"},
+      {lv:2, q:"Whose artwork won first prize?",  a:"Hana's artwork won first prize.", jp_q:"誰の作品が1位を取りましたか？",jp_a:"ハナの作品です。"},
+      {lv:2, q:"Whose phone is ringing?",         a:"It might be the teacher's phone.", jp_q:"誰の電話が鳴っていますか？",jp_a:"先生の電話かもしれません。"},
+      {lv:3, q:"Whose theory of evolution is still widely accepted today?", a:"Charles Darwin's theory is still widely accepted.", jp_q:"誰の進化論が今でも広く受け入れられていますか？",jp_a:"チャールズ・ダーウィンの進化論です。"},
+      {lv:3, q:"Whose responsibility is it to address climate change?", a:"It is every nation's and individual's shared responsibility.", jp_q:"気候変動への対応は誰の責任ですか？",jp_a:"全ての国と個人の共同責任です。"},
+      {lv:3, q:"Whose perspective is missing in this debate?", a:"The voices of young people and future generations are often missing.", jp_q:"この議論でどの視点が欠けていますか？",jp_a:"若者や将来の世代の声がしばしば欠けています。"},
+    ]
+  }
+};
+
+const WH_KEYS = ['who','what','when','where','why','how','which','whose'];
+
+// ══════════════════════════════════════
+//  TTS
+// ══════════════════════════════════════
+let bestVoice = null, voicesReady = false;
+function pickVoice(vs){
+  const pri=['Samantha','Karen','Moira','Fiona','Victoria','Allison','Ava'];
+  for(const n of pri){const v=vs.find(v=>v.name===n&&v.lang.startsWith('en'));if(v)return v}
+  return vs.find(v=>v.lang.startsWith('en-'))||null;
+}
+function initVoices(){
+  const vs=speechSynthesis.getVoices();if(!vs.length)return;
+  bestVoice=pickVoice(vs);voicesReady=true;
+  const b=document.getElementById('voice-badge');
+  if(b)b.textContent=bestVoice?`🔊 Voice: ${bestVoice.name}`:'🔊 Voice ready';
+}
+speechSynthesis.onvoiceschanged=initVoices;initVoices();
+
+function esc(s){return s.replace(/'/g,"\\'")}
+function speak(text,btn){
+  if(!voicesReady)initVoices();
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  if(bestVoice)u.voice=bestVoice;
+  u.rate=0.87;u.pitch=1.0;u.lang='en-US';
+  if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');u.onerror=()=>btn.classList.remove('speaking')}
+  speechSynthesis.speak(u);
+}
+
+// ══════════════════════════════════════
+//  BUILD CARDS
+// ══════════════════════════════════════
+function buildCard(item, whKey){
+  return `
+  <div class="card ${whKey}">
+    <div class="qa-block">
+      <div class="q-row">
+        <span class="wh-tag">${whKey.toUpperCase()}</span>
+        <span class="q-text">${item.q}</span>
+      </div>
+      <div class="a-row">💬 ${item.a}<em>${item.jp_q} → ${item.jp_a}</em></div>
+    </div>
+    <div class="audio-row">
+      <button class="abtn q" onclick="speak('${esc(item.q)}',this)">🔊 Question</button>
+      <button class="abtn a" onclick="speak('${esc(item.a)}',this)">🔊 Answer</button>
+      <button class="abtn both" onclick="speak('${esc(item.q)} ... ${esc(item.a)}',this)">🔊 Both</button>
+    </div>
+  </div>`;
+}
+
+function buildWHHeader(key){
+  const d=WH[key];
+  return `
+  <div class="wh-header ${key}" style="background:rgba(0,0,0,.3);border-color:${d.color}">
+    <div class="wh-emoji">${d.emoji}</div>
+    <div>
+      <h2 style="color:${d.color}">${key.toUpperCase()}</h2>
+      <p>${d.desc}</p>
+      <span class="meaning" style="background:${d.color};color:#fff">${d.meaning}</span>
+    </div>
+  </div>`;
+}
+
+function buildSection(key, container){
+  let html = buildWHHeader(key);
+  [1,2,3].forEach(lv=>{
+    const items=WH[key].items.filter(i=>i.lv===lv);
+    if(!items.length)return;
+    const star='⭐'.repeat(lv);
+    html+=`<div class="level-label">${star} Level ${lv}</div><div class="cards-grid">`;
+    items.forEach(i=>{html+=buildCard(i,key)});
+    html+=`</div>`;
+  });
+  container.insertAdjacentHTML('beforeend',html);
+}
+
+function initSections(){
+  const allSec=document.getElementById('section-all');
+  WH_KEYS.forEach(k=>{
+    buildSection(k, allSec);
+    buildSection(k, document.getElementById(`section-${k}`));
+  });
+  buildSpeakList();
+}
+
+// ══════════════════════════════════════
+//  SPEAK PANEL
+// ══════════════════════════════════════
+const SPEAK_SAMPLES=[
+  {q:"Who is your best friend?",   a:"My best friend is Yuki.",          wh:"WHO"},
+  {q:"What do you want to be?",    a:"I want to be an engineer.",        wh:"WHAT"},
+  {q:"When is your birthday?",     a:"My birthday is March 5th.",        wh:"WHEN"},
+  {q:"Where do you live?",         a:"I live in Kumamoto.",              wh:"WHERE"},
+  {q:"Why do you study English?",  a:"Because I want to talk with people around the world.", wh:"WHY"},
+  {q:"How do you go to school?",   a:"I walk to school.",                wh:"HOW"},
+  {q:"Which do you prefer — cats or dogs?", a:"I prefer dogs.",          wh:"WHICH"},
+  {q:"Whose bag is this?",         a:"It is Yuki's bag.",                wh:"WHOSE"},
+];
+function buildSpeakList(){
+  const c=document.getElementById('speak-list');
+  c.innerHTML=SPEAK_SAMPLES.map(s=>`
+    <div class="speak-item">
+      <div class="speak-text">${s.q}<br>${s.a}<small>${s.wh}</small></div>
+      <button class="speak-btn" onclick="speak('${esc(s.q)} ... ${esc(s.a)}',this)">▶️ Play</button>
+    </div>`).join('');
+}
+let spkIdx=0;
+function speakAll(){
+  spkIdx=0;spkNext();
+}
+function spkNext(){
+  if(spkIdx>=SPEAK_SAMPLES.length)return;
+  const s=SPEAK_SAMPLES[spkIdx++];
+  const u1=new SpeechSynthesisUtterance(s.q);
+  const u2=new SpeechSynthesisUtterance(s.a);
+  [u1,u2].forEach(u=>{if(bestVoice)u.voice=bestVoice;u.rate=0.85;u.lang='en-US'});
+  u2.onend=()=>setTimeout(spkNext,700);
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u1);
+  setTimeout(()=>speechSynthesis.speak(u2),1200);
+}
+
+// ══════════════════════════════════════
+//  TABS
+// ══════════════════════════════════════
+function showTab(tab){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.wh-pill').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`section-${tab}`).classList.add('active');
+  document.querySelector(`[onclick="showTab('${tab}')"]`).classList.add('active');
+}
+
+// ══════════════════════════════════════
+//  QUIZ
+// ══════════════════════════════════════
+// Quiz type A: Choose the correct WH word for a sentence
+// Quiz type B: Choose the correct answer to a WH question
+let qPool=[],qIdx=0,qScore=0,qAnswered=false;
+
+function buildPool(whSel, lvSel){
+  const keys = whSel==='all' ? WH_KEYS : [whSel];
+  let pool=[];
+  keys.forEach(k=>{
+    WH[k].items.forEach(item=>{
+      if(lvSel!=='all'&&item.lv!=lvSel)return;
+      // Mode A: fill the WH word in the question
+      const blanked = item.q.replace(new RegExp('^'+k,'i'),'___');
+      pool.push({
+        type:'wh',wh:k,
+        sentence: blanked,
+        answer: k.charAt(0).toUpperCase()+k.slice(1),
+        full: item.q,
+        hint: item.jp_q,
+        answerFull: item.a,
+      });
+      // Mode B: choose the answer
+      pool.push({
+        type:'ans',wh:k,
+        sentence: item.q,
+        answer: item.a,
+        full: item.q,
+        hint: item.jp_q,
+        answerFull: item.a,
+      });
+    });
+  });
+  return pool.sort(()=>Math.random()-.5);
+}
+
+function startQuiz(){
+  const wh=document.getElementById('qwh').value;
+  const lv=document.getElementById('qlv').value;
+  qPool=buildPool(wh,lv).slice(0,15);
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML='';
+  renderQ();
+}
+
+function renderQ(){
+  if(qIdx>=qPool.length){renderResult();return}
+  const item=qPool[qIdx];
+  const type=document.getElementById('qtype').value;
+  const pct=Math.round(qIdx/qPool.length*100);
+  qAnswered=false;
+
+  let inputHtml='';
+  if(item.type==='wh'){
+    // Choices: WH words
+    const wrongWHs=WH_KEYS.filter(k=>k!==item.wh).sort(()=>Math.random()-.5).slice(0,3)
+      .map(k=>k.charAt(0).toUpperCase()+k.slice(1));
+    const choices=[item.answer,...wrongWHs].sort(()=>Math.random()-.5);
+    if(type==='choice'){
+      inputHtml=`<div class="q-choices">${choices.map(c=>
+        `<button class="q-choice" onclick="chkChoice('${esc(c)}','${esc(item.answer)}','${esc(item.answerFull)}',this)">${c}</button>`
+      ).join('')}</div>`;
+    } else {
+      inputHtml=`<input class="q-input" id="q-inp" type="text" placeholder="Type the WH word..." autocomplete="off">
+      <button class="q-submit" id="q-sub" onclick="chkType('${esc(item.answer)}','${esc(item.answerFull)}')">Check ✓</button>`;
+    }
+  } else {
+    // Answer choices: correct answer + 3 other answers from pool
+    const wrongPool=qPool.filter((_,i)=>i!==qIdx&&_.answerFull!==item.answerFull);
+    const wrongs=wrongPool.sort(()=>Math.random()-.5).slice(0,3).map(i=>i.answerFull);
+    const choices=[item.answer,...wrongs].sort(()=>Math.random()-.5);
+    if(type==='choice'){
+      inputHtml=`<div class="q-choices">${choices.map(c=>
+        `<button class="q-choice" style="font-size:.8rem;text-align:left" onclick="chkChoice('${esc(c)}','${esc(item.answer)}','${esc(item.answerFull)}',this)">${c}</button>`
+      ).join('')}</div>`;
+    } else {
+      inputHtml=`<input class="q-input" id="q-inp" type="text" placeholder="Type your answer..." autocomplete="off">
+      <button class="q-submit" id="q-sub" onclick="chkType('${esc(item.answer)}','${esc(item.answerFull)}')">Check ✓</button>`;
+    }
+  }
+
+  const badge=item.wh;
+  const badgeColor=`background:var(--${item.wh}-c)`;
+  const instruction = item.type==='wh'
+    ? 'Choose the correct WH word to complete the question:'
+    : 'Choose the best answer to the question:';
+
+  document.getElementById('quiz-area').innerHTML=`
+  <div class="qcard">
+    <div class="qprog-row"><span>${qIdx+1} / ${qPool.length}</span><span>⭐ ${qScore}</span></div>
+    <div class="qprog-bar"><div class="qprog-fill" style="width:${pct}%"></div></div>
+    <span class="q-wh-badge" style="${badgeColor}">${badge.toUpperCase()}</span>
+    <div class="q-instruction">${instruction}</div>
+    <div class="q-sentence">${(item.sentence||item.full).replace('___','<span class="blank">___?</span>')}</div>
+    <div class="q-jp">🇯🇵 ${item.hint}</div>
+    ${inputHtml}
+    <div class="q-feedback" id="q-fb"></div>
+    <button class="q-next" id="q-next" onclick="nextQ()">Next →</button>
+  </div>`;
+
+  const inp=document.getElementById('q-inp');
+  if(inp){
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter')chkType(item.answer,item.answerFull)});
+    inp.focus();
+  }
+  setTimeout(()=>speak(item.full,null),400);
+}
+
+function chkChoice(chosen,correct,answerFull,btn){
+  if(qAnswered)return;
+  qAnswered=true;
+  document.querySelectorAll('.q-choice').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok)document.querySelectorAll('.q-choice').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});
+  showFB(ok,correct,answerFull);
+}
+
+function chkType(correct,answerFull){
+  if(qAnswered)return;
+  const inp=document.getElementById('q-inp');if(!inp)return;
+  qAnswered=true;
+  inp.disabled=true;
+  document.getElementById('q-sub').disabled=true;
+  const ok=inp.value.trim().toLowerCase()===correct.toLowerCase();
+  inp.classList.add(ok?'correct':'wrong');
+  showFB(ok,correct,answerFull);
+}
+
+function showFB(ok,correct,answerFull){
+  if(ok)qScore++;
+  const fb=document.getElementById('q-fb');
+  fb.style.display='block';
+  fb.className=`q-feedback ${ok?'correct':'wrong'}`;
+  fb.innerHTML=ok
+    ?`✅ Correct! &nbsp;<strong>${correct}</strong><br><em>${answerFull}</em>`
+    :`❌ Answer: &nbsp;<strong>${correct}</strong><br><em>${answerFull}</em>`;
+  speak(answerFull,null);
+  document.getElementById('q-next').style.display='block';
+}
+
+function nextQ(){qIdx++;renderQ()}
+
+function renderResult(){
+  const pct=Math.round(qScore/qPool.length*100);
+  const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg=pct>=90?'Perfect! Amazing work!':pct>=70?'Great job! Keep it up!':pct>=50?'Good try! Practice more!':'Don\'t give up!';
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML=`
+  <div class="q-result" style="display:block">
+    <div class="r-emoji">${emoji}</div>
+    <div class="r-score">${qScore} / ${qPool.length}</div>
+    <div class="r-msg">${msg}</div>
+    <button class="retry-btn" onclick="startQuiz()">🔄 Try Again!</button>
+  </div>`;
+}
+
+window.addEventListener('DOMContentLoaded',initSections);
+</script>
+</body>
+</html>
