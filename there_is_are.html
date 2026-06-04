@@ -1,0 +1,922 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>There is / There are Practice 🌟</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --pres-c:#06b6d4; --pres-dk:#0e7490; --pres-bg:rgba(6,182,212,.12);
+  --past-c:#f59e0b; --past-dk:#b45309; --past-bg:rgba(245,158,11,.12);
+  --will-c:#818cf8; --will-dk:#4338ca; --will-bg:rgba(129,140,248,.12);
+  --begt-c:#34d399; --begt-dk:#065f46; --begt-bg:rgba(52,211,153,.12);
+  --quiz-c:#f472b6;
+  --bg:#0d1117; --bg2:#161b22; --bg3:#21262d; --bg4:#30363d;
+  --text:#e6edf3; --muted:#7d8590;
+  --radius:16px;
+  --shadow:0 4px 20px rgba(0,0,0,.35);
+  --shadow-lg:0 8px 40px rgba(0,0,0,.5);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* HEADER */
+header{
+  background:linear-gradient(160deg,#0d1117 0%,#161b22 60%,#0d1117 100%);
+  padding:36px 20px 24px;text-align:center;
+  border-bottom:1px solid rgba(255,255,255,.06);
+  position:relative;overflow:hidden;
+}
+header::before{
+  content:'';position:absolute;inset:0;
+  background:
+    radial-gradient(ellipse at 15% 50%,rgba(6,182,212,.12) 0%,transparent 50%),
+    radial-gradient(ellipse at 85% 50%,rgba(52,211,153,.10) 0%,transparent 50%),
+    radial-gradient(ellipse at 50% 0%,  rgba(129,140,248,.08) 0%,transparent 50%);
+}
+header h1{
+  font-family:'Outfit',sans-serif;font-size:clamp(1.7rem,5vw,2.8rem);font-weight:900;
+  background:linear-gradient(90deg,#06b6d4,#818cf8,#34d399,#f59e0b);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;letter-spacing:-.02em;
+}
+header p{color:var(--muted);font-size:.9rem;font-weight:500;margin-top:6px;position:relative}
+
+#voice-badge{text-align:center;padding:6px;font-size:.72rem;color:var(--muted);font-weight:600}
+
+/* QUICK CHART */
+.chart-wrap{max-width:900px;margin:20px auto 0;padding:0 16px}
+.chart-title{text-align:center;font-size:.72rem;font-weight:700;text-transform:uppercase;
+  letter-spacing:.08em;color:var(--muted);margin-bottom:12px}
+.chart-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.chart-col{border-radius:14px;padding:16px 12px;border:1px solid rgba(255,255,255,.07)}
+.chart-col.pres{background:var(--pres-bg);border-color:rgba(6,182,212,.25)}
+.chart-col.past{background:var(--past-bg);border-color:rgba(245,158,11,.25)}
+.chart-col.will{background:var(--will-bg);border-color:rgba(129,140,248,.25)}
+.chart-col.begt{background:var(--begt-bg);border-color:rgba(52,211,153,.25)}
+.chart-col h3{font-family:'Outfit',sans-serif;font-size:.75rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:10px}
+.chart-col.pres h3{color:var(--pres-c)}
+.chart-col.past h3{color:var(--past-c)}
+.chart-col.will h3{color:var(--will-c)}
+.chart-col.begt h3{color:var(--begt-c)}
+.chart-row{display:flex;justify-content:space-between;align-items:baseline;
+  font-size:.72rem;margin-bottom:5px;gap:6px}
+.chart-row .subj{color:var(--muted);font-weight:500;white-space:nowrap}
+.chart-row .form{font-family:'Outfit',sans-serif;font-weight:700;font-size:.78rem;text-align:right}
+.chart-col.pres .form{color:var(--pres-c)}
+.chart-col.past .form{color:var(--past-c)}
+.chart-col.will .form{color:var(--will-c)}
+.chart-col.begt .form{color:var(--begt-c)}
+.chart-divider{height:1px;background:rgba(255,255,255,.08);margin:6px 0}
+.chart-note{font-size:.65rem;color:var(--muted);font-weight:500;line-height:1.4;margin-top:6px}
+
+/* TABS */
+.tab-nav{display:flex;gap:8px;padding:20px 16px 0;overflow-x:auto;scrollbar-width:none;
+  max-width:900px;margin:0 auto;justify-content:center;flex-wrap:wrap}
+.tab-btn{padding:9px 20px;border-radius:50px;border:2px solid;font-family:'Outfit',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;white-space:nowrap;
+  background:transparent}
+.tab-btn.t-all  {border-color:#30363d;color:var(--muted)}
+.tab-btn.t-pres {border-color:var(--pres-c);color:var(--pres-c)}
+.tab-btn.t-past {border-color:var(--past-c);color:var(--past-c)}
+.tab-btn.t-will {border-color:var(--will-c);color:var(--will-c)}
+.tab-btn.t-begt {border-color:var(--begt-c);color:var(--begt-c)}
+.tab-btn.t-quiz {border-color:var(--quiz-c);color:var(--quiz-c)}
+.tab-btn:hover,.tab-btn.active{transform:translateY(-2px);box-shadow:0 4px 14px rgba(0,0,0,.3)}
+.tab-btn.t-all.active  {background:#30363d;color:#fff}
+.tab-btn.t-pres.active {background:var(--pres-dk);border-color:var(--pres-dk);color:#fff}
+.tab-btn.t-past.active {background:var(--past-dk);border-color:var(--past-dk);color:#fff}
+.tab-btn.t-will.active {background:var(--will-dk);border-color:var(--will-dk);color:#fff}
+.tab-btn.t-begt.active {background:var(--begt-dk);border-color:var(--begt-dk);color:#fff}
+.tab-btn.t-quiz.active {background:var(--quiz-c); border-color:var(--quiz-c); color:#fff}
+
+/* SECTIONS */
+.section{display:none;padding:20px 16px 60px;max-width:900px;margin:0 auto}
+.section.active{display:block}
+
+/* TENSE HEADER */
+.tense-hdr{border-radius:var(--radius);padding:20px 24px;margin-bottom:24px;
+  border:1px solid rgba(255,255,255,.07);position:relative;overflow:hidden}
+.tense-hdr::before{content:'';position:absolute;inset:0;opacity:.05}
+.tense-hdr.pres{background:var(--pres-bg);border-color:rgba(6,182,212,.3)}
+.tense-hdr.past{background:var(--past-bg);border-color:rgba(245,158,11,.3)}
+.tense-hdr.will{background:var(--will-bg);border-color:rgba(129,140,248,.3)}
+.tense-hdr.begt{background:var(--begt-bg);border-color:rgba(52,211,153,.3)}
+.tense-hdr h2{font-family:'Outfit',sans-serif;font-size:1.4rem;font-weight:800;margin-bottom:5px}
+.tense-hdr.pres h2{color:var(--pres-c)}
+.tense-hdr.past h2{color:var(--past-c)}
+.tense-hdr.will h2{color:var(--will-c)}
+.tense-hdr.begt h2{color:var(--begt-c)}
+.tense-hdr p{font-size:.85rem;font-weight:500;color:rgba(255,255,255,.7);line-height:1.6}
+.formula-pills{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.formula-pill{padding:5px 14px;border-radius:50px;font-family:'Outfit',sans-serif;
+  font-size:.8rem;font-weight:700}
+.pres .formula-pill{background:var(--pres-dk);color:#fff}
+.past .formula-pill{background:var(--past-dk);color:#fff}
+.will .formula-pill{background:var(--will-dk);color:#fff}
+.begt .formula-pill{background:var(--begt-dk);color:#fff}
+
+/* LEVEL LABEL */
+.lv-label{font-size:.72rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;
+  color:var(--muted);padding:12px 0 6px;border-bottom:1px solid rgba(255,255,255,.07);margin-bottom:14px}
+
+/* CARDS GRID */
+.cards-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-bottom:24px}
+
+/* CARD */
+.card{
+  background:var(--bg2);border-radius:var(--radius);padding:18px;
+  box-shadow:var(--shadow);border:1px solid rgba(255,255,255,.06);
+  transition:transform .2s,box-shadow .2s;position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
+.card.pres::before{background:linear-gradient(90deg,var(--pres-dk),var(--pres-c))}
+.card.past::before{background:linear-gradient(90deg,var(--past-dk),var(--past-c))}
+.card.will::before{background:linear-gradient(90deg,var(--will-dk),var(--will-c))}
+.card.begt::before{background:linear-gradient(90deg,var(--begt-dk),var(--begt-c))}
+.card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+
+/* FORM BADGE */
+.form-badge{
+  display:inline-flex;align-items:center;gap:6px;
+  padding:4px 12px;border-radius:50px;
+  font-family:'Outfit',sans-serif;font-size:.78rem;font-weight:800;
+  margin-bottom:12px;
+}
+.card.pres .form-badge{background:rgba(6,182,212,.15);color:var(--pres-c);border:1px solid rgba(6,182,212,.3)}
+.card.past .form-badge{background:rgba(245,158,11,.15);color:var(--past-c);border:1px solid rgba(245,158,11,.3)}
+.card.will .form-badge{background:rgba(129,140,248,.15);color:var(--will-c);border:1px solid rgba(129,140,248,.3)}
+.card.begt .form-badge{background:rgba(52,211,153,.15);color:var(--begt-c);border:1px solid rgba(52,211,153,.3)}
+
+/* SENTENCE BLOCKS */
+.sent-block{display:flex;flex-direction:column;gap:7px;margin-bottom:12px}
+.sent{background:var(--bg3);border-radius:10px;padding:9px 12px;
+  font-size:.82rem;font-weight:600;line-height:1.5;border-left:3px solid;color:var(--text)}
+.card.pres .sent{border-color:var(--pres-c)}
+.card.past .sent{border-color:var(--past-c)}
+.card.will .sent{border-color:var(--will-c)}
+.card.begt .sent{border-color:var(--begt-c)}
+.sent em{display:block;font-style:normal;font-size:.7rem;color:var(--muted);margin-top:2px;font-weight:500}
+.sent.neg{border-color:#ef4444;background:rgba(239,68,68,.07)}
+.sent.que{border-color:#fbbf24;background:rgba(251,191,36,.07)}
+.sent-type{font-size:.6rem;font-weight:800;text-transform:uppercase;
+  letter-spacing:.06em;display:block;margin-bottom:2px}
+.sent.neg .sent-type{color:#f87171}
+.sent.que .sent-type{color:#fbbf24}
+.sent.aff .sent-type{color:var(--muted)}
+
+/* AUDIO ROW */
+.audio-row{display:flex;gap:6px;margin-top:10px}
+.abtn{flex:1;padding:7px 4px;border:none;border-radius:8px;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:.7rem;
+  transition:all .15s;display:flex;align-items:center;justify-content:center;gap:3px}
+.abtn:hover{filter:brightness(1.15);transform:scale(1.03)}
+.abtn:active{transform:scale(.97)}
+.abtn.speaking{animation:pulse .5s infinite alternate}
+@keyframes pulse{from{opacity:.6}to{opacity:1}}
+.card.pres .abtn.a1{background:var(--pres-dk);color:#fff}
+.card.pres .abtn.a2{background:rgba(239,68,68,.3);color:#fca5a5}
+.card.pres .abtn.a3{background:rgba(251,191,36,.2);color:#fcd34d}
+.card.past .abtn.a1{background:var(--past-dk);color:#fff}
+.card.past .abtn.a2{background:rgba(239,68,68,.3);color:#fca5a5}
+.card.past .abtn.a3{background:rgba(251,191,36,.2);color:#fcd34d}
+.card.will .abtn.a1{background:var(--will-dk);color:#fff}
+.card.will .abtn.a2{background:rgba(239,68,68,.3);color:#fca5a5}
+.card.will .abtn.a3{background:rgba(251,191,36,.2);color:#fcd34d}
+.card.begt .abtn.a1{background:var(--begt-dk);color:#fff}
+.card.begt .abtn.a2{background:rgba(239,68,68,.3);color:#fca5a5}
+.card.begt .abtn.a3{background:rgba(251,191,36,.2);color:#fcd34d}
+
+/* QUIZ */
+#section-quiz{max-width:680px}
+.quiz-setup{background:var(--bg2);border-radius:20px;padding:22px;
+  margin-bottom:20px;border:1px solid rgba(255,255,255,.07)}
+.quiz-setup h2{font-family:'Outfit',sans-serif;font-size:1.2rem;color:var(--quiz-c);margin-bottom:14px}
+.qctrls{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.qsel{padding:8px 14px;border-radius:50px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'DM Sans',sans-serif;
+  font-weight:600;font-size:.82rem;cursor:pointer}
+.qstart{padding:9px 22px;background:linear-gradient(135deg,var(--quiz-c),var(--will-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Outfit',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s;
+  box-shadow:0 4px 14px rgba(244,114,182,.3)}
+.qstart:hover{transform:translateY(-2px);filter:brightness(1.08)}
+
+.qcard{background:var(--bg2);border-radius:20px;padding:26px;
+  border:1px solid rgba(255,255,255,.08);box-shadow:var(--shadow);
+  animation:slideUp .3s ease;margin-bottom:20px}
+@keyframes slideUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+.qprow{display:flex;justify-content:space-between;font-size:.8rem;font-weight:600;color:var(--muted);margin-bottom:8px}
+.qpbar{width:100%;height:6px;background:var(--bg3);border-radius:50px;margin-bottom:20px;overflow:hidden}
+.qpfill{height:100%;background:linear-gradient(90deg,var(--quiz-c),var(--will-c));border-radius:50px;transition:width .4s}
+
+.q-badge{display:inline-block;padding:4px 14px;border-radius:50px;
+  font-family:'Outfit',sans-serif;font-size:.72rem;font-weight:800;
+  text-transform:uppercase;letter-spacing:.05em;margin-bottom:12px;color:#fff}
+.q-badge.pres{background:var(--pres-dk)}
+.q-badge.past{background:var(--past-dk)}
+.q-badge.will{background:var(--will-dk)}
+.q-badge.begt{background:var(--begt-dk)}
+
+.q-instruct{font-size:.85rem;font-weight:600;color:var(--muted);margin-bottom:6px}
+.q-sent{font-family:'Outfit',sans-serif;font-size:1.15rem;font-weight:700;
+  line-height:1.7;margin-bottom:6px;color:var(--text)}
+.q-sent .blank{display:inline-block;min-width:100px;border-bottom:3px solid var(--quiz-c);
+  color:var(--quiz-c);text-align:center;padding:0 4px}
+.q-jp{font-size:.78rem;color:var(--muted);font-weight:600;margin-bottom:18px;font-style:italic}
+
+.q-choices{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+.q-choice{padding:11px 14px;border-radius:12px;border:2px solid rgba(255,255,255,.12);
+  background:var(--bg3);color:var(--text);font-family:'Outfit',sans-serif;
+  font-size:.9rem;font-weight:700;cursor:pointer;transition:all .15s;text-align:center}
+.q-choice:hover:not(:disabled){border-color:var(--quiz-c);background:rgba(244,114,182,.12)}
+.q-choice.correct{border-color:#22c55e;background:rgba(34,197,94,.15);color:#86efac}
+.q-choice.wrong  {border-color:#ef4444;background:rgba(239,68,68,.15); color:#fca5a5}
+.q-choice:disabled{cursor:not-allowed;opacity:.7}
+
+.q-input{width:100%;padding:13px 18px;border-radius:12px;
+  border:2px solid rgba(255,255,255,.12);background:var(--bg3);color:var(--text);
+  font-family:'Outfit',sans-serif;font-size:1.05rem;font-weight:700;
+  margin-bottom:10px;outline:none;transition:border-color .2s}
+.q-input:focus{border-color:var(--quiz-c)}
+.q-input.correct{border-color:#22c55e;background:rgba(34,197,94,.1)}
+.q-input.wrong  {border-color:#ef4444;background:rgba(239,68,68,.1)}
+
+.q-submit{width:100%;padding:13px;background:linear-gradient(135deg,var(--quiz-c),var(--will-c));
+  color:#fff;border:none;border-radius:12px;font-family:'Outfit',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer;margin-bottom:10px;transition:all .2s}
+.q-submit:hover:not(:disabled){filter:brightness(1.08)}
+.q-submit:disabled{opacity:.45;cursor:not-allowed}
+
+.q-feedback{padding:13px 16px;border-radius:12px;font-size:.88rem;font-weight:600;
+  display:none;line-height:1.6;margin-bottom:10px}
+.q-feedback.correct{background:rgba(34,197,94,.1);border:1px solid rgba(34,197,94,.3);color:#86efac}
+.q-feedback.wrong  {background:rgba(239,68,68,.1); border:1px solid rgba(239,68,68,.3);color:#fca5a5}
+
+.q-next{width:100%;padding:12px;background:var(--bg3);color:var(--text);
+  border:2px solid rgba(255,255,255,.12);border-radius:12px;
+  font-family:'Outfit',sans-serif;font-weight:700;font-size:.95rem;
+  cursor:pointer;display:none;transition:all .2s}
+.q-next:hover{background:rgba(255,255,255,.08)}
+
+.q-result{display:none;background:var(--bg2);border-radius:20px;padding:40px 24px;
+  text-align:center;border:1px solid rgba(255,255,255,.08)}
+.r-emoji{font-size:3.5rem;margin-bottom:10px}
+.r-score{font-family:'Outfit',sans-serif;font-size:3rem;font-weight:900;
+  background:linear-gradient(90deg,var(--quiz-c),var(--will-c));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.r-msg{color:var(--muted);font-size:1rem;font-weight:600;margin:8px 0 24px}
+.retry-btn{padding:12px 32px;background:linear-gradient(135deg,var(--quiz-c),var(--will-c));
+  color:#fff;border:none;border-radius:50px;font-family:'Outfit',sans-serif;
+  font-weight:700;font-size:.95rem;cursor:pointer}
+
+/* SPEAK PANEL */
+.speak-panel{background:rgba(129,140,248,.07);border:1px solid rgba(129,140,248,.2);
+  border-radius:var(--radius);padding:20px;margin-top:28px}
+.speak-panel h3{font-family:'Outfit',sans-serif;font-size:1rem;color:var(--will-c);margin-bottom:14px}
+.speak-list{display:flex;flex-direction:column;gap:8px}
+.speak-item{background:var(--bg3);border-radius:10px;padding:12px 14px;
+  display:flex;align-items:center;justify-content:space-between;gap:10px}
+.speak-text{font-size:.82rem;font-weight:600;flex:1;line-height:1.4}
+.speak-text small{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}
+.speak-btn{background:var(--will-dk);color:#fff;border:none;border-radius:8px;
+  padding:7px 12px;font-family:'DM Sans',sans-serif;font-weight:700;font-size:.75rem;
+  cursor:pointer;white-space:nowrap;transition:all .15s;flex-shrink:0}
+.speak-btn:hover{filter:brightness(1.1)}
+.speak-all-btn{width:100%;margin-top:12px;padding:11px;
+  background:linear-gradient(135deg,var(--will-dk),var(--begt-dk));
+  color:#fff;border:none;border-radius:12px;font-family:'Outfit',sans-serif;
+  font-weight:700;font-size:.85rem;cursor:pointer;transition:all .2s}
+.speak-all-btn:hover{filter:brightness(1.08)}
+
+@media(max-width:600px){
+  .chart-grid{grid-template-columns:1fr 1fr}
+  .cards-grid{grid-template-columns:1fr}
+  .q-choices{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h1>📦 There is / There are</h1>
+  <p>Present · Past · Future (will / be going to) — 幼児〜高校生</p>
+</header>
+<div id="voice-badge">🔊 Loading voice...</div>
+
+<!-- QUICK REFERENCE CHART -->
+<div class="chart-wrap">
+  <div class="chart-title">📋 Quick Reference — 4 Tenses at a Glance</div>
+  <div class="chart-grid">
+    <div class="chart-col pres">
+      <h3>🔵 Present</h3>
+      <div class="chart-row"><span class="subj">単数</span><span class="form">There is</span></div>
+      <div class="chart-row"><span class="subj">複数</span><span class="form">There are</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">否定（単）</span><span class="form">There isn't</span></div>
+      <div class="chart-row"><span class="subj">否定（複）</span><span class="form">There aren't</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">疑問（単）</span><span class="form">Is there?</span></div>
+      <div class="chart-row"><span class="subj">疑問（複）</span><span class="form">Are there?</span></div>
+      <div class="chart-note">「〜があります・います」</div>
+    </div>
+    <div class="chart-col past">
+      <h3>🟡 Past</h3>
+      <div class="chart-row"><span class="subj">単数</span><span class="form">There was</span></div>
+      <div class="chart-row"><span class="subj">複数</span><span class="form">There were</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">否定（単）</span><span class="form">There wasn't</span></div>
+      <div class="chart-row"><span class="subj">否定（複）</span><span class="form">There weren't</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">疑問（単）</span><span class="form">Was there?</span></div>
+      <div class="chart-row"><span class="subj">疑問（複）</span><span class="form">Were there?</span></div>
+      <div class="chart-note">「〜がありました・いました」</div>
+    </div>
+    <div class="chart-col will">
+      <h3>🔵 will be</h3>
+      <div class="chart-row"><span class="subj">単数</span><span class="form">There will be</span></div>
+      <div class="chart-row"><span class="subj">複数</span><span class="form">There will be</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">否定</span><span class="form">There won't be</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">疑問</span><span class="form">Will there be?</span></div>
+      <div class="chart-note">「〜があるでしょう」予測・即決</div>
+    </div>
+    <div class="chart-col begt">
+      <h3>🟢 going to be</h3>
+      <div class="chart-row"><span class="subj">単数</span><span class="form">is going to be</span></div>
+      <div class="chart-row"><span class="subj">複数</span><span class="form">are going to be</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">否定</span><span class="form">isn't / aren't going to be</span></div>
+      <div class="chart-divider"></div>
+      <div class="chart-row"><span class="subj">疑問</span><span class="form">Is/Are there going to be?</span></div>
+      <div class="chart-note">「〜がある予定です」計画・根拠ある予測</div>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<nav class="tab-nav">
+  <button class="tab-btn t-all  active" onclick="showTab('all')">📚 All</button>
+  <button class="tab-btn t-pres"        onclick="showTab('pres')">🔵 Present</button>
+  <button class="tab-btn t-past"        onclick="showTab('past')">🟡 Past</button>
+  <button class="tab-btn t-will"        onclick="showTab('will')">🔮 will be</button>
+  <button class="tab-btn t-begt"        onclick="showTab('begt')">🟢 going to be</button>
+  <button class="tab-btn t-quiz"        onclick="showTab('quiz')">✏️ Quiz</button>
+</nav>
+
+<div id="section-all"  class="section active"></div>
+<div id="section-pres" class="section"></div>
+<div id="section-past" class="section"></div>
+<div id="section-will" class="section"></div>
+<div id="section-begt" class="section"></div>
+
+<div id="section-quiz" class="section">
+  <div class="quiz-setup">
+    <h2>✏️ There is / There are Quiz</h2>
+    <div class="qctrls">
+      <select class="qsel" id="q-tense">
+        <option value="all">All Tenses</option>
+        <option value="pres">🔵 Present</option>
+        <option value="past">🟡 Past</option>
+        <option value="will">🔮 will be</option>
+        <option value="begt">🟢 going to be</option>
+      </select>
+      <select class="qsel" id="q-lv">
+        <option value="all">All Levels</option>
+        <option value="1">⭐ Level 1</option>
+        <option value="2">⭐⭐ Level 2</option>
+        <option value="3">⭐⭐⭐ Level 3</option>
+      </select>
+      <select class="qsel" id="q-type">
+        <option value="choice">Multiple Choice</option>
+        <option value="type">Type Answer</option>
+      </select>
+      <button class="qstart" onclick="startQuiz()">🎯 Start!</button>
+    </div>
+  </div>
+  <div id="quiz-area"></div>
+  <div id="quiz-result"></div>
+
+  <div class="speak-panel">
+    <h3>🎤 Listen &amp; Repeat — Speaking Practice</h3>
+    <div class="speak-list" id="speak-list"></div>
+    <button class="speak-all-btn" onclick="speakAll()">▶️ Play All Sentences</button>
+  </div>
+</div>
+
+<script>
+// ══════════════════════════════════
+//  DATA
+// ══════════════════════════════════
+const DATA = {
+  pres:{
+    label:'🔵 Present — There is / There are',
+    cls:'pres', emoji:'📍',
+    desc:'今、何かが「存在する」ことを表す。単数は There is、複数は There are。',
+    formulas:['There is + 単数名詞','There are + 複数名詞','Is/Are there + ...?','There isn\'t / There aren\'t'],
+    cards:[
+      // Level 1
+      {lv:1,form:'There is',
+       aff:'There is a cat on the sofa.',       jp_a:'ソファの上に猫がいます。',
+       neg:'There isn\'t a cat on the bed.',    jp_n:'ベッドの上には猫がいません。',
+       que:'Is there a cat on the sofa?',       jp_q:'ソファの上に猫はいますか？',
+       ans:'Yes, there is.',                    num:'singular'},
+      {lv:1,form:'There are',
+       aff:'There are three apples on the table.', jp_a:'テーブルの上にリンゴが3つあります。',
+       neg:'There aren\'t any bananas.',           jp_n:'バナナはありません。',
+       que:'Are there any apples?',               jp_q:'リンゴはありますか？',
+       ans:'Yes, there are.',                     num:'plural'},
+      {lv:1,form:'There is',
+       aff:'There is a dog in the garden.',     jp_a:'庭に犬がいます。',
+       neg:'There isn\'t a cat in the garden.', jp_n:'庭に猫はいません。',
+       que:'Is there a dog outside?',           jp_q:'外に犬はいますか？',
+       ans:'Yes, there is.',                    num:'singular'},
+      {lv:1,form:'There are',
+       aff:'There are five children in the park.',  jp_a:'公園に子どもが5人います。',
+       neg:'There aren\'t any adults.',             jp_n:'大人はいません。',
+       que:'Are there any children in the park?',   jp_q:'公園に子どもはいますか？',
+       ans:'Yes, there are.',                       num:'plural'},
+      // Level 2
+      {lv:2,form:'There is',
+       aff:'There is a new student in our class.',    jp_a:'クラスに新しい生徒がいます。',
+       neg:'There isn\'t a spare seat.',              jp_n:'空席はありません。',
+       que:'Is there a new student in your class?',   jp_q:'クラスに新しい生徒はいますか？',
+       ans:'Yes, there is.',                          num:'singular'},
+      {lv:2,form:'There are',
+       aff:'There are many interesting books in the library.',  jp_a:'図書館には面白い本がたくさんあります。',
+       neg:'There aren\'t enough chairs for everyone.',         jp_n:'全員分の椅子が足りません。',
+       que:'Are there many books in your school library?',      jp_q:'学校の図書館には本がたくさんありますか？',
+       ans:'Yes, there are lots.',                              num:'plural'},
+      {lv:2,form:'There is',
+       aff:'There is a convenience store near my house.',  jp_a:'家の近くにコンビニがあります。',
+       neg:'There isn\'t a supermarket nearby.',           jp_n:'近くにスーパーはありません。',
+       que:'Is there a convenience store near your house?',jp_q:'家の近くにコンビニはありますか？',
+       ans:'Yes, there is one.',                           num:'singular'},
+      {lv:2,form:'There are',
+       aff:'There are over thirty students in my class.',  jp_a:'クラスには30人以上の生徒がいます。',
+       neg:'There aren\'t many empty desks.',              jp_n:'空いている机はあまりありません。',
+       que:'Are there more than twenty students?',         jp_q:'20人以上の生徒がいますか？',
+       ans:'Yes, there are.',                              num:'plural'},
+      // Level 3
+      {lv:3,form:'There is',
+       aff:'There is growing concern about mental health among teenagers.',  jp_a:'10代の若者のメンタルヘルスへの懸念が高まっています。',
+       neg:'There isn\'t enough support for students who struggle emotionally.',jp_n:'精神的に辛い生徒への支援が十分ではありません。',
+       que:'Is there adequate mental health support in your school?',          jp_q:'学校にはメンタルヘルスの十分なサポートがありますか？',
+       ans:'Unfortunately, there isn\'t enough.',                              num:'singular'},
+      {lv:3,form:'There are',
+       aff:'There are numerous opportunities for young people in the TSMC era.',  jp_a:'TSMCの時代、若者には多くのチャンスがあります。',
+       neg:'There aren\'t enough skilled workers to meet the demand.',            jp_n:'需要を満たす技能労働者が十分ではありません。',
+       que:'Are there good career opportunities in the semiconductor industry?',  jp_q:'半導体産業に良い就職のチャンスはありますか？',
+       ans:'Yes, there are many.',                                                num:'plural'},
+      {lv:3,form:'There is',
+       aff:'There is a strong link between consistent practice and language fluency.',  jp_a:'継続的な練習と語学力の間には強いつながりがあります。',
+       neg:'There isn\'t a shortcut to becoming fluent in a foreign language.',        jp_n:'外国語が流暢になる近道はありません。',
+       que:'Is there scientific evidence that input-rich environments help learners?',  jp_q:'インプットが豊富な環境が学習者を助けるという科学的根拠はありますか？',
+       ans:'Yes, there is substantial research on this.',                              num:'singular'},
+    ]
+  },
+
+  past:{
+    label:'🟡 Past — There was / There were',
+    cls:'past', emoji:'🕰️',
+    desc:'過去に何かが「存在していた」ことを表す。単数は There was、複数は There were。',
+    formulas:['There was + 単数名詞','There were + 複数名詞','Was/Were there + ...?','There wasn\'t / There weren\'t'],
+    cards:[
+      // Level 1
+      {lv:1,form:'There was',
+       aff:'There was a bird in the tree this morning.',  jp_a:'今朝、木の上に鳥がいました。',
+       neg:'There wasn\'t a bird there now.',             jp_n:'今は鳥がいません。',
+       que:'Was there a bird in the tree?',               jp_q:'木の上に鳥はいましたか？',
+       ans:'Yes, there was.',                             num:'singular'},
+      {lv:1,form:'There were',
+       aff:'There were many children at the playground.',  jp_a:'遊び場にたくさんの子どもがいました。',
+       neg:'There weren\'t any adults watching.',           jp_n:'見ている大人はいませんでした。',
+       que:'Were there many children there?',               jp_q:'そこにたくさんの子どもがいましたか？',
+       ans:'Yes, there were.',                             num:'plural'},
+      {lv:1,form:'There was',
+       aff:'There was a big cake at the party.',   jp_a:'パーティーに大きなケーキがありました。',
+       neg:'There wasn\'t any ice cream.',         jp_n:'アイスクリームはありませんでした。',
+       que:'Was there a cake at the party?',       jp_q:'パーティーにケーキはありましたか？',
+       ans:'Yes, there was a delicious one!',      num:'singular'},
+      {lv:1,form:'There were',
+       aff:'There were ten candles on the birthday cake.',  jp_a:'誕生日ケーキに10本のろうそくがありました。',
+       neg:'There weren\'t any balloons.',                  jp_n:'風船はありませんでした。',
+       que:'Were there candles on the cake?',               jp_q:'ケーキにろうそくはありましたか？',
+       ans:'Yes, there were ten.',                          num:'plural'},
+      // Level 2
+      {lv:2,form:'There was',
+       aff:'There was a famous castle in this city 400 years ago.',  jp_a:'400年前、この街に有名なお城がありました。',
+       neg:'There wasn\'t a shopping mall back then.',               jp_n:'当時はショッピングモールはありませんでした。',
+       que:'Was there a castle here in the past?',                   jp_q:'昔ここにお城はありましたか？',
+       ans:'Yes, there was a magnificent one.',                      num:'singular'},
+      {lv:2,form:'There were',
+       aff:'There were no smartphones when my parents were young.',  jp_a:'両親が若い頃、スマートフォンはありませんでした。',
+       neg:'There weren\'t any social media platforms either.',       jp_n:'SNSのプラットフォームもありませんでした。',
+       que:'Were there computers when your parents were students?',   jp_q:'両親が学生の頃、コンピューターはありましたか？',
+       ans:'There were some, but they were very basic.',              num:'plural'},
+      {lv:2,form:'There was',
+       aff:'There was a long line at the popular ramen shop.',  jp_a:'人気のラーメン屋に長い列がありました。',
+       neg:'There wasn\'t any wait at the other restaurant.',   jp_n:'他のレストランには待ち時間がありませんでした。',
+       que:'Was there a long line when you arrived?',           jp_q:'着いた時、長い列はありましたか？',
+       ans:'Yes, we waited for 30 minutes.',                   num:'singular'},
+      {lv:2,form:'There were',
+       aff:'There were hundreds of people at the school festival.',  jp_a:'学校祭には何百人もの人がいました。',
+       neg:'There weren\'t enough food stalls for everyone.',        jp_n:'全員分の食べ物スタンドが足りませんでした。',
+       que:'Were there many visitors at your school festival?',      jp_q:'学校祭にはたくさんの来場者がいましたか？',
+       ans:'Yes, there were around 500 people.',                    num:'plural'},
+      // Level 3
+      {lv:3,form:'There was',
+       aff:'There was significant opposition to the new school policy.',  jp_a:'新しい学校の方針に対する反対意見がありました。',
+       neg:'There wasn\'t enough discussion before the decision was made.',jp_n:'決定前に十分な話し合いがありませんでした。',
+       que:'Was there any debate about the changes?',                     jp_q:'変更について議論はありましたか？',
+       ans:'Yes, there was a heated debate.',                             num:'singular'},
+      {lv:3,form:'There were',
+       aff:'There were major advances in technology during the 20th century.',  jp_a:'20世紀には大きな技術の進歩がありました。',
+       neg:'There weren\'t as many environmental concerns at that time.',        jp_n:'当時は環境への懸念がそれほどありませんでした。',
+       que:'Were there significant challenges as well?',                         jp_q:'大きな課題もありましたか？',
+       ans:'Yes, there were many social and political challenges.',              num:'plural'},
+      {lv:3,form:'There was',
+       aff:'There was a turning point in my English learning journey when I started using it daily.',  jp_a:'毎日英語を使い始めた時が、英語学習の転機でした。',
+       neg:'There wasn\'t a sudden improvement — it was gradual.',                                    jp_n:'急な上達はなく、少しずつ伸びていきました。',
+       que:'Was there a particular moment that changed your attitude toward learning?',                jp_q:'学習に対する姿勢が変わった特定の瞬間はありましたか？',
+       ans:'Yes, there was — when I succeeded in a real conversation.',                               num:'singular'},
+    ]
+  },
+
+  will:{
+    label:'🔮 Future — There will be',
+    cls:'will', emoji:'🚀',
+    desc:'未来に何かが「あるだろう」と予測・約束する。will は単数・複数どちらも同形。',
+    formulas:['There will be + 名詞','There won\'t be + 名詞','Will there be + ...?'],
+    cards:[
+      // Level 1
+      {lv:1,form:'There will be',
+       aff:'There will be a birthday party next Sunday!',  jp_a:'来週の日曜日に誕生日パーティーがあります！',
+       neg:'There won\'t be any homework that day.',       jp_n:'その日は宿題はありません。',
+       que:'Will there be cake at the party?',            jp_q:'パーティーにケーキはありますか？',
+       ans:'Yes, there will be a big one!',               num:'singular'},
+      {lv:1,form:'There will be',
+       aff:'There will be many animals at the zoo.',  jp_a:'動物園にはたくさんの動物がいます。',
+       neg:'There won\'t be any lions indoors.',      jp_n:'室内にライオンはいません。',
+       que:'Will there be pandas at the zoo?',        jp_q:'動物園にパンダはいますか？',
+       ans:'Yes, there will be two pandas!',          num:'plural'},
+      {lv:1,form:'There will be',
+       aff:'There will be a school sports day in October.',  jp_a:'10月に運動会があります。',
+       neg:'There won\'t be any classes that day.',          jp_n:'その日は授業はありません。',
+       que:'Will there be a relay race?',                    jp_q:'リレーはありますか？',
+       ans:'Yes, there will be one for every grade.',        num:'singular'},
+      // Level 2
+      {lv:2,form:'There will be',
+       aff:'There will be a new shopping center in our town next year.',  jp_a:'来年、町に新しいショッピングセンターができます。',
+       neg:'There won\'t be enough parking spaces at first.',             jp_n:'最初は駐車スペースが十分ではないでしょう。',
+       que:'Will there be a cinema inside?',                              jp_q:'中に映画館はありますか？',
+       ans:'Yes, there will be a large one.',                            num:'singular'},
+      {lv:2,form:'There will be',
+       aff:'There will be many job opportunities in the IT sector.',  jp_a:'IT分野に多くの就職機会があるでしょう。',
+       neg:'There won\'t be as many traditional factory jobs.',        jp_n:'従来の工場の仕事はそれほど多くないでしょう。',
+       que:'Will there be good opportunities for English speakers?',   jp_q:'英語話者にとって良い機会はありますか？',
+       ans:'Yes, there will be many international roles.',             num:'plural'},
+      {lv:2,form:'There will be',
+       aff:'There will be a big exam at the end of the semester.',  jp_a:'学期末に大きな試験があります。',
+       neg:'There won\'t be a makeup test for absences.',           jp_n:'欠席者のための補講試験はありません。',
+       que:'Will there be an oral component too?',                  jp_q:'口頭試験もありますか？',
+       ans:'Yes, there will be a short speaking test.',             num:'singular'},
+      // Level 3
+      {lv:3,form:'There will be',
+       aff:'There will be more bilingual children in Japan as globalization continues.',  jp_a:'グローバル化が進むにつれ、日本にはバイリンガルの子どもが増えるでしょう。',
+       neg:'There won\'t be a one-size-fits-all solution to language education.',        jp_n:'言語教育に万能な解決策はないでしょう。',
+       que:'Will there be more demand for English in everyday life?',                    jp_q:'日常生活での英語需要は高まりますか？',
+       ans:'Yes, there will be, especially in Kumamoto\'s semiconductor region.',        num:'plural'},
+      {lv:3,form:'There will be',
+       aff:'There will be increasing pressure on universities to offer more practical skills training.',  jp_a:'大学はより実践的なスキル訓練を提供するよう求められるでしょう。',
+       neg:'There won\'t be enough time to master everything in four years.',                           jp_n:'4年間ですべてをマスターする時間は足りないでしょう。',
+       que:'Will there be more industry-university collaboration in the future?',                       jp_q:'将来、産学連携はもっと増えますか？',
+       ans:'Yes, there will likely be more partnerships.',                                             num:'plural'},
+      {lv:3,form:'There will be',
+       aff:'There will be a greater emphasis on AI literacy in school curricula worldwide.',  jp_a:'世界中の学校カリキュラムで、AIリテラシーへの重点がさらに高まるでしょう。',
+       neg:'There won\'t be a way to avoid learning about AI in the modern world.',          jp_n:'現代社会でAIについて学ぶことを避ける方法はないでしょう。',
+       que:'Will there be dedicated AI classes in Japanese high schools?',                   jp_q:'日本の高校にAI専用の授業はできますか？',
+       ans:'There will likely be, as the curriculum is being updated.',                     num:'singular'},
+    ]
+  },
+
+  begt:{
+    label:'🟢 Future — There is/are going to be',
+    cls:'begt', emoji:'📅',
+    desc:'計画・証拠に基づいた予測。単数は "There is going to be"、複数は "There are going to be"。',
+    formulas:['There is going to be + 単数名詞','There are going to be + 複数名詞','Is/Are there going to be + ...?','There isn\'t/aren\'t going to be'],
+    cards:[
+      // Level 1
+      {lv:1,form:'There is going to be',
+       aff:'There is going to be a school trip next month.',  jp_a:'来月、修学旅行があります。',
+       neg:'There isn\'t going to be school on that day.',   jp_n:'その日は授業はありません。',
+       que:'Is there going to be a bus for the trip?',       jp_q:'旅行にバスはありますか？',
+       ans:'Yes, there is going to be a big bus.',           num:'singular'},
+      {lv:1,form:'There are going to be',
+       aff:'There are going to be fireworks at the summer festival.',  jp_a:'夏祭りに花火があります。',
+       neg:'There aren\'t going to be any fireworks if it rains.',     jp_n:'雨が降ったら花火はありません。',
+       que:'Are there going to be food stalls?',                       jp_q:'屋台はありますか？',
+       ans:'Yes, there are going to be lots of them!',                 num:'plural'},
+      {lv:1,form:'There is going to be',
+       aff:'There is going to be a spelling test on Friday.',  jp_a:'金曜日にスペリングテストがあります。',
+       neg:'There isn\'t going to be a math test this week.', jp_n:'今週は数学のテストはありません。',
+       que:'Is there going to be a test tomorrow?',           jp_q:'明日テストはありますか？',
+       ans:'Yes, there is going to be one.',                  num:'singular'},
+      // Level 2
+      {lv:2,form:'There is going to be',
+       aff:'There is going to be a new English teacher from Canada.',  jp_a:'カナダから新しい英語の先生が来ます。',
+       neg:'There isn\'t going to be a homeroom change.',             jp_n:'ホームルームの変更はありません。',
+       que:'Is there going to be an introductory assembly?',          jp_q:'紹介の全校集会はありますか？',
+       ans:'Yes, there is going to be one on Monday.',                num:'singular'},
+      {lv:2,form:'There are going to be',
+       aff:'There are going to be several after-school events this term.',  jp_a:'今学期、いくつかの放課後イベントがあります。',
+       neg:'There aren\'t going to be any events during exam week.',        jp_n:'試験週間中はイベントはありません。',
+       que:'Are there going to be any sports events?',                      jp_q:'スポーツのイベントはありますか？',
+       ans:'Yes, there are going to be two.',                               num:'plural'},
+      {lv:2,form:'There is going to be',
+       aff:'There is going to be a big change to the school lunch menu.',  jp_a:'給食のメニューが大きく変わります。',
+       neg:'There isn\'t going to be as much fried food.',                 jp_n:'揚げ物はそれほど多くなくなります。',
+       que:'Is there going to be more variety?',                           jp_q:'バリエーションは増えますか？',
+       ans:'Yes, there is going to be a wider range of options.',          num:'singular'},
+      // Level 3
+      {lv:3,form:'There is going to be',
+       aff:'There is going to be a significant increase in demand for bilingual professionals.',  jp_a:'バイリンガル人材への需要が大幅に増加する見込みです。',
+       neg:'There isn\'t going to be enough supply to meet that demand.',                        jp_n:'その需要を満たすだけの供給は見込めません。',
+       que:'Is there going to be a shift in how English is taught in Japanese schools?',         jp_q:'日本の学校での英語指導に変化はありそうですか？',
+       ans:'There is going to be a major curriculum reform by 2030.',                           num:'singular'},
+      {lv:3,form:'There are going to be',
+       aff:'There are going to be major changes to the university entrance exam system.',  jp_a:'大学入試制度に大きな変化が起きる予定です。',
+       neg:'There aren\'t going to be as many purely knowledge-based tests.',              jp_n:'純粋な知識系のテストはそれほど多くなくなります。',
+       que:'Are there going to be more oral or practical assessments?',                   jp_q:'口頭試験や実技評価が増えますか？',
+       ans:'Yes, there are going to be more diverse assessment formats.',                 num:'plural'},
+      {lv:3,form:'There is going to be',
+       aff:'There is going to be a growing role for AI tools in language learning classrooms.',  jp_a:'語学学習の教室でAIツールの役割がますます大きくなる見込みです。',
+       neg:'There isn\'t going to be a complete replacement of human teachers, however.',        jp_n:'ただし、人間の教師が完全に置き換えられることはないでしょう。',
+       que:'Is there going to be a balance between AI support and human instruction?',           jp_q:'AIサポートと人間の指導のバランスは取れそうですか？',
+       ans:'There is going to be — effective teaching needs both.',                             num:'singular'},
+    ]
+  }
+};
+
+const TENSE_KEYS = ['pres','past','will','begt'];
+
+// ══════════════════════════════════
+//  TTS
+// ══════════════════════════════════
+let bestVoice=null, voicesReady=false;
+function pickVoice(vs){
+  const pri=['Samantha','Karen','Moira','Fiona','Victoria','Allison','Ava'];
+  for(const n of pri){const v=vs.find(v=>v.name===n&&v.lang.startsWith('en'));if(v)return v}
+  return vs.find(v=>v.lang.startsWith('en-'))||null;
+}
+function initVoices(){
+  const vs=speechSynthesis.getVoices();if(!vs.length)return;
+  bestVoice=pickVoice(vs);voicesReady=true;
+  const b=document.getElementById('voice-badge');
+  if(b)b.textContent=bestVoice?`🔊 Voice: ${bestVoice.name}`:'🔊 Voice ready';
+}
+speechSynthesis.onvoiceschanged=initVoices;initVoices();
+
+function esc(s){return s.replace(/'/g,"\\'")}
+function speak(text,btn){
+  if(!voicesReady)initVoices();
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  if(bestVoice)u.voice=bestVoice;
+  u.rate=0.87;u.pitch=1.0;u.lang='en-US';
+  if(btn){btn.classList.add('speaking');u.onend=()=>btn.classList.remove('speaking');u.onerror=()=>btn.classList.remove('speaking')}
+  speechSynthesis.speak(u);
+}
+
+// ══════════════════════════════════
+//  BUILD CARDS
+// ══════════════════════════════════
+function buildCard(card, tKey){
+  const fb = DATA[tKey].formulas[0];
+  return `
+  <div class="card ${tKey}">
+    <span class="form-badge">${card.form}</span>
+    <div class="sent-block">
+      <div class="sent aff">
+        <span class="sent-type">✅ Affirmative</span>
+        ${card.aff}
+        <em>${card.jp_a}</em>
+      </div>
+      <div class="sent neg">
+        <span class="sent-type">❌ Negative</span>
+        ${card.neg}
+        <em>${card.jp_n}</em>
+      </div>
+      <div class="sent que">
+        <span class="sent-type">❓ Question → ${card.ans}</span>
+        ${card.que}
+        <em>${card.jp_q}</em>
+      </div>
+    </div>
+    <div class="audio-row">
+      <button class="abtn a1" onclick="speak('${esc(card.aff)}',this)">🔊 Aff</button>
+      <button class="abtn a2" onclick="speak('${esc(card.neg)}',this)">🔊 Neg</button>
+      <button class="abtn a3" onclick="speak('${esc(card.que)}',this)">🔊 Q</button>
+    </div>
+  </div>`;
+}
+
+function buildTenseSection(tKey, container){
+  const t = DATA[tKey];
+  const pillsHtml = t.formulas.map(f=>`<span class="formula-pill">${f}</span>`).join('');
+  let html = `
+  <div class="tense-hdr ${tKey}">
+    <h2>${t.emoji} ${t.label}</h2>
+    <p>${t.desc}</p>
+    <div class="formula-pills">${pillsHtml}</div>
+  </div>`;
+  [1,2,3].forEach(lv=>{
+    const cards = t.cards.filter(c=>c.lv===lv);
+    if(!cards.length)return;
+    html+=`<div class="lv-label">${'⭐'.repeat(lv)} Level ${lv}</div><div class="cards-grid">`;
+    cards.forEach(c=>{html+=buildCard(c,tKey)});
+    html+=`</div>`;
+  });
+  container.insertAdjacentHTML('beforeend',html);
+}
+
+function initSections(){
+  const allSec=document.getElementById('section-all');
+  TENSE_KEYS.forEach(k=>{
+    buildTenseSection(k,allSec);
+    buildTenseSection(k,document.getElementById(`section-${k}`));
+  });
+  buildSpeakList();
+}
+
+// ══════════════════════════════════
+//  SPEAK LIST
+// ══════════════════════════════════
+const SPEAK_SAMPLES=[
+  {t:'There is a cat on the sofa.',        s:'Present — singular'},
+  {t:'There are three apples on the table.',s:'Present — plural'},
+  {t:'There was a bird in the tree.',       s:'Past — singular'},
+  {t:'There were many children at the park.',s:'Past — plural'},
+  {t:'There will be a birthday party!',    s:'Future: will — singular'},
+  {t:'There will be many job opportunities.',s:'Future: will — plural'},
+  {t:'There is going to be a school trip.',s:'Future: going to — singular'},
+  {t:'There are going to be fireworks!',   s:'Future: going to — plural'},
+];
+function buildSpeakList(){
+  const c=document.getElementById('speak-list');
+  c.innerHTML=SPEAK_SAMPLES.map(s=>`
+    <div class="speak-item">
+      <div class="speak-text">${s.t}<small>${s.s}</small></div>
+      <button class="speak-btn" onclick="speak('${esc(s.t)}',this)">▶️ Play</button>
+    </div>`).join('');
+}
+let spkIdx=0;
+function speakAll(){spkIdx=0;spkNext()}
+function spkNext(){
+  if(spkIdx>=SPEAK_SAMPLES.length)return;
+  const s=SPEAK_SAMPLES[spkIdx++];
+  const u=new SpeechSynthesisUtterance(s.t);
+  if(bestVoice)u.voice=bestVoice;u.rate=0.85;u.lang='en-US';
+  u.onend=()=>setTimeout(spkNext,700);
+  speechSynthesis.cancel();speechSynthesis.speak(u);
+}
+
+// ══════════════════════════════════
+//  TABS
+// ══════════════════════════════════
+function showTab(tab){
+  document.querySelectorAll('.section').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById(`section-${tab}`).classList.add('active');
+  document.querySelector(`[onclick="showTab('${tab}')"]`).classList.add('active');
+}
+
+// ══════════════════════════════════
+//  QUIZ
+// ══════════════════════════════════
+// Quiz: blank out the "There is/was/will be/is going to be" part
+const FORMS = {
+  pres: ['There is','There are','There isn\'t','There aren\'t','Is there','Are there'],
+  past: ['There was','There were','There wasn\'t','There weren\'t','Was there','Were there'],
+  will: ['There will be','There won\'t be','Will there be'],
+  begt: ['There is going to be','There are going to be','There isn\'t going to be','There aren\'t going to be','Is there going to be','Are there going to be'],
+};
+
+function buildQuizPool(tSel,lvSel){
+  const keys = tSel==='all' ? TENSE_KEYS : [tSel];
+  let pool=[];
+  keys.forEach(k=>{
+    DATA[k].cards.forEach(card=>{
+      if(lvSel!=='all'&&card.lv!=lvSel)return;
+      // Q1: blank the form in affirmative
+      pool.push({tense:k, sentence:card.aff.replace(card.form,'___'), answer:card.form, full:card.aff, jp:card.jp_a, forms:FORMS[k]});
+      // Q2: question form — choose correct question form
+      const qForm = card.num==='singular'
+        ? (k==='pres'?'Is there':k==='past'?'Was there':k==='will'?'Will there be':'Is there going to be')
+        : (k==='pres'?'Are there':k==='past'?'Were there':k==='will'?'Will there be':'Are there going to be');
+      pool.push({tense:k, sentence:card.que.replace(new RegExp('^'+qForm,'i'),'___'), answer:qForm, full:card.que, jp:card.jp_q, forms:FORMS[k]});
+    });
+  });
+  return pool.sort(()=>Math.random()-.5);
+}
+
+let qPool=[],qIdx=0,qScore=0,qAnswered=false;
+
+function startQuiz(){
+  qPool=buildQuizPool(document.getElementById('q-tense').value, document.getElementById('q-lv').value).slice(0,15);
+  qIdx=0;qScore=0;qAnswered=false;
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML='';
+  renderQ();
+}
+
+function renderQ(){
+  if(qIdx>=qPool.length){renderResult();return}
+  const item=qPool[qIdx];
+  const type=document.getElementById('q-type').value;
+  const pct=Math.round(qIdx/qPool.length*100);
+  qAnswered=false;
+
+  // Choices: correct + 3 from same tense forms
+  const wrongs=item.forms.filter(f=>f!==item.answer).sort(()=>Math.random()-.5).slice(0,3);
+  const choices=[item.answer,...wrongs].sort(()=>Math.random()-.5);
+
+  let inputHtml='';
+  if(type==='choice'){
+    inputHtml=`<div class="q-choices">${choices.map(c=>
+      `<button class="q-choice" onclick="chkChoice('${esc(c)}','${esc(item.answer)}','${esc(item.full)}',this)">${c}</button>`
+    ).join('')}</div>`;
+  } else {
+    inputHtml=`<input class="q-input" id="q-inp" type="text" placeholder="Type the correct form..." autocomplete="off">
+    <button class="q-submit" id="q-sub" onclick="chkType('${esc(item.answer)}','${esc(item.full)}')">Check ✓</button>`;
+  }
+
+  document.getElementById('quiz-area').innerHTML=`
+  <div class="qcard">
+    <div class="qprow"><span>${qIdx+1} / ${qPool.length}</span><span>⭐ ${qScore}</span></div>
+    <div class="qpbar"><div class="qpfill" style="width:${pct}%"></div></div>
+    <span class="q-badge ${item.tense}">${DATA[item.tense].label.replace(/[🔵🟡🔮🟢📍🕰️🚀📅]/g,'').trim()}</span>
+    <div class="q-instruct">Fill in the blank with the correct form:</div>
+    <div class="q-sent">${item.sentence.replace('___','<span class="blank">___</span>')}</div>
+    <div class="q-jp">🇯🇵 ${item.jp}</div>
+    ${inputHtml}
+    <div class="q-feedback" id="q-fb"></div>
+    <button class="q-next" id="q-next" onclick="nextQ()">Next →</button>
+  </div>`;
+
+  const inp=document.getElementById('q-inp');
+  if(inp){inp.addEventListener('keydown',e=>{if(e.key==='Enter')chkType(item.answer,item.full)});inp.focus()}
+  setTimeout(()=>speak(item.full,null),400);
+}
+
+function chkChoice(chosen,correct,full,btn){
+  if(qAnswered)return;
+  qAnswered=true;
+  document.querySelectorAll('.q-choice').forEach(b=>b.disabled=true);
+  const ok=chosen===correct;
+  btn.classList.add(ok?'correct':'wrong');
+  if(!ok)document.querySelectorAll('.q-choice').forEach(b=>{if(b.textContent===correct)b.classList.add('correct')});
+  showFB(ok,correct,full);
+}
+function chkType(correct,full){
+  if(qAnswered)return;
+  const inp=document.getElementById('q-inp');if(!inp)return;
+  qAnswered=true;inp.disabled=true;document.getElementById('q-sub').disabled=true;
+  const ok=inp.value.trim().toLowerCase()===correct.toLowerCase();
+  inp.classList.add(ok?'correct':'wrong');
+  showFB(ok,correct,full);
+}
+function showFB(ok,correct,full){
+  if(ok)qScore++;
+  const fb=document.getElementById('q-fb');
+  fb.style.display='block';
+  fb.className=`q-feedback ${ok?'correct':'wrong'}`;
+  fb.innerHTML=ok
+    ?`✅ Correct! &nbsp;<strong>${correct}</strong><br><em>${full}</em>`
+    :`❌ Answer: &nbsp;<strong>${correct}</strong><br><em>${full}</em>`;
+  speak(full,null);
+  document.getElementById('q-next').style.display='block';
+}
+function nextQ(){qIdx++;renderQ()}
+function renderResult(){
+  const pct=Math.round(qScore/qPool.length*100);
+  const emoji=pct>=90?'🏆':pct>=70?'🌟':pct>=50?'😊':'💪';
+  const msg=pct>=90?'Perfect! Amazing!':pct>=70?'Great job!':pct>=50?'Good try! Keep going!':'Don\'t give up!';
+  document.getElementById('quiz-area').innerHTML='';
+  document.getElementById('quiz-result').innerHTML=`
+  <div class="q-result" style="display:block">
+    <div class="r-emoji">${emoji}</div>
+    <div class="r-score">${qScore} / ${qPool.length}</div>
+    <div class="r-msg">${msg}</div>
+    <button class="retry-btn" onclick="startQuiz()">🔄 Try Again!</button>
+  </div>`;
+}
+
+window.addEventListener('DOMContentLoaded',initSections);
+</script>
+</body>
+</html>
